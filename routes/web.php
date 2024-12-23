@@ -2,7 +2,10 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\RegularUserController;
 
+
+Route::get('/',[RegularUserController::class, 'indexUser']);
 Route::get('/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
 Route::get('/instructors/create', [AdminController::class, 'create']);
