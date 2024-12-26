@@ -3,12 +3,35 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegularUserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\FileUploadController;
+
+Route::post('/upload', [FileUploadController::class, 'store']);
 use App\Http\Controllers\AuthController;
 
 
 Route::get('/',[RegularUserController::class, 'indexUser']);
-Route::get('/instructors', [AdminController::class, 'indexInstructor']);
+Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
+
+// Kelola Course
+Route::get('/admin/courses', [CourseController::class, 'index']);
+Route::get('/admin/courses/create', [CourseController::class, 'create']);
+Route::post('/admin/courses', [CourseController::class, 'store']);
+Route::get('/admin/courses/{id}/edit', [CourseController::class, 'edit']);
+Route::put('/admin/courses/{id}', [CourseController::class, 'update']);
+Route::delete('/admin/courses/{id}', [CourseController::class, 'destroy']); 
+
+// Kelola Instructor
+Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
+Route::get('admin/instructors/create', [AdminController::class, 'create']);
+Route::post('admin/instructors', [AdminController::class, 'store']);
+Route::get('admin/instructors/{id}/edit', [AdminController::class, 'edit']);
+Route::put('admin/instructors/{id}', [AdminController::class, 'update']);
+Route::delete('admin/instructors/{id}', [AdminController::class, 'destroy']); 
+
+
+
 Route::get('/instructors/create', [AdminController::class, 'create']);
 Route::post('/instructors', [AdminController::class, 'store']);
 Route::get('/instructors/{id}/edit', [AdminController::class, 'edit']);

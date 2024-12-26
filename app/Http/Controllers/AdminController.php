@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instructor;
+use App\Models\Course;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -16,7 +17,12 @@ class AdminController extends Controller
         $instructors = Instructor::all();
         return view('instructor.index', compact('instructors'));
     }
-  
+    public function indexCourse()
+    {
+        //
+        $courses = Course::all();
+        return view('course.index', compact('courses'));
+    }
     public function indexDashboard()
     {
         //
@@ -40,7 +46,7 @@ class AdminController extends Controller
     {
         //
         Instructor::create($request->all());
-        return redirect('/instructor')->with('success', 'Instructor added successfully.');
+        return redirect('/admin/instructor')->with('success', 'Instructor added successfully.');
     }
 
     /**
@@ -69,7 +75,7 @@ class AdminController extends Controller
         //
         $instructor = Instructor::findOrFail($id);
         $instructor->update($request->all());
-        return redirect('/instructors')->with('success', 'Instructor updated successfully.');
+        return redirect('/admin/instructors')->with('success', 'Instructor updated successfully.');
     }
 
     /**
@@ -80,6 +86,6 @@ class AdminController extends Controller
         //
         $instructor = Instructor::findOrFail($id);
         $instructor->delete();
-        return redirect('/instructors')->with('success', 'Instructor deleted successfully.');
+        return redirect('/admin/instructors')->with('success', 'Instructor deleted successfully.');
     }
 }

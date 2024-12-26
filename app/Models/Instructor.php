@@ -18,4 +18,9 @@ class Instructor extends Model
         'phone_number',
         
     ];
+    public function courses()
+{
+    return $this->hasMany(Course::class);
+}
+
 }
