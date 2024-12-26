@@ -44,7 +44,7 @@
                     <div class="nav-button">
                         <li>
                             <button class="btnLogin">
-                                <a href="page/login.html">Login</a>
+                                <a href="/login">Login</a>
                             </button>
                         </li>
                         <li>
