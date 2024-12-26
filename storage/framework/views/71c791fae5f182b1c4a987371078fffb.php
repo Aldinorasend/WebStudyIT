@@ -1,8 +1,6 @@
-@extends ('layouts.admin')
+<?php $__env->startSection('title', 'Instructor Data'); ?>
 
-@section('title', 'Instructor Data')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Instructor List</h1>
     <a href="/admin/instructors/create" class="btn btn-primary mb-3">Add New Instructor</a>
@@ -99,4 +97,6 @@
     // Load initial data
     fetchData(currentPage);
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/instructor/index.blade.php ENDPATH**/ ?>

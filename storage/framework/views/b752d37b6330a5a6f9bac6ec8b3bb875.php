@@ -1,8 +1,6 @@
-@extends ('layouts.admin')
+<?php $__env->startSection('title', 'Instructor Data'); ?>
 
-@section('title', 'Instructor Data')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <div class="container mt-4">
         <h1 class="mb-4 text-center">Add New Instructor</h1>
@@ -50,4 +48,6 @@ document.getElementById('create-instructor-form').addEventListener('submit', fun
 });
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/Instructor/create.blade.php ENDPATH**/ ?>
