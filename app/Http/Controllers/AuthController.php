@@ -21,7 +21,7 @@ class AuthController extends Controller
         $login = $request->input('login');
         $password = $request->input('password');
         
-        $response = Http::get(env('API_URL') . '/login', [
+        $response = Http::post(env('API_URL') . '/login', [
             'login' => $login,
             'password' => $password
         ]);
