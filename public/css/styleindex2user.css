@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 html{
     scroll-behavior: smooth;
+    overflow-x: hidden;
 }
 *{
     box-sizing: border-box;
@@ -55,7 +56,7 @@ body{
 .dropdown{
     position: relative;
     display: inline-block;
-    margin-right: 1.5rem;
+    margin-right: 2rem;
 }
 .dropdown-toggle{
     padding: 12px;
@@ -134,9 +135,8 @@ a{
 }
 .img-content{
     margin-top: 4rem;
-    margin-left: 4.5rem;
-    width: 70%;
-    height: 60%;
+    margin-left: 6rem;
+    height:50%;
 }
 .hero .content h1{
     font-size: 3.5rem;
@@ -271,7 +271,7 @@ footer{
 .container-footer{
     color: #002982;
     font-size: 2rem;
-    margin-left: 25rem;
+    margin-left: 20rem;
     
     
     
@@ -361,16 +361,20 @@ footer hr{
     .container-bootcamp {
         margin: 5px 50px;
     }
-    .content-image{
-        display: none;
-    }
+    
     .card-bootcamp {
         width: 250px;
         height: 250px;
     }
+    .container-list{
+        width: 100%;
+    }
 
     .nav .navbar-menu li {
         margin-left: 20px;
+    }
+    .img-content{
+        width: 50%;
     }
 }
 
