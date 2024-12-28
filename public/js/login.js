@@ -1,26 +1,47 @@
-const apiLoginUrl = 'http://localhost:3000/api/Accounts/search'; 
+const apiLoginUrl = 'http://localhost:3000/api/Accounts/search';
+
+function setCookie(name, value, days) {
+    const date = new Date();
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value}; expires=${date.toUTCString()}; path=/`;
+}
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [key, val] = cookie.trim().split('=');
+        if (key === name) {
+            return val;
+        }
+    }
+    return null;
+}
+
+function deleteCookie(name) {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
 
 async function submitLogin() {
-    const email = document.getElementById('email').value;
+    const loginInput = document.getElementById('loginInput').value;
     const password = document.getElementById('password').value;
-    const loginButton = document.querySelector('.login-button'); // Tombol login
+    const rememberMe = document.getElementById('checkbox').checked;
 
-    if (!email || !password) {
+    if (!loginInput || !password) {
         alert('Please fill in all fields.');
         return;
     }
 
     try {
+        const isEmail = loginInput.includes('@');
         const payload = {
-            email: email,
-            password: password
+            email: isEmail ? loginInput : null,
+            username: !isEmail ? loginInput : null,
+            password
         };
 
         const response = await fetch(apiLoginUrl, {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
@@ -28,25 +49,28 @@ async function submitLogin() {
             const data = await response.json();
             alert('Login successful! Redirecting...');
 
-            // Menyimpan token dan id ke localStorage
             if (data.token) {
                 localStorage.setItem('authToken', data.token);
             }
             if (data.id) {
-                loginButton.setAttribute('data-id', data.id); 
-                localStorage.setItem('userId', data.id); 
+                localStorage.setItem('userId', data.id);
+            }
+
+            // Set "Remember Me" cookie
+            if (rememberMe) {
+                setCookie('rememberUser', loginInput, 30); // Simpan selama 30 hari
+            } else {
+                deleteCookie('rememberUser'); // Hapus cookie jika tidak dicentang
             }
 
             // Redirect berdasarkan user_type
             if (data.User_Type === 'Admin') {
-                console.log(data.id);
                 window.location.href = `/admin/dashboard/${data.id}`;
             } else if (data.User_Type === 'Free' || data.User_Type === 'Subscriber') {
                 window.location.href = `/students?id=${data.id}`;
             } else {
                 console.log('User type is not recognized.');
             }
-
         } else {
             const error = await response.json();
             alert('Login failed: ' + (error.message || 'Invalid credentials'));
@@ -56,3 +80,12 @@ async function submitLogin() {
         alert('Error during login: ' + error.message);
     }
 }
+
+// Pre-fill email field if cookie exists
+window.addEventListener('DOMContentLoaded', () => {
+    const rememberedUser = getCookie('rememberUser');
+    if (rememberedUser) {
+        document.getElementById('loginInput').value = rememberedUser;
+        document.getElementById('checkbox').checked = true;
+    }
+});

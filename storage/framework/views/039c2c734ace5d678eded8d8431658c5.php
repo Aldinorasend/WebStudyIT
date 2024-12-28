@@ -16,8 +16,8 @@
         <form id="loginForm">
             <div class="forms">
                 <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
+                    <label for="loginInput ">Email or Username</label>
+                    <input type="text" id="loginInput" required>
                 </div>
                 <div class="password-container">
                     <label for="password">Password</label>
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="options">
-                <input type="checkbox" id="checkbox">
+                <input type="checkbox" id="checkbox" name="remember">
                 <label for="checkbox">Remember Me</label>
 
                 <a href="/page/resetPass.html">Forgot Password?</a>

@@ -3651,3 +3651,15 @@
 [stacktrace]
 #0 {main}
 "} 
+[2024-12-28 14:15:32] local.ERROR: Cannot redeclare App\Http\Controllers\AdminController::indexDashboard() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AdminController::indexDashboard() at C:\\Users\\harit\\OneDrive\\Documents\\GitHub\\WebStudyIT\\app\\Http\\Controllers\\AdminController.php:39)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-28 14:18:09] local.ERROR: Cannot redeclare App\Http\Controllers\AdminController::indexDashboard() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AdminController::indexDashboard() at C:\\Users\\harit\\OneDrive\\Documents\\GitHub\\WebStudyIT\\app\\Http\\Controllers\\AdminController.php:39)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-28 14:18:34] local.ERROR: Cannot redeclare App\Http\Controllers\AdminController::indexDashboard() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AdminController::indexDashboard() at C:\\Users\\harit\\OneDrive\\Documents\\GitHub\\WebStudyIT\\app\\Http\\Controllers\\AdminController.php:39)
+[stacktrace]
+#0 {main}
+"} 
