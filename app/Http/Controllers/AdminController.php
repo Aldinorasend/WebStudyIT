@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instructor;
+use App\Models\Account;
 use App\Models\Course;
 use Illuminate\Http\Request;
 
@@ -23,10 +24,9 @@ class AdminController extends Controller
         $courses = Course::all();
         return view('course.index', compact('courses'));
     }
-    public function indexDashboard()
+    public function indexDashboard(Account $account)
     {
         //
-       
         return view('Admin.index');
     }
 

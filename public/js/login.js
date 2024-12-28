@@ -1,8 +1,9 @@
-const apiLoginUrl = 'http://localhost:3000/api/login'; // Ganti dengan endpoint API login Anda
+const apiLoginUrl = 'http://localhost:3000/api/Accounts/search'; 
 
 async function submitLogin() {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
+    const loginButton = document.querySelector('.login-button'); // Tombol login
 
     if (!email || !password) {
         alert('Please fill in all fields.');
@@ -10,13 +11,11 @@ async function submitLogin() {
     }
 
     try {
-        // Membuat payload
         const payload = {
             email: email,
             password: password
         };
 
-        // Mengirim permintaan ke API login
         const response = await fetch(apiLoginUrl, {
             method: 'POST',
             headers: {
@@ -25,18 +24,29 @@ async function submitLogin() {
             body: JSON.stringify(payload)
         });
 
-        // Mengecek apakah login berhasil
         if (response.ok) {
             const data = await response.json();
             alert('Login successful! Redirecting...');
-            
-            // Menyimpan token ke localStorage (jika ada)
+
+            // Menyimpan token dan id ke localStorage
             if (data.token) {
                 localStorage.setItem('authToken', data.token);
             }
+            if (data.id) {
+                loginButton.setAttribute('data-id', data.id); 
+                localStorage.setItem('userId', data.id); 
+            }
 
-            // Redirect ke dashboard atau halaman lain
-            window.location.href = '/students/index'; // Ganti dengan halaman tujuan setelah login
+            // Redirect berdasarkan user_type
+            if (data.User_Type === 'Admin') {
+                console.log(data.id);
+                window.location.href = `/admin/dashboard/${data.id}`;
+            } else if (data.User_Type === 'Free' || data.user_type === 'subscriber') {
+                window.location.href = `/students/index?id=${data.id}`;
+            } else {
+                console.log('User type is not recognized.');
+            }
+
         } else {
             const error = await response.json();
             alert('Login failed: ' + (error.message || 'Invalid credentials'));

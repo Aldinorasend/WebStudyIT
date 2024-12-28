@@ -12,7 +12,7 @@ use App\Http\Controllers\AuthController;
 
 Route::get('/',[RegularUserController::class, 'indexUser']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
-Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
+Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
 
 // Kelola Course
 Route::get('/admin/courses', [CourseController::class, 'index']);
