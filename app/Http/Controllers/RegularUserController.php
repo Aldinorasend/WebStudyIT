@@ -47,5 +47,10 @@ class RegularUserController extends Controller
         //
         return view('user.subs');
     }
+    public function readModul()
+    {
+        //
+        return view('modul.index');
+    }
 
 }

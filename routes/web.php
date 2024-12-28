@@ -10,6 +10,7 @@ Route::post('/upload', [FileUploadController::class, 'store']);
 use App\Http\Controllers\AuthController;
 
 
+
 Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
@@ -18,25 +19,26 @@ Route::get('/loggedin',[RegularUserController::class, 'indexLoggedin']);
 
 
 
-Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
-Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
 
+Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
+Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
 
 // Kelola Course
-Route::get('/admin/courses', [AdminController::class, 'indexCourse']);
-Route::get('/admin/courses/create', [AdminController::class, 'createCourse']);
-Route::post('/admin/courses', [AdminController::class, 'storeCourse']);
-Route::get('/admin/courses/{id}/edit', [AdminController::class, 'editCourse']);
-Route::put('/admin/courses/{id}', [AdminController::class, 'updateCourse']);
-Route::delete('/admin/courses/{id}', [AdminController::class, 'destroyCourse']); 
+Route::get('/admin/courses', [CourseController::class, 'index']);
+Route::get('/admin/courses/create', [CourseController::class, 'create']);
+Route::post('/admin/courses', [CourseController::class, 'store']);
+Route::get('/admin/courses/{id}/edit', [CourseController::class, 'edit']);
+Route::put('/admin/courses/{id}', [CourseController::class, 'update']);
+Route::delete('/admin/courses/{id}', [CourseController::class, 'destroy']); 
 
 // Kelola Instructor
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
-Route::get('admin/instructors/create', [AdminController::class, 'createConstructor']);
-Route::post('admin/instructors', [AdminController::class, 'storeConstructor']);
-Route::get('admin/instructors/{id}/edit', [AdminController::class, 'editConstructor']);
-Route::put('admin/instructors/{id}', [AdminController::class, 'updateConstructor']);
-Route::delete('admin/instructors/{id}', [AdminController::class, 'destroyConstructor']); 
+Route::get('admin/instructors/create', [AdminController::class, 'create']);
+Route::post('admin/instructors', [AdminController::class, 'store']);
+Route::get('admin/instructors/{id}/edit', [AdminController::class, 'edit']);
+Route::put('admin/instructors/{id}', [AdminController::class, 'update']);
+Route::delete('admin/instructors/{id}', [AdminController::class, 'destroy']); 
+
 
 
 Route::get('/instructors/create', [AdminController::class, 'create']);
@@ -44,6 +46,9 @@ Route::post('/instructors', [AdminController::class, 'store']);
 Route::get('/instructors/{id}/edit', [AdminController::class, 'edit']);
 Route::put('/instructors/{id}', [AdminController::class, 'update']);
 Route::delete('/instructors/{id}', [AdminController::class, 'destroy']); 
+Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/login', [AuthController::class, 'login']);
-Route::get('/register', [AuthController::class, 'register']);
+Route::get('/course=1',[RegularUserController::class, 'readModul']);
