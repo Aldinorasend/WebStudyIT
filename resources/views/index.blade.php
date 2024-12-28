@@ -115,9 +115,9 @@
         <div class="bootcamp-container">
             <h1 class="bootcamp" id="bootcamp">Courses</h1>
             <div class="row">
-                <div class="container" id="course-container">
-                    <div class="card" id="course-template" style="width: 18rem; display: none;">
-                        <img src="" class="card-img-top" alt="">
+                <div class="container" id="course-container" >
+                    <div class="card" id="course-template" style="width: 18rem; display: none;" data-id="">
+                        <img src="" class="card-img-top" id="cover" alt="">
                         <div class="card-body">
                             <p class="card-title"></p>
                             <div class="date-container">

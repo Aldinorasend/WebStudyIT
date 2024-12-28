@@ -16,7 +16,7 @@ Route::get('/loggedin',[RegularUserController::class, 'indexLoggedin']);
 
 
 
-Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
+Route::get('/adminx/dashboard', [AdminController::class, 'indexDashboard']);
 
 
 // Kelola Course

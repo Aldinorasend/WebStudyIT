@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to StudyIT</title>
-    <link rel="stylesheet" href="{{ asset('css/stylelogin.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/stylelogin.css')); ?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -16,7 +16,7 @@
         <form id="loginForm">
             <div class="forms">
                 <div>
-                    <label for="email ">Email</label>
+                    <label for="email">Email</label>
                     <input type="email" id="email" required>
                 </div>
                 <div class="password-container">
@@ -39,3 +39,4 @@
 </body>
 
 </html>
+<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/Auth/login.blade.php ENDPATH**/ ?>
