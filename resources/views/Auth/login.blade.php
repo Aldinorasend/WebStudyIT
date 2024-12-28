@@ -16,7 +16,7 @@
         <form id="loginForm">
             <div class="forms">
                 <div>
-                    <label for="email">Email</label>
+                    <label for="email ">Email</label>
                     <input type="email" id="email" required>
                 </div>
                 <div class="password-container">
@@ -31,11 +31,11 @@
                 <a href="/page/resetPass.html">Forgot Password?</a>
             </div>
             <div class="button-container">
-                <button type="button" class="login-button" onclick="submitLogin()">Login</button>
+                <button type="button" class="login-button" onclick="submitLogin()" data-id="">Login</button>
             </div>
         </form>
     </div>
-    <script src="/js/login.js"></script>
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
 
 </html>
