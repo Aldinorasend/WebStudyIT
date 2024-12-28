@@ -11,10 +11,10 @@ use App\Http\Controllers\AuthController;
 
 
 Route::get('/',[RegularUserController::class, 'indexUser']);
+Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
+Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
 Route::get('/notloggedin',[RegularUserController::class, 'indexNotLoggedin']);
 Route::get('/loggedin',[RegularUserController::class, 'indexLoggedin']);
-
-
 
 Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
 
