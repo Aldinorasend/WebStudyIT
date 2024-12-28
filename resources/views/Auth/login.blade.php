@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="options">
-                <input type="checkbox" id="checkbox">
+                <input type="checkbox" id="checkbox" name="remember">
                 <label for="checkbox">Remember Me</label>
 
                 <a href="/page/resetPass.html">Forgot Password?</a>
