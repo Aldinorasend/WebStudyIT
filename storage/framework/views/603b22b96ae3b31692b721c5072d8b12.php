@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Your StudyIT Account</title>
-    <link rel="stylesheet" href="{{ asset('css/styleregister.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/styleregister.css')); ?>">
 </head>
 <body>
     <div class="register-container">
@@ -50,6 +50,6 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('js/register.js') }}"></script>
+    <script src="<?php echo e(asset('js/register.js')); ?>"></script>
 </body>
-</html>
+</html><?php /**PATH C:\Users\harit\OneDrive\Documents\GitHub\WebStudyIT\resources\views/Auth/register.blade.php ENDPATH**/ ?>

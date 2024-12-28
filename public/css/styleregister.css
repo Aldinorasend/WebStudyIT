@@ -43,7 +43,7 @@ h5{
     width: 400px;
     margin: 0 auto;
     /* Centers the container on the page */
-    margin-top: 50px;
+    margin-top: 25px;
 }
 
 .register-forms input[type="email"],

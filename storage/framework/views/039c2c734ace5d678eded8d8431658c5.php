@@ -16,8 +16,8 @@
         <form id="loginForm">
             <div class="forms">
                 <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
+                    <label for="loginInput ">Email or Username</label>
+                    <input type="text" id="loginInput" required>
                 </div>
                 <div class="password-container">
                     <label for="password">Password</label>

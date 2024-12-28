@@ -1,4 +1,4 @@
-const apiRegisterUrl = 'http://localhost:3000/api/register'; // Ganti dengan endpoint API registrasi Anda
+const apiRegisterUrl = 'http://localhost:3000/api/Accounts'; // Ganti dengan endpoint API registrasi Anda
 
 async function submitRegister() {
     event.preventDefault(); // Mencegah form melakukan submit default
@@ -7,6 +7,7 @@ async function submitRegister() {
     const username = document.getElementById('name').value;
     const firstname = document.querySelectorAll('#name')[1].value; // Mengambil input First Name
     const lastname = document.querySelectorAll('#name')[2].value;  // Mengambil input Last Name
+    const phone = document.getElementById('phone').value;
     const email = document.getElementById('email').value;
     const password = document.getElementById('newPass').value;
     const confirmPassword = document.getElementById('confNewPass').value;
@@ -23,6 +24,7 @@ async function submitRegister() {
             username: username,
             firstname: firstname,
             lastname: lastname,
+            phonenumber: phone,
             email: email,
             password: password
         };
@@ -42,7 +44,7 @@ async function submitRegister() {
             alert('Registration successful! Redirecting to login...');
             
             // Redirect ke halaman login
-            window.location.href = '/page/login.html';
+            window.location.href = '/login';
         } else {
             const error = await response.json();
             alert('Registration failed: ' + (error.message || 'Please try again.'));
