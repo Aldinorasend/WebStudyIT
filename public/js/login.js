@@ -1,4 +1,4 @@
-const apiLoginUrl = 'http://localhost:3000/api/Accounts/search'; 
+const apiLoginUrl = 'http://localhost:3000/api/Accounts/search';
 
 async function submitLogin() {
     const email = document.getElementById('email').value;
@@ -33,16 +33,16 @@ async function submitLogin() {
                 localStorage.setItem('authToken', data.token);
             }
             if (data.id) {
-                loginButton.setAttribute('data-id', data.id); 
-                localStorage.setItem('userId', data.id); 
+                loginButton.setAttribute('data-id', data.id);
+                localStorage.setItem('userId', data.id);
             }
 
             // Redirect berdasarkan user_type
             if (data.User_Type === 'Admin') {
                 console.log(data.id);
                 window.location.href = `/admin/dashboard/${data.id}`;
-            } else if (data.User_Type === 'Free' || data.user_type === 'Subscriber') {
-                window.location.href = `/students/index?id=${data.id}`;
+            } else if (data.User_Type === 'Free' || data.User_Type === 'Subscriber') {
+                window.location.href = `/students?id=${data.id}`;
             } else {
                 console.log('User type is not recognized.');
             }

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to StudyIT</title>
-    <link rel="stylesheet" href="{{ asset('css/stylelogin.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/stylelogin.css')); ?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -25,7 +25,7 @@
                 </div>
             </div>
             <div class="options">
-                <input type="checkbox" id="checkbox" name="remember">
+                <input type="checkbox" id="checkbox">
                 <label for="checkbox">Remember Me</label>
 
                 <a href="/page/resetPass.html">Forgot Password?</a>
@@ -35,7 +35,8 @@
             </div>
         </form>
     </div>
-    <script src="{{ asset('js/login.js') }}"></script>
+    <script src="<?php echo e(asset('js/login.js')); ?>"></script>
 </body>
 
 </html>
+<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/Auth/login.blade.php ENDPATH**/ ?>
