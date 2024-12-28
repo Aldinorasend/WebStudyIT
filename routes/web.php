@@ -10,10 +10,10 @@ Route::post('/upload', [FileUploadController::class, 'store']);
 use App\Http\Controllers\AuthController;
 
 
-Route::get('/',[RegularUserController::class, 'indexUser']);
+Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
-Route::get('/notloggedin',[RegularUserController::class, 'indexNotLoggedin']);
+Route::get('/students',[RegularUserController::class, 'indexUser']);
 Route::get('/loggedin',[RegularUserController::class, 'indexLoggedin']);
 
 

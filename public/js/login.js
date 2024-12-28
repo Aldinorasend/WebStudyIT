@@ -41,8 +41,8 @@ async function submitLogin() {
             if (data.User_Type === 'Admin') {
                 console.log(data.id);
                 window.location.href = `/admin/dashboard/${data.id}`;
-            } else if (data.User_Type === 'Free' || data.user_type === 'subscriber') {
-                window.location.href = `/students/index?id=${data.id}`;
+            } else if (data.User_Type === 'Free' || data.User_Type === 'Subscriber') {
+                window.location.href = `/students?id=${data.id}`;
             } else {
                 console.log('User type is not recognized.');
             }
