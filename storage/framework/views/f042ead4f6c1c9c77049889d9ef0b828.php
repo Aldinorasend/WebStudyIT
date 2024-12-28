@@ -196,7 +196,7 @@
         </div>
         </div>
     </footer>
-    <script src="<?php echo e(asset('js/indexuser.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/homePage.js')); ?>"></script>
 </body>
 
 </html>

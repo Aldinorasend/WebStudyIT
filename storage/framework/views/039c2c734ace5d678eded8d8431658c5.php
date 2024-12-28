@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login to StudyIT</title>
-    <link rel="stylesheet" href="{{ asset('css/stylelogin.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/stylelogin.css')); ?>">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
@@ -39,3 +39,4 @@
 </body>
 
 </html>
+<?php /**PATH C:\Users\harit\OneDrive\Documents\GitHub\WebStudyIT\resources\views/Auth/login.blade.php ENDPATH**/ ?>

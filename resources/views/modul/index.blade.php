@@ -9,42 +9,41 @@
 </head>
 <body>
     <div class="banner">
-        <img src="{{ asset('image/glenn-carstens-peters-P1qyEf1g0HU-unsplash') }}" alt="Banner Image">
-        <div class="banner-text">UI-UX Beginner Class</div>
+        <img id="banner-image" src="" alt="Banner Image">
+        <div class="banner-text" id="course-title">Course Title</div>
     </div>
 
     <div class="arw-back">
         <a href="../page/homePage.html">
-            <img src="../asset/image/backarrow.png" alt="Back to Course View">
+            <img src="{{ asset('image/backarrow.png') }}" alt="Back to Course View">
         </a>
     </div>
 
-    
-        <div class="card">
-            <img src="{{ asset('image/glenn-carstens-peters-P1qyEf1g0HU-unsplash') }}" class="card-img-top" alt="Course Image">
-            <div class="card-body">
-                <h5 class="card-title" style="color: white;">UI-UX Beginner Class</h5>
-                <p class="calendar-text">
-                    <img src="{{ asset('image/calen.png') }}" alt="Calendar Icon" class="calendar-icon">
-                    25-26 August 2024
-                </p>
+    <div class="bootcamp-container">
+        <!-- <h1 class="bootcamp">Courses</h1> -->
+        <div class="row">
+            <div class="container" id="course-container">
+                <div class="card" id="course-template" style="display: none;">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: white;"></h5>
+                        <div class="date-container">
+                            <img src="{{ asset('image/calen.png') }}" alt="Date Icon" class="calendar-icon">
+                            <p class="date-card"></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    
+    </div>
 
     <div class="dec-container">
-        <p>What You'll Learn</p>
+        <p>What You'll Learn:</p>
+        <div id="json-items">
+            <!-- Data will be inserted dynamically -->
+        </div>
     </div>
 
-    <div class="des-container">
-        <p>1. The principles of user-centered design</p>
-        <p>2. How to conduct user research and usability testing</p>
-        <p>3. Creating effective user personas and journey maps</p>
-        <p>4. Designing intuitive user interfaces</p>
-        <p>5. Prototyping and wireframing with industry-standard tools</p>
-    </div>
-
- 
     <div class="des-tools">
         <p>Here are some tools that you'll learn in this course</p>
         <div class="img-tools">
@@ -53,9 +52,17 @@
         </div>
     </div>
 
-  
+    <!-- YouTube Video Iframe -->
+    <div class="des-container">
+    <div class="vid-cor">
+    <!-- YouTube iframe will be inserted dynamically here -->
+</div>
+    </div>
+
     <div class="enroll-container">
         <a href="../page/videoModule.html" class="btn btn-primary btn-lg">Enroll</a>
     </div>
+
+    <script src="{{ asset('js/modulPage.js') }}"></script>
 </body>
 </html>

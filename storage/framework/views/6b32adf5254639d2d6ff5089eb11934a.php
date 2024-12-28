@@ -65,10 +65,10 @@
                 <img src="${baseUrl}${course.image}" alt="${course.course_name}" class="img-thumbnail" style="max-width: 100px; max-height: 100px;">
             </td>
             <td>${course.course_name}</td>
-            <td>${course.firstname} ${course.lastname}</td> <!-- Menggunakan firstname dan lastname -->
+            <td>${course.firstname} ${course.lastname}</td> 
             <td>${course.level.charAt(0).toUpperCase() + course.level.slice(1)}</td>
-            <td>${new Date(course.start_date).toLocaleDateString()}</td> <!-- Format tanggal -->
-            <td>${new Date(course.end_date).toLocaleDateString()}</td> <!-- Format tanggal -->
+            <td>${new Date(course.start_date).toLocaleDateString()}</td>
+            <td>${new Date(course.end_date).toLocaleDateString()}</td> 
             <td>
                 <span class="badge ${course.status === 'active' ? 'bg-success' : 'bg-secondary'}">
                     ${course.status.charAt(0).toUpperCase() + course.status.slice(1)}

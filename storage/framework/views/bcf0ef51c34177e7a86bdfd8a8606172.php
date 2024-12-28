@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title', 'Add New Course'); ?>
 
 <?php $__env->startSection('content'); ?>

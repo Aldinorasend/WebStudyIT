@@ -10,7 +10,7 @@
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/styleindexuser.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/styleindexuser.css')); ?>">
     
 
 </head>
@@ -21,7 +21,7 @@
         <div class="navbar">
             <div class="container-fluid">
                 <div class="nav-brand">
-                    <img src="{{ asset('image/logo.png') }}" alt="Logo">
+                    <img src="<?php echo e(asset('image/logo.png')); ?>" alt="Logo">
                     <h1>StudyIT</h1>
                 </div>
                 <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -72,7 +72,7 @@
                 <input class="btn btn-primary btn-lg" id="cta" type="submit" value="Enroll" onclick="navigatePayment()">
             </div>
             <div class="content-image">
-                <img src="{{ asset('image/landing.png') }}" alt="" class="img-content">
+                <img src="<?php echo e(asset('image/landing.png')); ?>" alt="" class="img-content">
             </div>
         </div>
         <div class="benefits-container">
@@ -121,7 +121,7 @@
                         <div class="card-body">
                             <p class="card-title"></p>
                             <div class="date-container">
-                                <img src="{{ asset('image/date.png') }}" alt="Date Icon">
+                                <img src="<?php echo e(asset('image/date.png')); ?>" alt="Date Icon">
                                 <p class="date-card"></p>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
     <footer id="footer">
         <div class="container-content-footer">
             <div class="container-logo">
-                <img src="{{ asset('image/Group.png') }}" alt="">
+                <img src="<?php echo e(asset('image/Group.png')); ?>" alt="">
             </div>
             <div class="container-footer">
                 <h1>StudyIT</h1>
@@ -191,12 +191,13 @@
                 <a href="#home">
                     <p>Back to Top</p>
                 </a>
-                <img src="{{ asset('image/arrowup.png') }}" alt="">
+                <img src="<?php echo e(asset('image/arrowup.png')); ?>" alt="">
             </div>
         </div>
         </div>
     </footer>
-    <script src="{{ asset('js/homePage.js') }}"></script>
+    <script src="<?php echo e(asset('js/indexuser.js')); ?>"></script>
 </body>
 
 </html>
+<?php /**PATH C:\Users\harit\OneDrive\Documents\GitHub\WebStudyIT\resources\views/index.blade.php ENDPATH**/ ?>

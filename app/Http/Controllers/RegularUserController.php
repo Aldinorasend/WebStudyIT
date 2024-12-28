@@ -13,5 +13,20 @@ class RegularUserController extends Controller
         //
         return view('index');
     }
+    public function indexNotLoggedIn()
+    {
+        //
+        return view('user.notloggedin');
+    }
+    public function indexLoggedIn()
+    {
+        //
+        return view('user.loggedin');
+    }
+    public function readModul()
+    {
+        //
+        return view('modul.index');
+    }
 
 }
