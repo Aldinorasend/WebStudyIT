@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course View</title>
-    <link rel="stylesheet" href="{{ asset('css/stylesCor.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/stylesCor.css')); ?>">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
@@ -15,11 +15,27 @@
 
     <div class="arw-back">
         <a href="../page/homePage.html">
-            <img src="{{ asset('image/backarrow.png') }}" alt="Back to Course View">
+            <img src="<?php echo e(asset('image/backarrow.png')); ?>" alt="Back to Course View">
         </a>
     </div>
 
-    
+    <div class="bootcamp-container">
+        <!-- <h1 class="bootcamp">Courses</h1> -->
+        <div class="row">
+            <div class="container" id="course-container">
+                <div class="card" id="course-template" style="display: none;">
+                    <img src="" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title" style="color: white;"></h5>
+                        <div class="date-container">
+                            <img src="<?php echo e(asset('image/calen.png')); ?>" alt="Date Icon" class="calendar-icon">
+                            <p class="date-card"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="dec-container">
         <p>What You'll Learn:</p>
@@ -48,7 +64,7 @@
     </div>
 
     <script>
-        const apiUrl = 'http://localhost:3000/api/moduls/{{$moduls->id}}'; // Replace with your API vidio
+        const apiUrl = 'http://localhost:3000/api/moduls/<?php echo e($moduls->id); ?>'; // Replace with your API vidio
         const baseUrl = 'http://localhost:8000/backend-uploads/'; // Replace with your base vidio for assets
 
 fetch(apiUrl)
@@ -86,3 +102,4 @@ fetch(apiUrl)
     </script>
 </body>
 </html>
+<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/modul/index.blade.php ENDPATH**/ ?>

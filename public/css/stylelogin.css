@@ -34,7 +34,7 @@ h5 {
     margin-top: 200px;
 }
 
-.forms input[type="email"],
+.forms input[type="text"],
 .forms input[type="password"] {
     width: 100%;
     /* Makes input fields take up the full width of their container */

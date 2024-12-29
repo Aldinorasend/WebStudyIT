@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RegularUser;
 use App\Models\Account;
+use App\Models\Modul;
 
 class RegularUserController extends Controller
 {
@@ -42,15 +43,26 @@ class RegularUserController extends Controller
         //
         return view('index');
     }
-    public function indexLoggedIn()
-    {
-        //
-        return view('user.subs');
-    }
-    public function readModul()
-    {
-        //
-        return view('modul.index');
-    }
 
+    public function readModul(Request $request)
+    {
+        //
+        // Ambil ID dari query string
+        $id = $request->query('id');
+    
+        // Validasi ID
+        if (!$id) {
+            return abort(400, 'Course ID is required');
+        }
+    
+        // Cari data student
+        $modul = Modul::find($id);
+        
+        // Jika data tidak ditemukan, tampilkan pesan
+        if (!$modul) {
+            abort(404, 'modul not found');
+        }
+        return view('modul.index', ['moduls' => $modul]);
+    }
+   
 }

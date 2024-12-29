@@ -150,7 +150,7 @@
     </footer>
 
 
-    <script src="{{ asset('js/homePage.js') }}"></script>
+    <script src="{{ asset('js/freeUser.js') }}"></script>
 </body>
 
 </html>
