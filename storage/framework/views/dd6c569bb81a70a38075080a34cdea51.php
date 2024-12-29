@@ -150,7 +150,7 @@
     </footer>
 
 
-    <script src="<?php echo e(asset('js/homePage.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/freeUser.js')); ?>"></script>
 </body>
 
 </html>

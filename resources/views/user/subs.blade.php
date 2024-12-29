@@ -149,7 +149,7 @@
     </footer>
 
 
-    <script src="{{ asset('js/homePage.js') }}"></script>
+    <script src="{{ asset('js/subsUser.js') }}"></script>
 </body>
 
 </html>

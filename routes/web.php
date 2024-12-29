@@ -5,9 +5,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegularUserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\AuthController;
 
 Route::post('/upload', [FileUploadController::class, 'store']);
-use App\Http\Controllers\AuthController;
 
 
 
@@ -15,7 +15,6 @@ Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
 Route::get('/students',[RegularUserController::class, 'indexUser']);
-Route::get('/loggedin',[RegularUserController::class, 'indexLoggedin']);
 
 
 
@@ -46,9 +45,10 @@ Route::post('/instructors', [AdminController::class, 'store']);
 Route::get('/instructors/{id}/edit', [AdminController::class, 'edit']);
 Route::put('/instructors/{id}', [AdminController::class, 'update']);
 Route::delete('/instructors/{id}', [AdminController::class, 'destroy']); 
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-Route::get('/course=1',[RegularUserController::class, 'readModul']);
+Route::get('/students/courses',[RegularUserController::class, 'readModul']);
