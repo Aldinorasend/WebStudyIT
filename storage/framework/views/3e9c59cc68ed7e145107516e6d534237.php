@@ -19,23 +19,7 @@
         </a>
     </div>
 
-    <div class="bootcamp-container">
-        <!-- <h1 class="bootcamp">Courses</h1> -->
-        <div class="row">
-            <div class="container" id="course-container">
-                <div class="card" id="course-template" style="display: none;">
-                    <img src="" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title" style="color: white;"></h5>
-                        <div class="date-container">
-                            <img src="<?php echo e(asset('image/calen.png')); ?>" alt="Date Icon" class="calendar-icon">
-                            <p class="date-card"></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    
 
     <div class="dec-container">
         <p>What You'll Learn:</p>
