@@ -64,5 +64,9 @@ class RegularUserController extends Controller
         }
         return view('modul.index', ['moduls' => $modul]);
     }
-   
+
+    public function enroll()
+    {
+        return view('payment.index');
+    }
 }
