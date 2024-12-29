@@ -42,7 +42,7 @@
                                 <button class="dropdown-toggle"> <?php echo e($students->username); ?></button>
                                 <div class="dropdown-content">
                                     <a href="editprofile.html">Edit Profile</a>
-                                    <a href="../index.html">Logout</a>
+                                    <a href="/">Logout</a>
                                 </div>
                                </div>
                             </li>

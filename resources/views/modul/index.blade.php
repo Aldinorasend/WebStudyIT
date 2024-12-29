@@ -64,7 +64,7 @@
     </div>
 
     <script>
-        const apiUrl = 'http://localhost:3000/api/moduls/{{$moduls->id}}'; // Replace with your API vidio
+        const apiUrl = 'http://localhost:3000/api/modulsByCourseID/{{$courses->id}}'; // Replace with your API vidio
         const baseUrl = 'http://localhost:8000/backend-uploads/'; // Replace with your base vidio for assets
 
 fetch(apiUrl)
@@ -74,8 +74,8 @@ fetch(apiUrl)
 
         // Update banner
         document.getElementById('banner-image').src = `${baseUrl}${data.vidio}`;
-        document.getElementById('course-title').textContent = data.Title;
-        document.getElementById('json-items').textContent = data.Description;
+        document.getElementById('course-title').textContent = "Id Modul : " + data.id;
+        document.getElementById('json-items').textContent = "ID Course : " + data.CourseID;
 
         // YouTube video setup
         const youtubeVideoUrl = `https://www.youtube.com/embed/tgbNymZ7vqY`;
