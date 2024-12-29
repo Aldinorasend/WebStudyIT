@@ -149,7 +149,7 @@
     </footer>
 
 
-    <script src="<?php echo e(asset('js/homePage.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/subsUser.js')); ?>"></script>
 </body>
 
 </html>

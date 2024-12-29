@@ -3651,6 +3651,7 @@
 [stacktrace]
 #0 {main}
 "} 
+<<<<<<< HEAD
 [2024-12-28 19:08:13] local.ERROR: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u229098060_studyitfinal.modul' doesn't exist (Connection: mysql, SQL: select * from `modul` where `modul`.`id` = 1 limit 1) {"exception":"[object] (Illuminate\\Database\\QueryException(code: 42S02): SQLSTATE[42S02]: Base table or view not found: 1146 Table 'u229098060_studyitfinal.modul' doesn't exist (Connection: mysql, SQL: select * from `modul` where `modul`.`id` = 1 limit 1) at D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php:825)
 [stacktrace]
 #0 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Database\\Connection.php(779): Illuminate\\Database\\Connection->runQueryCallback()
@@ -4107,6 +4108,70 @@
 #46 {main}
 "} 
 [2024-12-29 12:11:30] local.ERROR: Call to undefined method App\Http\Controllers\AuthController::showLogin() {"exception":"[object] (Error(code: 0): Call to undefined method App\\Http\\Controllers\\AuthController::showLogin() at D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php:47)
+[stacktrace]
+#0 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch()
+#1 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(212): Illuminate\\Routing\\Route->runController()
+#2 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(808): Illuminate\\Routing\\Route->run()
+#3 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Routing\\Router->{closure:Illuminate\\Routing\\Router::runRouteWithinStack():807}()
+#4 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Middleware\\SubstituteBindings.php(51): Illuminate\\Pipeline\\Pipeline->{closure:Illuminate\\Pipeline\\Pipeline::prepareDestination():142}()
+#5 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Routing\\Middleware\\SubstituteBindings->handle()
+#6 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken.php(88): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#7 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\VerifyCsrfToken->handle()
+#8 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\View\\Middleware\\ShareErrorsFromSession.php(49): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#9 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\View\\Middleware\\ShareErrorsFromSession->handle()
+#10 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(121): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#11 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Session\\Middleware\\StartSession.php(64): Illuminate\\Session\\Middleware\\StartSession->handleStatefulRequest()
+#12 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Session\\Middleware\\StartSession->handle()
+#13 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse.php(37): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#14 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Cookie\\Middleware\\AddQueuedCookiesToResponse->handle()
+#15 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Cookie\\Middleware\\EncryptCookies.php(75): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#16 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Cookie\\Middleware\\EncryptCookies->handle()
+#17 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#18 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(807): Illuminate\\Pipeline\\Pipeline->then()
+#19 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(786): Illuminate\\Routing\\Router->runRouteWithinStack()
+#20 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(750): Illuminate\\Routing\\Router->runRoute()
+#21 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(739): Illuminate\\Routing\\Router->dispatchToRoute()
+#22 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(201): Illuminate\\Routing\\Router->dispatch()
+#23 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(144): Illuminate\\Foundation\\Http\\Kernel->{closure:Illuminate\\Foundation\\Http\\Kernel::dispatchToRouter():198}()
+#24 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->{closure:Illuminate\\Pipeline\\Pipeline::prepareDestination():142}()
+#25 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull.php(31): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle()
+#26 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\ConvertEmptyStringsToNull->handle()
+#27 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest.php(21): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#28 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\TrimStrings.php(51): Illuminate\\Foundation\\Http\\Middleware\\TransformsRequest->handle()
+#29 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\TrimStrings->handle()
+#30 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\ValidatePostSize.php(27): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#31 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\ValidatePostSize->handle()
+#32 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance.php(110): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#33 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\PreventRequestsDuringMaintenance->handle()
+#34 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\HandleCors.php(49): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#35 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\HandleCors->handle()
+#36 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Http\\Middleware\\TrustProxies.php(58): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#37 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Http\\Middleware\\TrustProxies->handle()
+#38 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks.php(22): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#39 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(183): Illuminate\\Foundation\\Http\\Middleware\\InvokeDeferredCallbacks->handle()
+#40 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php(119): Illuminate\\Pipeline\\Pipeline->{closure:{closure:Illuminate\\Pipeline\\Pipeline::carry():158}:159}()
+#41 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(176): Illuminate\\Pipeline\\Pipeline->then()
+#42 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Http\\Kernel.php(145): Illuminate\\Foundation\\Http\\Kernel->sendRequestThroughRouter()
+#43 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Application.php(1190): Illuminate\\Foundation\\Http\\Kernel->handle()
+#44 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\public\\index.php(17): Illuminate\\Foundation\\Application->handleRequest()
+#45 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('...')
+#46 {main}
+"} 
+=======
+[2024-12-28 14:15:32] local.ERROR: Cannot redeclare App\Http\Controllers\AdminController::indexDashboard() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AdminController::indexDashboard() at C:\\Users\\harit\\OneDrive\\Documents\\GitHub\\WebStudyIT\\app\\Http\\Controllers\\AdminController.php:39)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-28 14:18:09] local.ERROR: Cannot redeclare App\Http\Controllers\AdminController::indexDashboard() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AdminController::indexDashboard() at C:\\Users\\harit\\OneDrive\\Documents\\GitHub\\WebStudyIT\\app\\Http\\Controllers\\AdminController.php:39)
+[stacktrace]
+#0 {main}
+"} 
+[2024-12-28 14:18:34] local.ERROR: Cannot redeclare App\Http\Controllers\AdminController::indexDashboard() {"exception":"[object] (Symfony\\Component\\ErrorHandler\\Error\\FatalError(code: 0): Cannot redeclare App\\Http\\Controllers\\AdminController::indexDashboard() at C:\\Users\\harit\\OneDrive\\Documents\\GitHub\\WebStudyIT\\app\\Http\\Controllers\\AdminController.php:39)
+[stacktrace]
+#0 {main}
+"} 
+>>>>>>> 5b0adfdb4d9531e9a62162ce494132760df36ac6
+[2024-12-29 12:17:51] local.ERROR: Call to undefined method App\Http\Controllers\AuthController::showLogin() {"exception":"[object] (Error(code: 0): Call to undefined method App\\Http\\Controllers\\AuthController::showLogin() at D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php:47)
 [stacktrace]
 #0 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(266): Illuminate\\Routing\\ControllerDispatcher->dispatch()
 #1 D:\\KULIAHAHAHHA\\KULIAH\\SEMESTER 5\\WEB\\laravel-frontend\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(212): Illuminate\\Routing\\Route->runController()

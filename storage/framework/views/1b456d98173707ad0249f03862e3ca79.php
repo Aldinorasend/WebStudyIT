@@ -49,7 +49,7 @@
                         </li>
                         <li>
                             <button class="btnSignup">
-                                <a href="page/homePage.html">Sign Up </a>
+                                <a href="/register">Sign Up </a>
                             </button>
                         </li>
                     </div>

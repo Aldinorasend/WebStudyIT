@@ -150,8 +150,8 @@
     </footer>
 
 
-    <script src="<?php echo e(asset('js/freeUser.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/homePage.js')); ?>"></script>
 </body>
 
 </html>
-<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/user/unsubs.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\harit\OneDrive\Documents\GitHub\WebStudyIT\resources\views/user/unsubs.blade.php ENDPATH**/ ?>
