@@ -1,4 +1,4 @@
-const apiUrl = 'http://localhost:3000/api/moduls'; // Replace with your API vidio
+const apiUrl = 'http://localhost:3000/api/moduls/'; // Replace with your API vidio
 const baseUrl = 'http://localhost:8000/backend-uploads/'; // Replace with your base vidio for assets
 
 fetch(apiUrl)

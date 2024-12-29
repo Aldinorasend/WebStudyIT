@@ -120,6 +120,7 @@
                         <img src="" class="card-img-top" id="cover" alt="">
                         <div class="card-body">
                             <p class="card-title"></p>
+                            <!-- <p class="card-level">Level : </p> -->
                             <div class="date-container">
                                 <img src="<?php echo e(asset('image/date.png')); ?>" alt="Date Icon">
                                 <p class="date-card"></p>
@@ -196,7 +197,7 @@
         </div>
         </div>
     </footer>
-    <script src="<?php echo e(asset('js/homePage.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/landingPage.js')); ?>"></script>
 </body>
 
 </html>
