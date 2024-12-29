@@ -12,6 +12,7 @@
             data.forEach(course => {
                 const courseCard = courseTemplate.cloneNode(true);
                 courseCard.style.display = 'block'; // Tampilkan card
+                courseCard.setAttribute('data-id', course.id);
                 courseCard.querySelector('.card-img-top').src = `${baseUrl}${course.image}`; // Set gambar
                 courseCard.querySelector('.card-img-top').alt = "Cover course"; // Set alt text
                 courseCard.querySelector('.card-title').textContent = course.course_name;
@@ -112,4 +113,35 @@ function isInViewport(element) {
   
   // Initial check in case elements are already in view
   animateOnScroll();
+
+  // const container = document.getElementById('course-container');
+
+  const container = document.getElementById('course-container');
+
+container.addEventListener('click', (event) => {
+  // Cari elemen card terdekat dari elemen yang diklik
+  const card = event.target.closest('.card');
+
+  // Jika card ditemukan dan bukan template
+  if (card) {
+    const courseId = card.getAttribute('data-id'); // Ambil data-id dari card
+
+    if (courseId) {
+      // Log untuk debugging
+      console.log('Card clicked:', card); // Debug: elemen card yang diklik
+      console.log('Course ID:', courseId); // Debug: ID dari elemen card
+
+      // Redirect ke halaman dengan ID yang sesuai
+      const targetUrl = `/admin/courses/${courseId}/edit`;
+      console.log('Redirecting to:', targetUrl); // Debug: URL tujuan
+      window.location.href = targetUrl;
+    } else {
+      console.log('No course ID found for this card.'); // Debug jika data-id tidak ditemukan
+    }
+  } else {
+    console.log('Clicked outside a valid card or on the template.'); // Debug jika klik tidak valid
+  }
+});
+
+  
 

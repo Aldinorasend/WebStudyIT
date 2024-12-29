@@ -19,7 +19,7 @@
         <div class="navbar" id="home">
             <div class="container-fluid">
                 <div class="nav-brand">
-                    <img src="../asset/image/logo.png" alt="Logo">
+                    <img src="{{ asset('image/logo.png') }}" alt="Logo">
                     <h1>StudyIT</h1>
                 </div>
                 <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -38,14 +38,8 @@
                                 <a href="/page/contactus.html">Contact Us</a>
                             </li>
                             <li>
-                                <a href="create.php">Create Users</a>
-                            </li>
-                            <li>
-                                <a href="read.php">View Users</a>
-                            </li>
-                            <li>
                                <div class="dropdown">
-                                <button class="dropdown-toggle">Aldino</button>
+                                <button class="dropdown-toggle"> {{ $students->username }}</button>
                                 <div class="dropdown-content">
                                     <a href="editprofile.html">Edit Profile</a>
                                     <a href="../index.html">Logout</a>
@@ -71,7 +65,7 @@
                 <input class="btn btn-primary btn-lg" id="cta" type="submit" value="Enroll" onclick="navigatePayment()">
             </div>
             <div class="content-image">
-                <img src=".{{ asset('image/landing.png') }}" alt="" class="img-content">
+                <img src="{{ asset('image/landing.png') }}" alt="" class="img-content">
             </div>
         </div>
           <div class="bootcamp-container">
@@ -84,7 +78,7 @@
                             <p class="card-title"></p>
                             <p class="card-level"></p>
                             <div class="date-container">
-                                <img src="../asset/image/date.png" alt="Date Icon">
+                                <img src="{{ asset('image/date.png') }}" alt="Date Icon">
                                 <p class="date-card"></p>
                             </div>
                         </div>
@@ -97,7 +91,7 @@
     <footer id="footer">
         <div class="container-content-footer">
             <div class="container-logo">
-                <img src="../asset/image/Group.png" alt="">
+                <img src="{{ asset('image/Group.png') }}" alt="">
             </div>
             <div class="container-footer">
                 <h1>StudyIT</h1>
@@ -149,14 +143,14 @@
                 <a href="#home">
                     <p>Back to Top</p>
                 </a>
-                <img src="../asset/image/arrowup.png" alt="">
+                <img src="{{ asset('image/arrowup.png') }}" alt="">
             </div>
         </div>
         </div>
     </footer>
 
 
-    <script src="../js/homePage.js"></script>
+    <script src="{{ asset('js/homePage.js') }}"></script>
 </body>
 
 </html>
