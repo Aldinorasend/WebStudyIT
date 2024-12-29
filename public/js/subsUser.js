@@ -67,14 +67,18 @@
     
     
       if (card) {
+        const path = window.location.pathname;
         const courseId = card.getAttribute('data-id'); 
-    
+        const akunId = path.split('/').pop();
+        console.log(akunId)
         if (courseId) {
           // Log untuk debugging
           console.log('Card clicked:', card); 
           console.log('Course ID:', courseId); 
     
-          const targetUrl = `/students/courses?id=${courseId}`;
+          const targetUrl = `/students/${akunId}/courses/${courseId}/modul`;
+
+
           console.log('Redirecting to:', targetUrl); 
           window.location.href = targetUrl;
         } else {
