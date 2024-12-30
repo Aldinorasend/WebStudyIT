@@ -14,8 +14,8 @@ Route::post('/upload', [FileUploadController::class, 'store']);
 Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
-Route::get('/students',[RegularUserController::class, 'indexUser']);
-Route::get('/payment',[RegularUserController::class, 'enroll']);
+Route::get('/students/{akun_id}',[RegularUserController::class, 'indexUser']);
+Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll']);
 
 
 
@@ -51,4 +51,4 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
 Route::post('/register', [AuthController::class, 'register']);
 
-
+Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);

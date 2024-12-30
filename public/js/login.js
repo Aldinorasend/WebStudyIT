@@ -64,10 +64,11 @@ async function submitLogin() {
             }
 
             // Redirect berdasarkan user_type
+            const idAkun = data.id;
             if (data.User_Type === 'Admin') {
-                window.location.href = `/admin/dashboard/${data.id}`;
+                window.location.href = `/admin/dashboard/${idAkun}`;
             } else if (data.User_Type === 'Free' || data.User_Type === 'Subscriber') {
-                window.location.href = `/students?id=${data.id}`;
+                window.location.href = `/students/${idAkun}`;
             } else {
                 console.log('User type is not recognized.');
             }
