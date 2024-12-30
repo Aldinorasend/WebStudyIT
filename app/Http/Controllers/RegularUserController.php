@@ -5,22 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RegularUser;
 use App\Models\Account;
+use App\Models\Modul;
+use App\Models\Course;
 
 class RegularUserController extends Controller
 {
     //
-    public function indexUser(Request $request)
+    public function indexUser($akun_id)
     {
-        // Ambil ID dari query string
-        $id = $request->query('id');
-    
-        // Validasi ID
-        if (!$id) {
-            return abort(400, 'ID is required');
-        }
-    
-        // Cari data student
-        $student = Account::find($id);
+        // Ambil ID dari account 
+       
+        $student = Account::find($akun_id);
         
         // Jika data tidak ditemukan, tampilkan pesan
         if (!$student) {
@@ -42,10 +37,39 @@ class RegularUserController extends Controller
         //
         return view('index');
     }
-    public function indexLoggedIn()
-    {
-        //
-        return view('user.subs');
-    }
 
+    public function readModul($akun_id, $course_id)
+    {
+        // Ambil data berdasarkan route model binding
+        $akun = Account::find($akun_id); // Asumsi kamu memiliki model Akun
+        $course = Course::find($course_id); // Asumsi kamu memiliki model Course
+    
+        // Validasi apakah akun dan course ditemukan
+        if (!$akun || !$course) {
+            abort(404, 'Akun or Course not found');
+        }
+    
+        // Cari data modul berdasarkan course_id
+        $modul = Modul::where('CourseID', $course_id)->first();
+    
+        // Validasi modul
+        if (!$modul) {
+            abort(404, 'Modul not found');
+        }
+    
+        return view('modul.index', [
+            'akun_id' => $akun_id,
+            'courses' => $modul,
+        ]);
+    }
+    
+
+    public function enroll($akun_id)
+    {
+        $akun = Account::find($akun_id);
+        if (!$akun) {
+            abort(404, 'Akun  not found');
+        } //
+        return view('payment.index',['akun_id' => $akun_id]);
+    }
 }

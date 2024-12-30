@@ -42,7 +42,7 @@
                                 <button class="dropdown-toggle"> {{ $students->username }}</button>
                                 <div class="dropdown-content">
                                     <a href="editprofile.html">Edit Profile</a>
-                                    <a href="../index.html">Logout</a>
+                                    <a href="/">Logout</a>
                                 </div>
                                </div>
                             </li>
@@ -149,7 +149,7 @@
     </footer>
 
 
-    <script src="{{ asset('js/homePage.js') }}"></script>
+    <script src="{{ asset('js/subsUser.js') }}"></script>
 </body>
 
 </html>

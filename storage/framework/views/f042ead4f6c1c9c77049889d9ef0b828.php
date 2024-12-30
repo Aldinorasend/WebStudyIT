@@ -6,20 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyIT | Find your way in a Good Way</title>
-    <link rel="stylesheet" href="{{ asset('css/styleindex2user.css') }}">
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
     
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="<?php echo e(asset('css/styleindexuser.css')); ?>">
+    
+
 </head>
 
 <body>
     <!-- Navbar  -->
-    <header>
-        <div class="navbar" id="home">
+    <header id="home">
+        <div class="navbar">
             <div class="container-fluid">
                 <div class="nav-brand">
-                    <img src="{{ asset('image/logo.png') }}" alt="Logo">
+                    <img src="<?php echo e(asset('image/logo.png')); ?>" alt="Logo">
                     <h1>StudyIT</h1>
                 </div>
                 <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -35,22 +37,27 @@
                                 <a href="#bootcamp">Bootcamp</a>
                             </li>
                             <li>
-                                <a href="/page/contactus.html">Contact Us</a>
-                            </li>
-                            <li>
-                               <div class="dropdown">
-                                <button class="dropdown-toggle"> {{ $students->username }}</button>
-                                <div class="dropdown-content">
-                                    <a href="editprofile.html">Edit Profile</a>
-                                    <a href="/">Logout</a>
-                                </div>
-                               </div>
+                                <a href="#footer">Contact Us</a>
                             </li>
                         </ul>
+                    </div>
+                    <div class="nav-button">
+                        <li>
+                            <button class="btnLogin">
+                                <a href="/login">Login</a>
+                            </button>
+                        </li>
+                        <li>
+                            <button class="btnSignup">
+                                <a href="page/homePage.html">Sign Up </a>
+                            </button>
+                        </li>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </header>
 
     <!-- End Navbar Section -->
@@ -65,10 +72,47 @@
                 <input class="btn btn-primary btn-lg" id="cta" type="submit" value="Enroll" onclick="navigatePayment()">
             </div>
             <div class="content-image">
-                <img src="{{ asset('image/landing.png') }}" alt="" class="img-content">
+                <img src="<?php echo e(asset('image/landing.png')); ?>" alt="" class="img-content">
             </div>
         </div>
-          <div class="bootcamp-container">
+        <div class="benefits-container">
+            <div class="title-benefits">
+                <h1>Program Highlight</h1>
+            </div>
+            <div class="content-benefits">
+                <ol>
+                    <li><span>Updated Curriculum:</span> Learn the latest in-demand technology skills in the industry
+                    </li>
+                    <li><span>Experienced Mentors:</span> Get direct guidance from seasoned developers with extensive
+                        experience</li>
+                    <li><span>Hands-On Focus:</span> Not just theory! Every module includes real-world projects to
+                        sharpen your skills.</li>
+                    <li><span>Flexible Learning Schedule:</span> Designed for everyone—from students to working
+                        professionals.</li>
+                </ol>
+            </div>
+        </div>
+
+        </div>
+        <div class="testimoni-container">
+            <div class="content-testimoni">
+                <p>“This bootcamp transformed my career! From having zero tech background, I’m now working as a Junior
+                    Developer at a reputable company.”</p>
+                <span>
+                    <p>- Sinta, Class of 2023</p>
+                </span>
+                <p>"The program is clear, mentors are always ready to help, and the curriculum is spot-on. I highly
+                    recommend this bootcamp!"</p>
+                <p>- Dimas, Class of 2022</p>
+            </div>
+            <div class="title-testimoni">
+                <h1>Student Testimonials</h1>
+            </div>
+
+        </div>
+
+        <!-- Bootcamp Template Card -->
+        <div class="bootcamp-container">
             <h1 class="bootcamp" id="bootcamp">Courses</h1>
             <div class="row">
                 <div class="container" id="course-container">
@@ -76,9 +120,8 @@
                         <img src="" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-title"></p>
-                            <p class="card-level"></p>
                             <div class="date-container">
-                                <img src="{{ asset('image/date.png') }}" alt="Date Icon">
+                                <img src="<?php echo e(asset('image/date.png')); ?>" alt="Date Icon">
                                 <p class="date-card"></p>
                             </div>
                         </div>
@@ -86,12 +129,17 @@
                 </div>
             </div>
         </div>
+        <!-- End CTA Section -->
+
+
+
     </main>
-    <!-- End Bootcamp Section -->
+
+
     <footer id="footer">
         <div class="container-content-footer">
             <div class="container-logo">
-                <img src="{{ asset('image/Group.png') }}" alt="">
+                <img src="<?php echo e(asset('image/Group.png')); ?>" alt="">
             </div>
             <div class="container-footer">
                 <h1>StudyIT</h1>
@@ -110,7 +158,7 @@
                         <h2>Support</h2>
                         <div class="content-support">
                             <ul>
-                                <li><a href="..//page/contactus.html">Contact</a></li>
+                                <li><a href="/page/contactus.html">Contact</a></li>
                                 <li>FAQ's</li>
                                 <li>Subscription</li>
                             </ul>
@@ -143,14 +191,13 @@
                 <a href="#home">
                     <p>Back to Top</p>
                 </a>
-                <img src="{{ asset('image/arrowup.png') }}" alt="">
+                <img src="<?php echo e(asset('image/arrowup.png')); ?>" alt="">
             </div>
         </div>
         </div>
     </footer>
-
-
-    <script src="{{ asset('js/freeUser.js') }}"></script>
+    <script src="<?php echo e(asset('js/homePage.js')); ?>"></script>
 </body>
 
 </html>
+<?php /**PATH C:\Users\alienware\Documents\WebPro\TUBESSS\WebStudyIT\resources\views/index.blade.php ENDPATH**/ ?>

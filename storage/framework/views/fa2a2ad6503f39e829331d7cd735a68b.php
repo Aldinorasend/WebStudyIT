@@ -39,4 +39,4 @@
 </body>
 
 </html>
-<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/Auth/login.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Users\alienware\Documents\WebPro\TUBESSS\WebStudyIT\resources\views/Auth/login.blade.php ENDPATH**/ ?>

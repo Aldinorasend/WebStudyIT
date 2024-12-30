@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StudyIT | Find your way in a Good Way</title>
-    <link rel="stylesheet" href="{{ asset('css/styleindex2user.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/styleindex2user.css')); ?>">
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
     
@@ -19,7 +19,7 @@
         <div class="navbar" id="home">
             <div class="container-fluid">
                 <div class="nav-brand">
-                    <img src="{{ asset('image/logo.png') }}" alt="Logo">
+                    <img src="<?php echo e(asset('image/logo.png')); ?>" alt="Logo">
                     <h1>StudyIT</h1>
                 </div>
                 <button class="hamburger" onclick="toggleMenu()">☰</button>
@@ -39,7 +39,7 @@
                             </li>
                             <li>
                                <div class="dropdown">
-                                <button class="dropdown-toggle"> {{ $students->username }}</button>
+                                <button class="dropdown-toggle"> <?php echo e($students->username); ?></button>
                                 <div class="dropdown-content">
                                     <a href="editprofile.html">Edit Profile</a>
                                     <a href="/">Logout</a>
@@ -62,10 +62,9 @@
                 <h1>Join The Next Generation Of</h1>
                 <h1><span>Tech Innovators</span></h1>
                 <h2>Learn the skills you need to succeed in the it industry in just 12 weeks</h2>
-                <input class="btn btn-primary btn-lg" id="cta" type="submit" value="Enroll" onclick="navigatePayment()">
             </div>
             <div class="content-image">
-                <img src="{{ asset('image/landing.png') }}" alt="" class="img-content">
+                <img src="<?php echo e(asset('image/landing.png')); ?>" alt="" class="img-content">
             </div>
         </div>
           <div class="bootcamp-container">
@@ -78,7 +77,7 @@
                             <p class="card-title"></p>
                             <p class="card-level"></p>
                             <div class="date-container">
-                                <img src="{{ asset('image/date.png') }}" alt="Date Icon">
+                                <img src="<?php echo e(asset('image/date.png')); ?>" alt="Date Icon">
                                 <p class="date-card"></p>
                             </div>
                         </div>
@@ -91,7 +90,7 @@
     <footer id="footer">
         <div class="container-content-footer">
             <div class="container-logo">
-                <img src="{{ asset('image/Group.png') }}" alt="">
+                <img src="<?php echo e(asset('image/Group.png')); ?>" alt="">
             </div>
             <div class="container-footer">
                 <h1>StudyIT</h1>
@@ -143,14 +142,15 @@
                 <a href="#home">
                     <p>Back to Top</p>
                 </a>
-                <img src="{{ asset('image/arrowup.png') }}" alt="">
+                <img src="<?php echo e(asset('image/arrowup.png')); ?>" alt="">
             </div>
         </div>
         </div>
     </footer>
 
 
-    <script src="{{ asset('js/freeUser.js') }}"></script>
+    <script src="<?php echo e(asset('js/subsUser.js')); ?>"></script>
 </body>
 
 </html>
+<?php /**PATH C:\Users\alienware\Documents\WebPro\TUBESSS\WebStudyIT\resources\views/user/subs.blade.php ENDPATH**/ ?>

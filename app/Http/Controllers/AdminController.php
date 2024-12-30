@@ -36,11 +36,11 @@ class AdminController extends Controller
         return view('course.index', compact('courses'));
     }
 
-    public function indexDashboard(Account $account)
-    {
-        //
-        return view('Admin.index');
-    }
+    // public function indexDashboard(Account $account)
+    // {
+    //     //
+    //     return view('Admin.index');
+    // }
 
     /**
      * Show the form for creating a new resource.
