@@ -3,15 +3,16 @@ const apiForgotPassUrl = 'http://localhost:3000/api/Accounts/request-reset';
 
 // Mengambil form dan input email
 const form = document.getElementById('forgot-password-form');
-const emailInput = document.getElementById('email').value;
+
 
 // Mengirimkan permintaan untuk reset password
 form.addEventListener('submit', async (e) => {
     e.preventDefault(); // Mencegah form agar tidak submit secara default
 
-    const email = emailInput;
-    if (!email) {
-        alert("Please enter a valid email.");
+    const email = document.getElementById('email').value;
+
+    if (!email.includes('@') || !email.includes('.')) {
+        alert("Invalid email address.");
         return;
     }
 
@@ -28,7 +29,7 @@ form.addEventListener('submit', async (e) => {
         if (response.ok) {
             alert('Reset email sent! Please check your inbox.');
             // Redirect user to login page or any other page
-            window.location.href = 'login.html';
+            window.location.href = '/login';
         } else {
             alert('Error: ' + result.error || 'An error occurred.');
         }
