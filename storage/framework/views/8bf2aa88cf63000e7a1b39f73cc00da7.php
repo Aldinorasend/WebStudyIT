@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Your Password</title>
-    <link rel="stylesheet" href="{{ asset('css/styleforgotpass.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/styleforgotpass.css')); ?>">
 </head>
 
 <body>
@@ -23,8 +23,8 @@
                     </div>
                 </div>
             </form>
-            <script src="{{ asset('js/forgotPass.js') }}"></script>
+            <script src="<?php echo e(asset('js/forgotPass.js')); ?>"></script>
     </div>
 </body>
 
-</html>
+</html><?php /**PATH C:\Users\harit\OneDrive\Documents\GitHub\WebStudyIT\resources\views/Auth/forgotPass.blade.php ENDPATH**/ ?>

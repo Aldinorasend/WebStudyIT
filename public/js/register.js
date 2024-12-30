@@ -24,10 +24,6 @@ async function submitRegister() {
         return;
     }
 
-    if (value.startsWith('@') || value.endsWith('@') || value.endsWith('.')) {
-        return 'Enter a valid email address.';
-    }
-
     // Validasi password dan konfirmasi password
     if (password !== confirmPassword) {
         alert('Passwords do not match!');

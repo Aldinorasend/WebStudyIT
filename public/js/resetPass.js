@@ -5,9 +5,20 @@ document.getElementById('reset-password-form').addEventListener('submit', async 
     const password = document.getElementById('password').value;
     const confPassword = document.getElementById('confPassword').value;
 
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     // Validasi: pastikan password dan konfirmasi cocok
+    if (!password || !confPassword){
+        alert('Please fill in all fields.');
+        return;
+    }
+    
     if (password !== confPassword) {
         alert('Passwords do not match!');
+        return;
+    }
+
+    if (!passwordPattern.test(password) && !passwordPattern.test(confPassword)){
+        alert("Password must be at least 8 characters long and contain letters, numbers, and special characters.");
         return;
     }
 
