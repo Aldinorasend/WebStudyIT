@@ -46,9 +46,9 @@ Route::get('/instructors/{id}/edit', [AdminController::class, 'edit']);
 Route::put('/instructors/{id}', [AdminController::class, 'update']);
 Route::delete('/instructors/{id}', [AdminController::class, 'destroy']); 
 
-Route::get('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register']);
-
+Route::get('/login', [AuthController::class, 'login']);
+Route::get('/register', [AuthController::class, 'register']);
+Route::get('/forgot-password', [AuthController::class, 'forgotPass']);
+Route::get('/reset-password', [AuthController::class, 'resetPass']);
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
+

@@ -12,9 +12,30 @@ async function submitRegister() {
     const password = document.getElementById('newPass').value;
     const confirmPassword = document.getElementById('confNewPass').value;
 
+    const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!username || !firstname || !lastname || !phone || !email || !password || !confirmPassword){
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    if (!email.includes('@') || !email.includes('.')){
+        alert("Invalid email address.");
+        return;
+    }
+
+    if (value.startsWith('@') || value.endsWith('@') || value.endsWith('.')) {
+        return 'Enter a valid email address.';
+    }
+
     // Validasi password dan konfirmasi password
     if (password !== confirmPassword) {
         alert('Passwords do not match!');
+        return;
+    }
+
+    if (!passwordPattern.test(password) && !passwordPattern.test(confirmPassword)){
+        alert("Password must be at least 8 characters long and contain letters, numbers, and special characters.");
         return;
     }
 

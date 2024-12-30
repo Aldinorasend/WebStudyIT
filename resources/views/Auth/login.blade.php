@@ -28,7 +28,7 @@
                 <input type="checkbox" id="checkbox" name="remember">
                 <label for="checkbox">Remember Me</label>
 
-                <a href="/page/resetPass.html">Forgot Password?</a>
+                <a href="/forgotPass">Forgot Password?</a>
             </div>
             <div class="button-container">
                 <button type="button" class="login-button" onclick="submitLogin()" data-id="">Login</button>
