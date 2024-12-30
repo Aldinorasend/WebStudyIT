@@ -47,3 +47,5 @@ Route::delete('/instructors/{id}', [AdminController::class, 'destroy']);
 
 Route::get('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'register']);
+Route::get('/forgot-password', [AuthController::class, 'forgotPass']);
+Route::get('/reset-password', [AuthController::class, 'resetPass']);
