@@ -3,7 +3,6 @@
 <?php $__env->startSection('content'); ?>
 <div class="container mt-4">
     <h1 class="mb-4 text-center">Tasks List</h1>
-    <a href="/admin/tasks/create" class="btn btn-success mb-3">Add New Task</a>
     <table class="table table-striped">
         <thead class="table-dark text-center">
             <tr>

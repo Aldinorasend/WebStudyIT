@@ -17,9 +17,4 @@ class modul extends Model
         'task',
         'assetto',
     ];
-
-    public function instructor()
-    {
-       return $this->belongsTo(Instructor::class);
-    }
 }
