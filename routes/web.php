@@ -38,7 +38,13 @@ Route::get('admin/instructors/{id}/edit', [AdminController::class, 'edit']);
 Route::put('admin/instructors/{id}', [AdminController::class, 'update']);
 Route::delete('admin/instructors/{id}', [AdminController::class, 'destroy']); 
 
-
+// Kelola Modul
+Route::get('/admin/tasks', [AdminController::class, 'indexTask']);
+// Route::get('admin/instructors/create', [AdminController::class, 'create']);
+Route::post('admin/tasks', [AdminController::class, 'store']);
+Route::get('/admin/tasks/{id}/edit', [AdminController::class, 'editTask']);
+Route::put('admin/tasks/{id}', [AdminController::class, 'update']);
+Route::delete('admin/tasks/{id}', [AdminController::class, 'destroy']); 
 
 Route::get('/instructors/create', [AdminController::class, 'create']);
 Route::post('/instructors', [AdminController::class, 'store']);

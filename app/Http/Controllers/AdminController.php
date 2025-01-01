@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Instructor;
 use App\Models\Account;
 use App\Models\Course;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -35,6 +36,18 @@ class AdminController extends Controller
         } // Mengambil data kursus beserta instruktur
         return view('course.index', compact('courses'));
     }
+
+    // public function indexTask()
+    // {
+    //     //
+    //     $tasks = Task::with('instructor')->get();
+    //     foreach ($tasks as $task) {
+    //         if ($task->image) {
+    //             $task->image_url = asset('backend-uploads/' . $task->image);
+    //         }
+    //     } // Mengambil data kursus beserta instruktur
+    //     return view('modul.index', compact('tasks'));
+    // }
 
     // public function indexDashboard(Account $account)
     // {
@@ -72,6 +85,13 @@ class AdminController extends Controller
         Course::create($validated);
         return redirect('/admin/courses')->with('success', 'Course added successfully.');
     }
+
+    // public function storeTask(Request $request)
+    // {
+    //     // Simpan data ke database
+    //     Task::create($validated);
+    //     return redirect('/admin/tasks')->with('success', 'Task added successfully.');
+    // }
     /**
      * Display the specified resource.
      */
@@ -98,6 +118,12 @@ class AdminController extends Controller
         //
         return view('course.edit', compact('course'));
     }
+
+    // public function editTask(Task $task)
+    // {
+    //     //
+    //     return view('modul.edit', compact('task'));
+    // }
     public function updateInstructor(Request $request, Instructor $instructor)
     {
         //
@@ -113,6 +139,14 @@ class AdminController extends Controller
         $course->update($request->all());
         return redirect('/admin/courses')->with('success', 'Courses updated successfully.');
     }
+
+    // public function updateTask(Request $request, Task $task)
+    // {
+    //     //
+    //     $task = Task::findOrFail($id);
+    //     $task->update($request->all());
+    //     return redirect('/admin/tasks')->with('success', 'Task updated successfully.');
+    // }
     /**
      * Remove the specified resource from storage.
      */
@@ -131,6 +165,15 @@ class AdminController extends Controller
         $course->delete();
         return redirect('/admin/courses')->with('success', 'Course deleted successfully.');
     }
+
+    // public function destroyTask(Task $task)
+    // {
+    //     //
+    //     $course = Task::findOrFail($id);
+    //     $course->delete();
+    //     return redirect('/admin/tasks')->with('success', 'Task deleted successfully.');
+    // }
+
 
     /**
      * Update the specified resource in storage.
