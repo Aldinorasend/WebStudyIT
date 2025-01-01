@@ -13,12 +13,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function indexDashboard()
-    {
-        //
-       
-        return view('Admin.index');
-    }
+ 
     public function indexInstructor()
     {
         //
@@ -37,10 +32,16 @@ class AdminController extends Controller
         return view('course.index', compact('courses'));
     }
 
-    public function indexDashboard(Account $account)
+    public function indexTask()
     {
         //
-        return view('Admin.index');
+        $tasks = Task::with('instructor')->get();
+        foreach ($tasks as $task) {
+            if ($task->image) {
+                $task->image_url = asset('backend-uploads/' . $task->image);
+            }
+        } // Mengambil data kursus beserta instruktur
+        return view('modul.index', compact('tasks'));
     }
 
     /**

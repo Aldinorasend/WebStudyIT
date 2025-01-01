@@ -57,7 +57,7 @@
         </div>
 
         <!-- Form submission -->
-        <form class="contact-form" action="<?php echo e(route('ContactUs.store')); ?>" method="POST">
+        <form class="contact-form" action="<?php echo e(route('contact_us.store')); ?>" method="POST">
             <?php echo csrf_field(); ?>
             <input type="text" name="First_name" placeholder="First Name" required>
             <input type="text" name="Last_name" placeholder="Last Name" required>
