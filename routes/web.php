@@ -14,8 +14,13 @@ Route::post('/upload', [FileUploadController::class, 'store']);
 Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
+<<<<<<< HEAD
+Route::get('/students',[RegularUserController::class, 'indexUser']);
+Route::get('/students/{id}/payment',[RegularUserController::class, 'enroll']);
+=======
 Route::get('/students/{akun_id}',[RegularUserController::class, 'indexUser']);
 Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll']);
+>>>>>>> f945bcd8b2afee7ee0135eb36ba138982cca8f31
 
 
 

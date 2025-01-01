@@ -15,17 +15,15 @@
                 <div class="payment-logos">
                     <input type="radio" id="visa" name="paymentMethod" value="visa" required>
                     <label for="visa">
-                        <img src="/asset/image/visa-logo-svgrepo-com.svg" alt="Visa" class="payment-logo">
+                        <img src="<?php echo e(asset('image/visa-logo-svgrepo-com.svg')); ?>" alt="Visa" class="payment-logo">
                     </label>
-    
                     <input type="radio" id="mastercard" name="paymentMethod" value="mastercard" required>
                     <label for="mastercard">
-                        <img src="/asset/image/mastercard-svgrepo-com.svg" alt="Mastercard" class="payment-logo">
+                        <img src="<?php echo e(asset('image/mastercard-svgrepo-com.svg')); ?>" alt="Mastercard" class="payment-logo">
                     </label>
-    
                     <input type="radio" id="amex" name="paymentMethod" value="amex" required>
                     <label for="amex">
-                        <img src="/asset/image/american-express-svgrepo-com.svg" alt="American Express" class="payment-logo">
+                        <img src="<?php echo e(asset('image/american-express-svgrepo-com.svg')); ?>" alt="American Express" class="payment-logo">
                     </label>
                 </div>
             </div>
@@ -63,6 +61,7 @@
             <button type="submit">Continue</button>
         </form>
     </div>
-    <script src="/js/payment.js"></script>
+    <script src="<?php echo e(asset('js/payment.js')); ?>"></script>
 </body>
-</html><?php /**PATH C:\Telkom University\Semester 5\Perancangan dan Pemrograman Web\Tubes\WebStudyIT\resources\views/payment/index.blade.php ENDPATH**/ ?>
+</html>
+<?php /**PATH C:\Telkom University\Semester 5\Perancangan dan Pemrograman Web\Tubes\WebStudyIT\resources\views/payment/index.blade.php ENDPATH**/ ?>
