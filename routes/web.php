@@ -15,7 +15,7 @@ Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
 Route::get('/students',[RegularUserController::class, 'indexUser']);
-Route::get('/payment',[RegularUserController::class, 'enroll']);
+Route::get('/students/{id}/payment',[RegularUserController::class, 'enroll']);
 
 
 
