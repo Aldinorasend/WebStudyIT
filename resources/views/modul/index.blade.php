@@ -66,13 +66,13 @@
                 ${task.FileTask ? `<a href="${baseUrl}${task.FileTask}" target="_blank" class="btn btn-sm btn-info">View File</a>` : 'No File'}
             </td>
             <td>
-                <span class="badge ${task.Status === 'Pending' ? 'bg-success' : 'bg-secondary'}">
+                <span class="badge ${task.Status === 'Pending' ? 'bg-secondary' : 'bg-success'}">
                     ${task.Status}
                 </span>
             </td>
             <td>
                 <a href="/admin/tasks/${task.id}/edit" class="btn btn-sm btn-warning">Edit</a>
-                <button class="btn btn-sm btn-danger" onclick="deleteCourse(${task.id})">Delete</button>
+                <button class="btn btn-sm btn-danger" onclick="deleteTask(${task.id})">Delete</button>
             </td>
         </tr>`;
 });
