@@ -22,6 +22,7 @@ Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserControll
 
 
 // INSTRUCTOR DATA
+Route::get('admin/', [AdminController::class, 'indexDashboard']);
 Route::get('admin/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('admin/instructors/create', [AdminController::class, 'createInstructor']);
 Route::post('admin/instructors', [AdminController::class, 'storeInstructor']);
