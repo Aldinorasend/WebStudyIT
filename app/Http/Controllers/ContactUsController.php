@@ -3,65 +3,56 @@
 namespace App\Http\Controllers;
 
 use App\Models\contactUs;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ContactUsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    // Menampilkan halaman kontak
     public function index()
     {
-        //
-        
+        $contacts = ContactUs::all();
+        return view('students.contact_us', compact('contacts'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Menyimpan pesan kontak
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'First_name' => 'required|string|max:255',
+            'Last_name' => 'required|string|max:255',
+            'Email' => 'required|email',
+            'Phone_number' => 'nullable|string|max:15',
+            'Message' => 'required|string',
+        ]);
+
+        ContactUs::create($validated);
+
+        return redirect()->back()->with('success', 'Message sent successfully!');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(contactUs $contactUs)
+    // Menampilkan detail pesan kontak
+    public function show($id)
     {
-        //
+        $contact = ContactUs::find($id);
+
+        if (!$contact) {
+            return redirect()->back()->with('error', 'Message not found.');
+        }
+
+        return view('students.contact_us_detail', compact('contact'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(contactUs $contactUs)
+    // Menghapus pesan kontak
+    public function destroy($id)
     {
-        //
-    }
+        $contact = ContactUs::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, contactUs $contactUs)
-    {
-        //
-    }
+        if (!$contact) {
+            return redirect()->back()->with('error', 'Message not found.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(contactUs $contactUs)
-    {
-        //
+        $contact->delete();
+
+        return redirect()->route('contact_us.index')->with('success', 'Message deleted successfully.');
     }
 }
