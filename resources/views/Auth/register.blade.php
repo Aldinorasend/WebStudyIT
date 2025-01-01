@@ -11,7 +11,7 @@
         <h1>Create Your StudyIT Account</h1>
         <div class="signin-prompt">
             <h3>Already have a StudyIT Account?</h3>
-            <a href="/page/login.html">Sign in</a>
+            <a href="/login">Sign in</a>
         </div>
         <form action="">
             <div class="register-forms">
@@ -32,6 +32,10 @@
                     <input type="email" id="email" required>
                 </div>
                 <div>
+                    <label for="phone">Phone Number</label>
+                    <input type="text" id="phone" required>
+                </div>
+                <div>
                     <label for="newPass">Password</label>
                     <input type="password" id="newPass" maxlength="20" required>
                 </div>
@@ -46,6 +50,6 @@
             </div>
         </form>
     </div>
-    <script src="/js/register.js"></script>
+    <script src="{{ asset('js/register.js') }}"></script>
 </body>
 </html>

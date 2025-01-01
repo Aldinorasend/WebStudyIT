@@ -6,13 +6,22 @@ use App\Http\Controllers\RegularUserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ContactUsController;
-
-Route::post('/upload', [FileUploadController::class, 'store']);
 use App\Http\Controllers\AuthController;
 
 
-Route::get('/',[RegularUserController::class, 'indexUser']);
+Route::post('/upload', [FileUploadController::class, 'store']);
+
+
+
+Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/admin/instructors', [AdminController::class, 'indexInstructor']);
+Route::get('/admin/dashboard/{id}', [AdminController::class, 'indexDashboard']);
+Route::get('/students/{akun_id}',[RegularUserController::class, 'indexUser']);
+Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll']);
+
+
+
+Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
 Route::get('/admin/dashboard', [AdminController::class, 'indexDashboard']);
 
 // Kelola Course
@@ -31,7 +40,13 @@ Route::get('admin/instructors/{id}/edit', [AdminController::class, 'edit']);
 Route::put('admin/instructors/{id}', [AdminController::class, 'update']);
 Route::delete('admin/instructors/{id}', [AdminController::class, 'destroy']); 
 
-
+// Kelola Modul
+Route::get('/admin/tasks', [AdminController::class, 'indexTask']);
+// Route::get('admin/instructors/create', [AdminController::class, 'create']);
+Route::post('admin/tasks', [AdminController::class, 'store']);
+Route::get('/admin/tasks/{id}/edit', [AdminController::class, 'editTask']);
+Route::put('admin/tasks/{id}', [AdminController::class, 'update']);
+Route::delete('admin/tasks/{id}', [AdminController::class, 'destroy']); 
 
 Route::get('/instructors/create', [AdminController::class, 'create']);
 Route::post('/instructors', [AdminController::class, 'store']);
@@ -42,7 +57,15 @@ Route::delete('/instructors/{id}', [AdminController::class, 'destroy']);
 Route::get('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'register']);
 
+
 Route::get('contact-us/', [ContactUsController::class, 'index'])->name('contact_us.index');
 Route::post('contact-us/store', [ContactUsController::class, 'store'])->name('contact_us.store');
 Route::get('contact-us/{id}', [ContactUsController::class, 'show'])->name('contact_us.show');
 Route::delete('contact-us/{id}', [ContactUsController::class, 'destroy'])->name('contact_us.destroy');
+
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
+Route::get('/reset-password', [AuthController::class, 'resetPassword']);
+
+Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
+
+

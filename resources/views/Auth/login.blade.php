@@ -16,8 +16,8 @@
         <form id="loginForm">
             <div class="forms">
                 <div>
-                    <label for="email">Email</label>
-                    <input type="email" id="email" required>
+                    <label for="loginInput ">Email or Username</label>
+                    <input type="text" id="loginInput" required>
                 </div>
                 <div class="password-container">
                     <label for="password">Password</label>
@@ -25,17 +25,17 @@
                 </div>
             </div>
             <div class="options">
-                <input type="checkbox" id="checkbox">
+                <input type="checkbox" id="checkbox" name="remember">
                 <label for="checkbox">Remember Me</label>
 
-                <a href="/page/resetPass.html">Forgot Password?</a>
+                <a href="/forgot-password">Forgot Password?</a>
             </div>
             <div class="button-container">
-                <button type="button" class="login-button" onclick="submitLogin()">Login</button>
+                <button type="button" class="login-button" onclick="submitLogin()" data-id="">Login</button>
             </div>
         </form>
     </div>
-    <script src="/js/login.js"></script>
+    <script src="{{ asset('js/login.js') }}"></script>
 </body>
 
 </html>

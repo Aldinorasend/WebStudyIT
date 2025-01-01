@@ -49,7 +49,7 @@
                         </li>
                         <li>
                             <button class="btnSignup">
-                                <a href="page/homePage.html">Sign Up </a>
+                                <a href="/register">Sign Up </a>
                             </button>
                         </li>
                     </div>
@@ -115,11 +115,12 @@
         <div class="bootcamp-container">
             <h1 class="bootcamp" id="bootcamp">Courses</h1>
             <div class="row">
-                <div class="container" id="course-container">
-                    <div class="card" id="course-template" style="width: 18rem; display: none;">
-                        <img src="" class="card-img-top" alt="">
+                <div class="container" id="course-container" >
+                    <div class="card" id="course-template" style="width: 18rem; display: none;" data-id="">
+                        <img src="" class="card-img-top" id="cover" alt="">
                         <div class="card-body">
                             <p class="card-title"></p>
+                            <!-- <p class="card-level">Level : </p> -->
                             <div class="date-container">
                                 <img src="{{ asset('image/date.png') }}" alt="Date Icon">
                                 <p class="date-card"></p>
@@ -196,7 +197,7 @@
         </div>
         </div>
     </footer>
-    <script src="{{ asset('js/indexuser.js') }}"></script>
+    <script src="{{ asset('js/landingPage.js') }}"></script>
 </body>
 
 </html>
