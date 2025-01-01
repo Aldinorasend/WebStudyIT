@@ -37,23 +37,11 @@ class AdminController extends Controller
         return view('course.index', compact('courses'));
     }
 
-    public function indexTask()
+    public function indexDashboard(Account $account)
     {
         //
-        $tasks = Task::with('instructor')->get();
-        foreach ($tasks as $task) {
-            if ($task->image) {
-                $task->image_url = asset('backend-uploads/' . $task->image);
-            }
-        } // Mengambil data kursus beserta instruktur
-        return view('modul.index', compact('tasks'));
+        return view('Admin.index');
     }
-
-    // public function indexDashboard(Account $account)
-    // {
-    //     //
-    //     return view('Admin.index');
-    // }
 
     /**
      * Show the form for creating a new resource.
