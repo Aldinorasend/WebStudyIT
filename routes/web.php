@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RegularUserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileUploadController;
+use App\Http\Controllers\ContactUsController;
 
 Route::post('/upload', [FileUploadController::class, 'store']);
 use App\Http\Controllers\AuthController;
@@ -40,3 +41,8 @@ Route::delete('/instructors/{id}', [AdminController::class, 'destroy']);
 
 Route::get('/login', [AuthController::class, 'login']);
 Route::get('/register', [AuthController::class, 'register']);
+
+Route::get('contact-us/', [ContactUsController::class, 'index'])->name('contact_us.index');
+Route::post('contact-us/store', [ContactUsController::class, 'store'])->name('contact_us.store');
+Route::get('contact-us/{id}', [ContactUsController::class, 'show'])->name('contact_us.show');
+Route::delete('contact-us/{id}', [ContactUsController::class, 'destroy'])->name('contact_us.destroy');
