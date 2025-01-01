@@ -49,7 +49,6 @@ class AdminController extends Controller
     public function createInstructor()
     {
         //
-
         return view('Instructor.create');
     }
     public function createCourse()
@@ -65,7 +64,7 @@ class AdminController extends Controller
     {
         //
         Instructor::create($request->all());
-        return redirect('/admin/instructor')->with('success', 'Instructor added successfully.');
+        return redirect('admin/{akun_id}/instructors')->with('success', 'Instructor addd successfully.');
     }
     public function storeCourse(Request $request)
     {
@@ -94,7 +93,7 @@ class AdminController extends Controller
     public function editInstructor(Instructor $instructor)
     {
         //
-        $instructor = Instructor::findOrFail($id);
+        
         return view('instructors.edit', compact('instructor'));
     }
 
@@ -104,7 +103,8 @@ class AdminController extends Controller
     public function editCourse(Course $course)
     {
         //
-        return view('course.edit', compact('course'));
+        $instructors = Instructor::all();
+        return view('course.edit', compact('instructors'));
     }
 
     public function editTask(Task $task)

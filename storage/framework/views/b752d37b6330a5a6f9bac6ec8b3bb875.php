@@ -4,7 +4,7 @@
 
 <div class="container mt-4">
         <h1 class="mb-4 text-center">Add New Instructor</h1>
-        <a href="/admin/instructors" class="btn btn-secondary mb-3">Back to List</a>
+        <a href="javascript:void(0);" onclick="goBack()" class="btn btn-secondary mb-3">Back to List</a>
         <form id="create-instructor-form">
             <div class="mb-3">
                 <label for="name" class="form-label">First Name</label>
@@ -27,9 +27,18 @@
     </div>
 
     <script>
-     const apiUrl = 'http://localhost:3000/api/instructors';
+    const apiUrl = 'http://localhost:3000/api/instructors';
+    path = window.location.pathname;
+         akunId = path.split('/').slice(-1)[0];
+    function goBack() {
+        if (window.history.length > 1) {
+            window.history.back(); // Kembali ke halaman sebelumnya
+        } else {
+            window.location.href = '/admin/dashboard'; // Jika tidak ada halaman sebelumnya, arahkan ke halaman utama
+        }
+    }
 
-document.getElementById('create-instructor-form').addEventListener('submit', function (e) {
+    document.getElementById('create-instructor-form').addEventListener('submit', function (e) {
     e.preventDefault();
 
     const firstname = document.getElementById('firstname').value;
@@ -43,7 +52,7 @@ document.getElementById('create-instructor-form').addEventListener('submit', fun
         body: JSON.stringify({ firstname, lastname, email,phone_number })
     }).then(() => {
         alert('Instructor added successfully');
-        window.location.href = '/instructors';
+        window.location.href = '/admin/instructors';
     });
 });
 </script>

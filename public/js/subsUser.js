@@ -1,6 +1,6 @@
 
     document.addEventListener('DOMContentLoaded', function () {
-        const apiUrl = 'http://localhost:3000/api/courses'; // Ganti dengan URL API Anda
+        const apiUrl = 'http://localhost:3000/api/coursesUser'; // Ganti dengan URL API Anda
         const baseUrl = 'http://localhost:8000/backend-uploads/';
         const courseContainer = document.getElementById('course-container');
         const courseTemplate = document.getElementById('course-template');

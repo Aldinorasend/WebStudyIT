@@ -1,7 +1,7 @@
 @extends ('layouts.admin')
 
-@section('title', 'Instructor Data')
+@section('title', 'Dashboard Instructor')
 
 @section('content')
-    <p>Testing Content Dashboard</p>
+    <h1>Selamat Datang, Instructor</h1>
 @endsection
