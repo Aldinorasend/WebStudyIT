@@ -14,6 +14,12 @@ class modul extends Model
         'CourseID',
         'title',
         'description',
-        'URL',
+        'task',
+        'assetto',
     ];
+
+    public function instructor()
+    {
+       return $this->belongsTo(Instructor::class);
+    }
 }

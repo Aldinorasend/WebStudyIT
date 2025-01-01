@@ -12,6 +12,13 @@ class task extends Model
     protected $table = 'tasks';
     protected $fillable = [
         'ModulID',
+        'UserID',
         'FileTask',
+        'Status',
     ];
+
+    public function instructor()
+    {
+       return $this->belongsTo(Instructor::class);
+    }
 }

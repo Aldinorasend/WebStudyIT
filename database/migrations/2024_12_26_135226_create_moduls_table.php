@@ -17,7 +17,9 @@ return new class extends Migration
             $table->foreign('CourseID')->references('id')->on('courses')->onDelete('cascade');
             $table->string('Title');
             $table->string('Description');
-            $table->string('URL');
+            $table->string('Assetto');
+            $table->string('YTEmbedLink');
+            $table->string('Task');
             $table->timestamps();
         });
     }
