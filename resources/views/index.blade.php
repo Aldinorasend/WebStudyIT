@@ -159,7 +159,7 @@
                         <h2>Support</h2>
                         <div class="content-support">
                             <ul>
-                                <li><a href="/page/contactus.html">Contact</a></li>
+                                <li><a href="/contactUs/create">Contact</a></li>
                                 <li>FAQ's</li>
                                 <li>Subscription</li>
                             </ul>

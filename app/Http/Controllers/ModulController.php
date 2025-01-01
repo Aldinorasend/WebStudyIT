@@ -20,18 +20,18 @@ class ModulController extends Controller
                 $modul->image_url = asset('backend-uploads/' . $modul->image);
             }
         } // Mengambil data kursus beserta instruktur
-        return view('modul.index', compact('moduls'));
+        return view('user.modul', compact('moduls'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-        $moduls = Modul::all();
-        return view('modul.create', compact('moduls'));
-    }
+    // public function create()
+    // {
+    //     //
+    //     $moduls = Modul::all();
+    //     return view('modul.create', compact('moduls'));
+    // }
     
     /**
      * Store a newly created resource in storage.

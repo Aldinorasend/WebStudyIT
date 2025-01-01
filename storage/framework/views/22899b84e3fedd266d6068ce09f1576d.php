@@ -16,8 +16,8 @@
         <form id="loginForm">
             <div class="forms">
                 <div>
-                    <label for="loginInput ">Email or Username</label>
-                    <input type="text" id="loginInput" required>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
                 </div>
                 <div class="password-container">
                     <label for="password">Password</label>
@@ -25,18 +25,18 @@
                 </div>
             </div>
             <div class="options">
-                <input type="checkbox" id="checkbox" name="remember">
+                <input type="checkbox" id="checkbox">
                 <label for="checkbox">Remember Me</label>
 
-                <a href="/forgot-password">Forgot Password?</a>
+                <a href="/page/resetPass.html">Forgot Password?</a>
             </div>
             <div class="button-container">
-                <button type="button" class="login-button" onclick="submitLogin()" data-id="">Login</button>
+                <button type="button" class="login-button" onclick="submitLogin()">Login</button>
             </div>
         </form>
     </div>
-    <script src="<?php echo e(asset('js/login.js')); ?>"></script>
+    <script src="/js/login.js"></script>
 </body>
 
 </html>
-<?php /**PATH C:\Users\alienware\Documents\WebPro\TUBESSS\WebStudyIT\resources\views/Auth/login.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\WEBPRO\WebStudyIT\resources\views/Auth/login.blade.php ENDPATH**/ ?>

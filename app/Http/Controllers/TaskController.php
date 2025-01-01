@@ -43,6 +43,7 @@ class TaskController extends Controller
         $validated = $request->validate([
             'FileTask' => 'required|file|mimes:jpg,png,pdf,doc,docx|max:2048',
             'course_id' => 'required|exists:courses,id',
+            'user_id' => 'required|exists:users,id',
         ]);
 
         // Simpan data ke database
@@ -97,5 +98,14 @@ class TaskController extends Controller
             abort(404, ' not found');
         } //
         return view('modul.index',['modul_id' => $modul_id]);
+    }
+
+    public function enrolll($user_id)
+    {
+        $user = Task::find($user_id);
+        if (!$user) {
+            abort(404, ' not found');
+        } //
+        return view('modul.index',['user_id' => $user_id]);
     }
 }

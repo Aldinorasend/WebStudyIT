@@ -49,7 +49,7 @@
                         </li>
                         <li>
                             <button class="btnSignup">
-                                <a href="/register">Sign Up </a>
+                                <a href="page/homePage.html">Sign Up </a>
                             </button>
                         </li>
                     </div>
@@ -69,7 +69,7 @@
                 <h1>Join The Next Generation Of</h1>
                 <h1><span>Tech Innovators</span></h1>
                 <h2>Learn the skills you need to succeed in the it industry in just 12 weeks</h2>
-                <input class="btn btn-primary btn-lg" id="cta" type="submit" value="Enroll" onclick="navigateLogin()">
+                <input class="btn btn-primary btn-lg" id="cta" type="submit" value="Enroll" onclick="navigatePayment()">
             </div>
             <div class="content-image">
                 <img src="<?php echo e(asset('image/landing.png')); ?>" alt="" class="img-content">
@@ -115,12 +115,11 @@
         <div class="bootcamp-container">
             <h1 class="bootcamp" id="bootcamp">Courses</h1>
             <div class="row">
-                <div class="container" id="course-container" >
-                    <div class="card" id="course-template" style="width: 18rem; display: none;" data-id="">
-                        <img src="" class="card-img-top" id="cover" alt="">
+                <div class="container" id="course-container">
+                    <div class="card" id="course-template" style="width: 18rem; display: none;">
+                        <img src="" class="card-img-top" alt="">
                         <div class="card-body">
                             <p class="card-title"></p>
-                            <!-- <p class="card-level">Level : </p> -->
                             <div class="date-container">
                                 <img src="<?php echo e(asset('image/date.png')); ?>" alt="Date Icon">
                                 <p class="date-card"></p>
@@ -159,7 +158,7 @@
                         <h2>Support</h2>
                         <div class="content-support">
                             <ul>
-                                <li><a href="/contactUs/create">Contact</a></li>
+                                <li><a href="/page/contactus.html">Contact</a></li>
                                 <li>FAQ's</li>
                                 <li>Subscription</li>
                             </ul>
@@ -197,8 +196,8 @@
         </div>
         </div>
     </footer>
-    <script src="<?php echo e(asset('js/landingPage.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/indexuser.js')); ?>"></script>
 </body>
 
 </html>
-<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/index.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\WEBPRO\WebStudyIT\resources\views/index.blade.php ENDPATH**/ ?>

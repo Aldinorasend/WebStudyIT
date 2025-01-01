@@ -57,7 +57,7 @@ class RegularUserController extends Controller
             abort(404, 'Modul not found');
         }
     
-        return view('modul.index', [
+        return view('user.modul', [
             'akun_id' => $akun_id,
             'courses' => $modul,
         ]);

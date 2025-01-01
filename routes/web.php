@@ -20,8 +20,6 @@ Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
 
 
-// ADMIN FUNCTIONALITY
-Route::get('/admin', [AdminController::class, 'indexDashboard']);
 
 // INSTRUCTOR DATA
 Route::get('admin/instructors', [AdminController::class, 'indexInstructor']);
@@ -39,21 +37,7 @@ Route::get('/admin/courses/{id}/edit', [AdminController::class, 'editCourse']);
 Route::put('/admin/courses/', [AdminController::class, 'updateCourse']);
 Route::delete('/admin/courses/{id}', [AdminController::class, 'destroyCourse']); 
 
-// AKUN DATA
-Route::get('/admin/account', [AdminController::class, 'indexCourse']);
-Route::get('/admin/account/create', [AdminController::class, 'createCourse']);
-Route::post('/admin/account', [AdminController::class, 'storeCourse']);
-Route::get('/admin/account/{id}/edit', [AdminController::class, 'editCourse']);
-Route::put('/admin/account/', [AdminController::class, 'updateCourse']);
-Route::delete('/admin/account/{id}', [AdminController::class, 'destroyCourse']); 
 
-
-
-// Route::get('/instructors/create', [AdminController::class, 'create']);
-// Route::post('/instructors', [AdminController::class, 'store']);
-// Route::get('/instructors/{id}/edit', [AdminController::class, 'edit']);
-// Route::put('/instructors/{id}', [AdminController::class, 'update']);
-// Route::delete('/instructors/{id}', [AdminController::class, 'destroy']); 
 
 
 
