@@ -30,48 +30,48 @@
 <script>
     const apiUrl = 'http://localhost:3000/api/instructors'; // Ganti dengan API endpoint Anda
     let currentPage = 1;
-    const itemsPerPage = 1; // Satu data per halaman
+    const itemsPerPage = 2; // Satu data per halaman
 
+   
     function fetchData(page = 1) {
-        fetch(`${apiUrl}?_page=${page}&_limit=${itemsPerPage}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const totalItems = response.headers.get('X-Total-Count'); // Total data (pastikan API mendukung header ini)
-                const totalPages = Math.ceil(totalItems / itemsPerPage);
-                document.getElementById('pageInfo').textContent = `Page ${page} of ${totalPages}`;
-                document.getElementById('prevPage').disabled = page === 1;
-                document.getElementById('nextPage').disabled = page === totalPages;
+    const url = `${apiUrl}?page=${page}&limit=${itemsPerPage}`;
+    fetch(url)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
 
-                return response.json();
-            })
-            .then(data => {
-                const table = document.getElementById('instructors-table');
-                table.innerHTML = ''; // Hapus konten tabel sebelumnya
-                if (data.length === 0) {
-                    table.innerHTML = `<tr><td colspan="6" class="text-center">No instructors found.</td></tr>`;
-                } else {
-                    data.forEach((instructor, index) => {
-                        table.innerHTML += `
-                            <tr>
-                                <td>${(page - 1) * itemsPerPage + index + 1}</td>
-                                <td>${instructor.id}</td>
-                                <td>${instructor.firstname} ${instructor.lastname}</td>
-                                <td>${instructor.email}</td>
-                                <td>${instructor.phone_number}</td>
-                                <td>
-                                    <a href="/admin/instructors/${instructor.id}/edit" class="btn btn-sm btn-warning">Edit</a>
-                                    <button class="btn btn-sm btn-danger" onclick="deleteInstructor(${instructor.id})">Delete</button>
-                                </td>
-                            </tr>`;
-                    });
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-    }
+        return response.json();
+    })
+    .then(data => {
+        const totalItems = data.meta.total; // Ambil total items dari meta
+        const totalPages = data.meta.totalPages; // Ambil total pages dari meta
+
+        // Update pagination UI
+        document.getElementById('pageInfo').textContent = `Page ${currentPage} of ${totalPages}`;
+        document.getElementById('prevPage').disabled = currentPage === 1;
+        document.getElementById('nextPage').disabled = currentPage === totalPages;
+
+        const table = document.getElementById('instructors-table');
+        const instructors = data.data; // Akses array di dalam properti 'data'
+        table.innerHTML = '';
+        instructors.forEach((instructor, index) => {
+            table.innerHTML += `
+                <tr>
+                    <td>${(currentPage - 1) * itemsPerPage + index + 1}</td>
+                    <td>${instructor.id}</td>
+                    <td>${instructor.firstname} ${instructor.lastname}</td>
+                    <td>${instructor.email}</td>
+                    <td>${instructor.phone_number}</td>
+                    <td>
+                        <button class="btn btn-sm btn-danger" onclick="deleteInstructor(${instructor.id})">Delete</button>
+                    </td>
+                </tr>`;
+        });
+    });
+
+}
+
 
     function deleteInstructor(id) {
         fetch(`${apiUrl}/${id}`, {
@@ -86,7 +86,7 @@
         if (currentPage > 1) {
             currentPage--;
             fetchData(currentPage);
-        }
+        } 
     });
 
     document.getElementById('nextPage').addEventListener('click', () => {

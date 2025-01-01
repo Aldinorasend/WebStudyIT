@@ -8,7 +8,7 @@
     <style>
         body {
             display: flex;
-            flex-direction:row;
+            flex-direction: row;
         }
         #sidebar {
             min-width: 250px;
@@ -23,11 +23,11 @@
             text-decoration: none;
             display: block;
             padding: 10px 15px;
-            transition:0.5s
+            transition: 0.5s;
+            cursor: pointer;
         }
         #sidebar a:hover {
             background-color: #018BFA;
-            
         }
         #content {
             flex-grow: 1;
@@ -38,22 +38,22 @@
 <body>
     <!-- Sidebar -->
     <div id="sidebar">
-        <h3 class="text-center fw-bold"> Admin Panel</h3>
-        <a href="/admin/dashboard" class="mt-5">Dashboard</a>
-        <a href="/admin/instructors">Instructor List</a>
-        <a href="/admin/students">Student List</a>
-        <a href="/admin/courses">Course Management</a>
-        <a href="/admin/reports">Reports</a>
-        <a href="/admin/settings">Settings</a>
-        <a href="/logout">Logout</a>
+        <h3 class="text-center fw-bold">Admin Panel</h3>
+        <a href="dashboard" class="mt-5">Dashboard</a>
+        <a href="instructors">Instructor List</a>
+        <a href="students">Student List</a>
+        <a href="courses">Course Management</a>
+        <a href="reports">Reports</a>
+        <a href="settings">Settings</a>
+        <a href="/">Logout</a>
     </div>
-
+    
     <!-- Content -->
     <div id="content">
         <?php echo $__env->yieldContent('content'); ?>
     </div>
 
-  
+   
 </body>
 </html>
 <?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/layouts/admin.blade.php ENDPATH**/ ?>
