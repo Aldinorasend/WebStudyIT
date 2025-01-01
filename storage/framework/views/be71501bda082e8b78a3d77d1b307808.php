@@ -39,11 +39,9 @@
         <!-- Sidebar -->
         <div id="sidebar">
             <h3 class="text-center fw-bold">Instructor Panel</h3>
-            <a href="/admin/instructors">Instructor List</a>
-            <a href="students">Student List</a>
+            <a href="/admin/instructors">Instructor Management</a>
             <a href="/admin/courses">Course Management</a>
-            <a href="reports">Reports</a>
-            <a href="settings">Settings</a>
+            <a href="/admin/tasks">Task Management</a>
             <a href="/">Logout</a>
         </div>
         

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const url = window.location.pathname;
     const pathParts = url.split('/');
     const userId = pathParts[2]; // Mengambil UserID
-
+    const baseUrl = '/students/';
     console.log('UserID:', userId); // Debugging untuk memastikan UserID benar
 
     // Form submission handler
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 alert('Payment successful!');
                 console.log(result);
                 console.log(result1);
-                window.location.href = '/page/billing.html';
+                window.location.href = `/students/${userId}`;
             } else {
                 console.error('Error:', result);
                 console.error('Error:', result1);
