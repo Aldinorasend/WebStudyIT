@@ -27,12 +27,12 @@ class TaskController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
-    {
-        //
-        $tasks = Task::all();
-        return view('modul.create', compact('tasks'));
-    }
+    // public function create()
+    // {
+    //     //
+    //     $tasks = Task::all();
+    //     return view('modul.create', compact('tasks'));
+    // }
     
     /**
      * Store a newly created resource in storage.
@@ -66,7 +66,7 @@ class TaskController extends Controller
     public function edit(Task $modul)
     {
         //
-        return view('modul.edit', compact('modul'));
+        return view('modul.edit', compact('tasks'));
     }
 
     /**
@@ -83,11 +83,11 @@ class TaskController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Task $modul)
+    public function destroy(Task $task)
     {
         //
-        $modul = Task::findOrFail($id);
-        $modul->delete();
+        $task = Task::findOrFail($id);
+        $task->delete();
         return redirect('/admin/tasks')->with('success', 'Task deleted successfully.');
     }
 

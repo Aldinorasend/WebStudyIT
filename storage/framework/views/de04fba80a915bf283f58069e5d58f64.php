@@ -11,16 +11,12 @@
         <h1 class="mb-4">Edit Status</h1>
         <a href="/admin/tasks" class="btn btn-secondary mb-3">Back to List</a>
         <form id="edit-task-form">
-            <!-- <div class="mb-3">
+            <div class="mb-3">
                 <label for="Status" class="form-label">Status</label>
                 <select class="form-control" id="Status">
                     <option value="Pending">Pending</option>
                     <option value="Completed">Completed</option>
                 </select>
-            </div> -->
-            <div class="mb-3">
-                <label for="CourseID" class="form-label">Course ID</label>
-                <input type="text" class="form-control" id="CourseID" required>
             </div>
             <button type="submit" class="btn btn-primary">Update Status</button>
         </form>
@@ -30,12 +26,11 @@
         const taskId = window.location.pathname.split('/').slice(-2, -1)[0];
 
         // Fetch data task untuk mengisi form
-        fetch(`${apiUrl}/${taskId}/edit`)
+        fetch(`${apiUrl}/${taskId}`)
             .then(response => response.json())
             .then(data => {
                 console.log("Fetched Data:", data);
                 document.getElementById('Status').value = data.Status; // Pastikan ID sesuai
-                document.getElementById('CourseID').value = data.CourseID; // Pastikan ID sesuai
 
             })
             .catch(error => {
@@ -47,14 +42,12 @@
         document.getElementById('edit-task-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
-            // const Status = document.getElementById('Status').value;
-            const CourseID = document.getElementById('CourseID').value;
-
+            const Status = document.getElementById('Status').value;
 
             fetch(`${apiUrl}/${taskId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ CourseID }) // Kirim data ke API
+                body: JSON.stringify({ Status }) // Kirim data ke API
             })
                 .then(() => {
                     alert('Task updated successfully');
