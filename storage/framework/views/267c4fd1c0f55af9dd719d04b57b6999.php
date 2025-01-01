@@ -28,7 +28,7 @@
                 <input type="checkbox" id="checkbox" name="remember">
                 <label for="checkbox">Remember Me</label>
 
-                <a href="/forgot-password">Forgot Password?</a>
+                <a href="/page/resetPass.html">Forgot Password?</a>
             </div>
             <div class="button-container">
                 <button type="button" class="login-button" onclick="submitLogin()" data-id="">Login</button>
@@ -39,4 +39,4 @@
 </body>
 
 </html>
-<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/Auth/login.blade.php ENDPATH**/ ?>
+<?php /**PATH C:\Telkom University\Semester 5\Perancangan dan Pemrograman Web\Tubes\WebStudyIT\resources\views/Auth/login.blade.php ENDPATH**/ ?>

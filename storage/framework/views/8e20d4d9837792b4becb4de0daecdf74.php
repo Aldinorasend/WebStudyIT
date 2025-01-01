@@ -16,8 +16,13 @@
                 <input type="text" class="form-control" id="course_name" required>
             </div>
             <div class="mb-3">
-                <label for="instructor" class="form-label">Instructor</label>
-                <input type="text" class="form-control" id="instructor" readonly>
+            <label for="instructor_id" class="form-label">Instructor</label>
+            <select class="form-select" id="instructor" name="instructor" required>
+                <option value="">Select an Instructor</option>
+                <?php $__currentLoopData = $instructors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $instructor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($instructor->id); ?>"><?php echo e($instructor->firstname); ?> <?php echo e($instructor->lastname); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
             </div>
             <div class="mb-3">
                 <label for="level" class="form-label">Level</label>
@@ -47,7 +52,26 @@
     </div>
     <script>
         const apiUrl = 'http://localhost:3000/api/courses';
+        const apiInstructorsUrl = 'http://localhost:3000/api/instructors';
         const courseId = window.location.pathname.split('/').slice(-2, -1)[0];
+
+        async function loadInstructors() {
+        try {
+            const response = await fetch(apiInstructorsUrl);
+            const instructors = await response.json();
+            const instructorDropdown = document.getElementById('instructor_id');
+
+            // Menambahkan instruktur ke dalam dropdown
+            instructors.forEach(instructor => {
+                const option = document.createElement('option');
+                option.value = instructor.id;
+                option.textContent = `${instructor.firstname} ${instructor.lastname}`;
+                instructorDropdown.appendChild(option);
+            });
+        } catch (error) {
+            console.error('Error loading instructors:', error);
+        }
+    }
 
         // Fetch data course untuk diisi di form
         fetch(`${apiUrl}/${courseId}`)

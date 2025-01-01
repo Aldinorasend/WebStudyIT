@@ -81,7 +81,7 @@ async function submitLogin() {
             // Redirect berdasarkan user_type
             const idAkun = data.id;
             if (data.User_Type === 'Admin') {
-                window.location.href = `/admin/dashboard/${idAkun}`;
+                window.location.href = `/admin/`;
             } else if (data.User_Type === 'Free' || data.User_Type === 'Subscriber') {
                 window.location.href = `/students/${idAkun}`;
             } else {

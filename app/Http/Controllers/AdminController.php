@@ -37,23 +37,11 @@ class AdminController extends Controller
         return view('course.index', compact('courses'));
     }
 
-    public function indexTask()
+    public function indexDashboard(Account $account)
     {
         //
-        $tasks = Task::with('instructor')->get();
-        foreach ($tasks as $task) {
-            if ($task->image) {
-                $task->image_url = asset('backend-uploads/' . $task->image);
-            }
-        } // Mengambil data kursus beserta instruktur
-        return view('modul.index', compact('tasks'));
+        return view('Admin.index');
     }
-
-    // public function indexDashboard(Account $account)
-    // {
-    //     //
-    //     return view('Admin.index');
-    // }
 
     /**
      * Show the form for creating a new resource.
@@ -61,7 +49,6 @@ class AdminController extends Controller
     public function createInstructor()
     {
         //
-
         return view('Instructor.create');
     }
     public function createCourse()
@@ -77,7 +64,7 @@ class AdminController extends Controller
     {
         //
         Instructor::create($request->all());
-        return redirect('/admin/instructor')->with('success', 'Instructor added successfully.');
+        return redirect('admin/{akun_id}/instructors')->with('success', 'Instructor addd successfully.');
     }
     public function storeCourse(Request $request)
     {
@@ -106,7 +93,7 @@ class AdminController extends Controller
     public function editInstructor(Instructor $instructor)
     {
         //
-        $instructor = Instructor::findOrFail($id);
+        
         return view('instructors.edit', compact('instructor'));
     }
 
@@ -116,7 +103,8 @@ class AdminController extends Controller
     public function editCourse(Course $course)
     {
         //
-        return view('course.edit', compact('course'));
+        $instructors = Instructor::all();
+        return view('course.edit', compact('instructors'));
     }
 
     public function editTask(Task $task)

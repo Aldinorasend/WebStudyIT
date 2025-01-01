@@ -60,6 +60,8 @@ class CourseController extends Controller
     public function edit(Course $course)
     {
         //
+
+        
         return view('course.edit', compact('course'));
     }
 

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - StudyIT</title>
-    <link rel="stylesheet" href="{{ asset('css/stylecontactus.css') }}">
+    <link rel="stylesheet" href="<?php echo e(asset('css/stylecontactus.css')); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
@@ -12,14 +12,14 @@
         <div class="navbar">
             <div class="container-fluid">
                 <div class="nav-brand">
-                    <img src="{{ asset('asset/image/logo.png') }}" alt="Logo">
+                    <img src="<?php echo e(asset('asset/image/logo.png')); ?>" alt="Logo">
                     <h1>StudyIT</h1>
                 </div>
                 <div class="nav-menu">
                     <div class="nav-list">
                         <ul>
-                            <li><a href="{{ url()->previous() }}">Home</a></li>
-                            <li><a href="{{ url()->previous() }}">Bootcamp</a></li>
+                            <li><a href="<?php echo e(url()->previous()); ?>">Home</a></li>
+                            <li><a href="<?php echo e(url()->previous()); ?>">Bootcamp</a></li>
                             <li><a href="#">Contact Us</a></li>
                             <li>
                                 <div class="dropdown">
@@ -57,8 +57,8 @@
         </div>
 
         <!-- Form submission -->
-        <form class="contact-form" action="{{ route('ContactUs.store') }}" method="POST">
-            @csrf
+        <form class="contact-form" action="<?php echo e(route('ContactUs.store')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
             <input type="text" name="First_name" placeholder="First Name" required>
             <input type="text" name="Last_name" placeholder="Last Name" required>
             <input type="email" name="Email" placeholder="Email" required>
@@ -75,6 +75,7 @@
         <p>2024 All Rights Reserved ©</p>
     </footer>
 
-    <script src="{{ asset('js/scriptContactUS.js') }}"></script>
+    <script src="<?php echo e(asset('js/scriptContactUS.js')); ?>"></script>
 </body>
 </html>
+<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/students/contact_us.blade.php ENDPATH**/ ?>
