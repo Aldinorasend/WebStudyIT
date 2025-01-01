@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContactUs;
+use App\Models\contactUs;
 use Illuminate\Http\Request;
 
 class ContactUsController extends Controller
