@@ -1,5 +1,20 @@
 const apiLoginUrl = 'http://localhost:3000/api/Accounts/search';
 
+function togglePassword() {
+    const passwordField = document.getElementById("password");
+    const eyeIcon = document.getElementById("eyeIcon");
+    
+    if (passwordField.type === "password") {
+        passwordField.type = "text";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+    } else {
+        passwordField.type = "password";
+        eyeIcon.classList.remove("fa-eye");
+        eyeIcon.classList.add("fa-eye-slash");
+    }
+}
+
 function setCookie(name, value, days) {
     const date = new Date();
     date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
