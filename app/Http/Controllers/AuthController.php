@@ -16,31 +16,13 @@ class AuthController extends Controller
         return view('Auth.register');
     }
 
-    // public function authenticate(Request $request)
-    // {
-    //     $login = $request->input('login');
-    //     $password = $request->input('password');
-        
-    //     $response = Http::post(env('API_URL') . '/login', [
-    //         'login' => $login,
-    //         'password' => $password
-    //     ]);
+    public function forgotPassword(){
+        return view('Auth.forgotPass');
+    }
 
-    //     if ($response->successful()) {
-    //         $user = $response->json();
-    //         Session::put('user', $user);
-            
-    //         if ($user['user_type'] === 'admin') {
-    //             return redirect()->route('admin.index', ['id' => $user['id']]);
-    //         } elseif (in_array($user['user_type'], ['free', 'subscriber'])) {
-    //             return redirect()->route('students.index', ['id' => $user['id']]);
-    //         }
-    //     }
-
-    //     return back()->withErrors([
-    //         'login' => 'Invalid credentials or server error.',
-    //     ]);
-    // }
+    public function resetPassword(){
+        return view('Auth.resetPass');
+    }
 
     public function adminIndex($id)
     {

@@ -74,7 +74,7 @@ body {
 }
 
 
-.dec-container, .des-container, .des-tools {
+.dec-container, .des-container, .des-tools, .task-container, .submit-container {
     max-width: 800px;
     width: 90%;
     margin: 15px auto;
