@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreign('ModulID')->references('id')->on('moduls')->onDelete('cascade');
             $table->foreign('UserID')->references('id')->on('accounts')->onDelete('cascade');
             $table->string('FileTask');
+            $table->enum('Status', ['Pending', 'Completed'])->default('Pending');
             $table->timestamps();
         });
     }

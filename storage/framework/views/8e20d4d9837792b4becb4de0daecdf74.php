@@ -16,8 +16,13 @@
                 <input type="text" class="form-control" id="course_name" required>
             </div>
             <div class="mb-3">
-                <label for="instructor" class="form-label">Instructor</label>
-                <input type="text" class="form-control" id="instructor" readonly>
+            <label for="instructor_id" class="form-label">Instructor</label>
+            <select class="form-select" id="instructor" name="instructor" required>
+                <option value="">Select an Instructor</option>
+                <?php $__currentLoopData = $instructors; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $instructor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <option value="<?php echo e($instructor->id); ?>"><?php echo e($instructor->firstname); ?> <?php echo e($instructor->lastname); ?></option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
             </div>
             <div class="mb-3">
                 <label for="level" class="form-label">Level</label>
@@ -47,14 +52,33 @@
     </div>
     <script>
         const apiUrl = 'http://localhost:3000/api/courses';
+        const apiInstructorsUrl = 'http://localhost:3000/api/instructors';
         const courseId = window.location.pathname.split('/').slice(-2, -1)[0];
+
+        async function loadInstructors() {
+    try {
+        const response = await fetch(apiInstructorsUrl);
+        const instructors = await response.json();
+        const instructorDropdown = document.getElementById('instructor');
+
+        instructors.forEach(instructor => {
+            const option = document.createElement('option');
+            option.value = instructor.id; // value adalah ID instruktur
+            option.textContent = `${instructor.firstname} ${instructor.lastname}`; // teks adalah nama instruktur
+            instructorDropdown.appendChild(option);
+        });
+    } catch (error) {
+        console.error('Error loading instructors:', error);
+    }
+}
+
 
         // Fetch data course untuk diisi di form
         fetch(`${apiUrl}/${courseId}`)
             .then(response => response.json())
             .then(data => {
                 document.getElementById('course_name').value = data.course_name;
-                document.getElementById('instructor').value = `${data.firstname} ${data.lastname}`;
+                document.getElementById('instructor').value = data.instructor_id;
                 document.getElementById('level').value = data.level;
                 document.getElementById('start_date').value = new Date(data.start_date).toISOString().split('T')[0];
                 document.getElementById('end_date').value = new Date(data.end_date).toISOString().split('T')[0];
@@ -67,6 +91,7 @@
 
             const course_name = document.getElementById('course_name').value;
             const level = document.getElementById('level').value;
+            const instructor_id = document.getElementById('instructor').value;
             const start_date = document.getElementById('start_date').value;
             const end_date = document.getElementById('end_date').value;
             const status = document.getElementById('status').value;
@@ -74,7 +99,7 @@
             fetch(`${apiUrl}/${courseId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ course_name, level, start_date, end_date, status })
+                body: JSON.stringify({ course_name, instructor_id, level, start_date, end_date, status })
             }).then(() => {
                 alert('Course updated successfully');
                 window.location.href = '/admin/courses';

@@ -1,6 +1,6 @@
 
     document.addEventListener('DOMContentLoaded', function () {
-    const apiUrl = 'http://localhost:3000/api/courses'; // Ganti dengan URL API Anda
+    const apiUrl = 'http://localhost:3000/api/coursesAdmin'; // Ganti dengan URL API Anda
     const baseUrl = 'http://localhost:8000/backend-uploads/';
     const courseContainer = document.getElementById('course-container');
     const courseTemplate = document.getElementById('course-template');
@@ -49,6 +49,9 @@ document.addEventListener('click', function (event) {
 });
 function navigatePayment(){
     window.location.href = "/page/payment.html";
+}
+function navigateLogin(){
+  window.location.href = "/login"
 }
 function isInViewport(element) {
     const rect = element.getBoundingClientRect();

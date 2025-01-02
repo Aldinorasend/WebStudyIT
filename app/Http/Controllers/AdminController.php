@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Instructor;
 use App\Models\Account;
 use App\Models\Course;
+use App\Models\Task;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -12,12 +13,7 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function indexDashboard()
-    {
-        //
-       
-        return view('Admin.index');
-    }
+ 
     public function indexInstructor()
     {
         //
@@ -36,11 +32,17 @@ class AdminController extends Controller
         return view('course.index', compact('courses'));
     }
 
-    // public function indexDashboard(Account $account)
-    // {
-    //     //
-    //     return view('Admin.index');
-    // }
+    public function indexTask()
+    {
+        //
+        $tasks = Task::with('instructor')->get();
+        foreach ($tasks as $task) {
+            if ($task->image) {
+                $task->image_url = asset('backend-uploads/' . $task->image);
+            }
+        } // Mengambil data kursus beserta instruktur
+        return view('modul.index', compact('tasks'));
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -48,7 +50,6 @@ class AdminController extends Controller
     public function createInstructor()
     {
         //
-
         return view('Instructor.create');
     }
     public function createCourse()
@@ -64,13 +65,20 @@ class AdminController extends Controller
     {
         //
         Instructor::create($request->all());
-        return redirect('/admin/instructor')->with('success', 'Instructor added successfully.');
+        return redirect('admin/{akun_id}/instructors')->with('success', 'Instructor addd successfully.');
     }
     public function storeCourse(Request $request)
     {
         // Simpan data ke database
         Course::create($validated);
         return redirect('/admin/courses')->with('success', 'Course added successfully.');
+    }
+
+    public function storeTask(Request $request)
+    {
+        // Simpan data ke database
+        Task::create($validated);
+        return redirect('/admin/tasks')->with('success', 'Task added successfully.');
     }
     /**
      * Display the specified resource.
@@ -86,7 +94,7 @@ class AdminController extends Controller
     public function editInstructor(Instructor $instructor)
     {
         //
-        $instructor = Instructor::findOrFail($id);
+        
         return view('instructors.edit', compact('instructor'));
     }
 
@@ -96,7 +104,14 @@ class AdminController extends Controller
     public function editCourse(Course $course)
     {
         //
-        return view('course.edit', compact('course'));
+        $instructors = Instructor::all();
+        return view('course.edit', compact('instructors'));
+    }
+
+    public function editTask(Task $task)
+    {
+        //
+        return view('modul.edit', compact('task'));
     }
     public function updateInstructor(Request $request, Instructor $instructor)
     {
@@ -112,6 +127,14 @@ class AdminController extends Controller
         $course = Course::findOrFail($id);
         $course->update($request->all());
         return redirect('/admin/courses')->with('success', 'Courses updated successfully.');
+    }
+
+    public function updateTask(Request $request, Task $task)
+    {
+        //
+        $task = Task::findOrFail($id);
+        $task->update($request->all());
+        return redirect('/admin/tasks')->with('success', 'Task updated successfully.');
     }
     /**
      * Remove the specified resource from storage.
@@ -131,6 +154,15 @@ class AdminController extends Controller
         $course->delete();
         return redirect('/admin/courses')->with('success', 'Course deleted successfully.');
     }
+
+    public function destroyTask(Task $task)
+    {
+        //
+        $task = Task::findOrFail($id);
+        $task->delete();
+        return redirect('/admin/tasks')->with('success', 'Task deleted successfully.');
+    }
+
 
     /**
      * Update the specified resource in storage.

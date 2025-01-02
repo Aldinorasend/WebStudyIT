@@ -14,6 +14,7 @@ class modul extends Model
         'CourseID',
         'title',
         'description',
-        'URL',
+        'task',
+        'assetto',
     ];
 }
