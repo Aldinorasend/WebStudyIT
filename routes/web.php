@@ -6,6 +6,7 @@ use App\Http\Controllers\RegularUserController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EditProfileController;
 
 Route::post('/upload', [FileUploadController::class, 'store']);
 
@@ -53,3 +54,7 @@ Route::get('/reset-password', [AuthController::class, 'resetPassword']);
 
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
 
+Route::middleware(['auth'])->group(function () {
+Route::get('/profile/edit', [EditProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/update', [EditProfileController::class, 'update'])->name('profile.update');
+});
