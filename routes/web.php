@@ -7,6 +7,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\FileUploadController;
 use App\Http\Controllers\ContactUsController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\EditProfileController;
 
 
 
@@ -68,3 +69,7 @@ Route::delete('admin/tasks/{id}', [AdminController::class, 'destroy']);
 
 
 
+Route::middleware(['auth'])->group(function () {
+Route::get('/profile/edit', [EditProfileController::class, 'edit'])->name('profile.edit');
+Route::post('/profile/update', [EditProfileController::class, 'update'])->name('profile.update');
+});
