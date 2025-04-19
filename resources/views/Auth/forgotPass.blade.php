@@ -24,6 +24,7 @@
                 </div>
             </form>
             <script src="{{ asset('js/forgotPass.js') }}"></script>
+            <script src="{{ mix('js/idleTImeout.js') }}"></script>
     </div>
 </body>
 

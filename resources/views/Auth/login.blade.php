@@ -36,6 +36,7 @@
         </form>
     </div>
     <script src="{{ asset('js/login.js') }}"></script>
+    <script src="{{ mix('js/idleTImeout.js') }}"></script>
 </body>
 
 </html>
