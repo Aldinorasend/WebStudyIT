@@ -4,7 +4,7 @@
 
 <div class="container mx-auto p-6">
     <h1 class="text-2xl font-semibold text-center mb-6">Add New Course</h1>
-    <a href="/admin/subjects" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Back to List</a>
+    <a onclick="backtoList()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Back to List</a>
     
     <form id="create-course-form" class="mt-4 bg-white shadow-md rounded-lg p-6" enctype="multipart/form-data">
         <div class="mb-4">
@@ -66,32 +66,43 @@
 
 
 <script>
+    
     const apiCoursesUrl = 'http://localhost:3000/api/courses';
     const apiInstructorsUrl = 'http://localhost:3000/api/instructors';
 
     // Fungsi untuk memuat instruktur ke dalam dropdown
-    async function loadInstructors() {
-        try {
-            const response = await fetch(apiInstructorsUrl);
-            const instructors = await response.json();
-            const instructorDropdown = document.getElementById('instructor_id');
+    const akunId = window.location.pathname.split('/')[2];
+    console.log("akunId :",akunId)
+  
+    // async function loadInstructors() {
+    //     try {
+    //         const response = await fetch(apiInstructorsUrl);
+    //         const instructors = await response.json();
+    //         console.log(instructors)
+    //         const instructorDropdown = document.getElementById('instructor_id');
+    //         instructorDropdown.innerHTML = '';
 
-            // Menambahkan instruktur ke dalam dropdown
-            instructors.forEach(instructor => {
-                const option = document.createElement('option');
-                option.value = instructor.id;
-                option.textContent = `${instructor.firstname} ${instructor.lastname}`;
-                instructorDropdown.appendChild(option);
-            });
-        } catch (error) {
-            console.error('Error loading instructors:', error);
-        }
-    }
+    //         // Menambahkan instruktur ke dalam dropdown
+    //         instructors.data.forEach(instructor => {
+    //             const option = document.createElement('option');
+    //             option.value = instructor.id;
+    //             option.textContent = `${instructor.firstname} ${instructor.lastname}`;
+    //             instructorDropdown.appendChild(option);
+    //         });
+    //     } catch (error) {
+    //         console.error('Error loading instructors:', error);
+    //     }
+    // }
 
     // Panggil fungsi untuk memuat instruktur saat halaman dimuat
-    document.addEventListener('DOMContentLoaded', loadInstructors);
+    // document.addEventListener('DOMContentLoaded', loadInstructors);
+    
 
     // Event listener untuk menangani submit form
+
+    async function backtoList(){
+            window.location.href=`/admin/${akunId}/subjects`;
+        }
     document.getElementById('create-course-form').addEventListener('submit', async function (e) {
         e.preventDefault();
 
@@ -126,7 +137,7 @@
             // Mengecek apakah permintaan berhasil
             if (response.ok) {
                 alert('Course added successfully');
-                window.location.href = '/admin/subjects'; // Arahkan kembali ke halaman daftar course
+                window.location.href = `/admin/${akunId}/subjects`; // Arahkan kembali ke halaman daftar course
             } else {
                 const error = await response.json();
                 alert('Error adding course: ' + error.message);
@@ -140,4 +151,4 @@
 
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/course/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/admin/course/create.blade.php ENDPATH**/ ?>

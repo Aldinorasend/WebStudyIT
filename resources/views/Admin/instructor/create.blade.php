@@ -1,10 +1,11 @@
-<?php $__env->startSection('title', 'Admin Page'); ?>
-<?php $__env->startSection('content-title', 'Instructor Management'); ?>
-<?php $__env->startSection('content'); ?>
+@extends('layouts.admin')
+@section('title', 'Admin Page')
+@section('content-title', 'Instructor Management')
+@section('content')
 
 <div class="container mx-auto p-6 ">
     <h1 class="text-2xl font-semibold text-center mb-6">Add New Instructor</h1>
-    <a href="javascript:void(0);" onclick="goBack()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Back to List</a>
+    <a onclick="backtoList()" class="bg-gray-500 text-white px-4 py-2 rounded-md hover:bg-gray-600">Back to List</a>
     
     <form id="create-instructor-form" class="mt-4 bg-white shadow-md rounded-lg p-6 w-full">
         <div class="mb-4">
@@ -32,14 +33,12 @@
 </div>
 
 <script>
-    const apiUrl = 'http://localhost:3000/api/instructors';
-    function goBack() {
-        if (window.history.length > 1) {
-            window.history.back();
-        } else {
-            window.location.href = '/admin/dashboard';
-        }
+     const akunId = window.location.pathname.split('/')[2];
+     console.log("akunId :",akunId)
+    async function backtoList(){
+           window.location.href=`/admin/${akunId}/instructors`;
     }
+    const apiUrl = 'http://localhost:3000/api/instructors';
 
     document.getElementById('create-instructor-form').addEventListener('submit', function (e) {
         e.preventDefault();
@@ -55,11 +54,9 @@
             body: JSON.stringify({ firstname, lastname, email, phone_number })
         }).then(() => {
             alert('Instructor added successfully');
-            goBack();   
+            window.location.href = `/admin/${akunId}/instructors` 
         });
     });
 </script>
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/Instructor/create.blade.php ENDPATH**/ ?>
+@endsection

@@ -1,21 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudyIT | Find your way in a Good Way</title>
-    <link rel="stylesheet" href="{{ asset('css/styleindex2user.css') }}">
-    <link rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
+@extends('layouts.user')
+@section('title', 'StudyIT')
+@section('content')
+<div class="container flex flex-row">
+    <header class="w-full bg-sideBarLight h-12 border-2 border-textColorLight ">
     
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-</head>
-
-<body>
+    </header>
+</div>
+<!-- <body> -->
     <!-- Navbar  -->
-    <header>
+    <!-- <header>
         <div class="navbar" id="home">
             <div class="container-fluid">
                 <div class="nav-brand">
@@ -51,12 +44,12 @@
                 </div>
             </div>
         </div>
-    </header>
+    </header> -->
 
     <!-- End Navbar Section -->
 
     <!-- CTA Section -->
-    <main>
+    <!-- <main>
         <div class="hero">
             <div class="content">
                 <h1>Join The Next Generation Of</h1>
@@ -85,9 +78,9 @@
                 </div>
             </div>
         </div>
-    </main>
+    </main> -->
     <!-- End Bootcamp Section -->
-    <footer id="footer">
+    <!-- <footer id="footer">
         <div class="container-content-footer">
             <div class="container-logo">
                 <img src="{{ asset('image/Group.png') }}" alt="">
@@ -146,7 +139,7 @@
             </div>
         </div>
         </div>
-    </footer>
+    </footer> -->
 
 
     <script src="{{ asset('js/subsUser.js') }}"></script>

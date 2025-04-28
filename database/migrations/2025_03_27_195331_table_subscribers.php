@@ -11,15 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('tasks', function (Blueprint $table) {
+        //
+        Schema::create('subscribers', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('ModulID');
             $table->unsignedBigInteger('UserID');
-            $table->foreign('ModulID')->references('id')->on('moduls')->onDelete('cascade');
             $table->foreign('UserID')->references('id')->on('accounts')->onDelete('cascade');
-            $table->string('FileTask');
+            $table->enum('Payment_method', ['Dana', 'Gopay', 'ShoppePay']);
+            $table->string('Phone_number');
+            $table->integer('Amount')->nullable();
+            $table->enum('Category', ['Basic', 'Standard', 'Premium'])->default('Basic');
             $table->enum('Status', ['Pending', 'Completed'])->default('Pending');
-            $table->timestamps();
+            $table->timestamp('Payment_date')->useCurrent(); // Menggunakan current timestamp untuk created_at
+            $table->timestamp('End_date')->nullable(); // Menggunakan current timestamp untuk updated_at
         });
     }
 
@@ -28,6 +31,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('tasks');
+        //
+        Schema::dropIfExists('subscribers');
     }
 };

@@ -1,6 +1,7 @@
-<?php $__env->startSection('title', 'Admin Page'); ?>
-<?php $__env->startSection('content-title', 'Subject Course Management'); ?>
-<?php $__env->startSection('content'); ?>
+@extends('layouts.admin')
+@section('title', 'Admin Page')
+@section('content-title', 'Subject Course Management')
+@section('content')
 
 <button class="bg-green-600 text-white w-fit px-4 py-2 rounded-lg mt-4 font-semibold text-sm flex items-center hover:bg-green-700 transition duration-200">
     <a href="subjects/create" class="flex items-center">
@@ -37,7 +38,9 @@
 <script>
     const apiUrl = 'http://localhost:3000/api/coursesAdmin';
     const baseUrl = 'http://localhost:8000/backend-uploads/';
-
+    const urlPage = window.location.href;
+    const akunId = urlPage.split('/').slice(-2, -1)[0];
+    console.log("akunId:",akunId)
     async function fetchData() {
         try {
             const response = await fetch(apiUrl);
@@ -71,7 +74,7 @@
                         </td>
                         <td class="p-3 text-center">
                             <div class="flex justify-center items-center gap-2">
-                                <a href="/admin/subjects/${course.id}/edit" class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition">Edit</a>
+                                <a href="/admin/${akunId}/subjects/${course.id}/edit" class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition">Edit</a>
                                 <button class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition" onclick="deleteCourse(${course.id})">Delete</button>
                             </div>
                         </td>
@@ -98,10 +101,10 @@
             if(result.isConfirmed){
                 try{
                 
-                const response = await fetch(`${apiUrl}/${id}`, { method: 'DELETE' });
+                const response = await fetch(`${apiUrl}/${id}`, { method: 'PUT' });
                 if (!response.ok) throw new Error('Failed to delete course');
     
-                alert('Course deleted successfully');
+                Swal.fire("Deactivated!", "Course has been deactivated succesfully", "success");
                 fetchData(); // Refresh data
             } catch (error) {
                 console.error('Error deleting course:', error);
@@ -117,6 +120,4 @@
     document.addEventListener('DOMContentLoaded', fetchData);
 </script>
 
-<?php $__env->stopSection(); ?>
-
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/course/index.blade.php ENDPATH**/ ?>
+@endsection

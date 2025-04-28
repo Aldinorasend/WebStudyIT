@@ -6,6 +6,7 @@ use App\Models\Instructor;
 use App\Models\Account;
 use App\Models\Course;
 use App\Models\Task;
+use App\Models\contactUs;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -13,13 +14,59 @@ class AdminController extends Controller
     /**
      * Display a listing of the resource.
      */
- 
+    public function indexDashboard()
+    {
+        //
+        return view('Admin.index');
+    }
+    public function indexMessage()
+    {
+        //
+        $messages = contactUs::all();
+        return view('Admin.message', compact('messages'));
+    }
+
+
+
+
+    // Kelola Instruktur
     public function indexInstructor()
     {
         //
         $instructors = Instructor::all();
-        return view('instructor.index', compact('instructors'));
+        return view('admin.instructor.index', compact('instructors'));
     }
+    public function createInstructor()
+    {
+        return view('admin.instructor.create');
+    }
+    public function storeInstructor(Request $request)
+    {
+        //
+        Instructor::create($request->all());
+        return redirect('/admin/{akunid}/instructors')->with('success', 'Instructor added successfully.');
+    }
+    public function editInstructor(Instructor $instructor)
+    {
+        //
+        return view('admin.instructor.edit');
+    }
+    public function updateInstructor(Request $request, Instructor $instructor)
+    {
+        //
+        $instructor = Instructor::findOrFail($id);
+        $instructor->update($request->all());
+        return redirect('/admin/instructors')->with('success', 'Instructor updated successfully.');
+    }
+    public function destroyInstructor(Instructor $instructor)
+    {
+        //
+        $instructor = Instructor::findOrFail($id);
+        $instructor->delete();
+        return redirect('/admin/instructors')->with('success', 'Instructor deleted successfully.');
+    }
+    
+    // Kelola Kursus
     public function indexCourse()
     {
         //
@@ -29,9 +76,54 @@ class AdminController extends Controller
                 $course->image_url = asset('backend-uploads/' . $course->image);
             }
         } // Mengambil data kursus beserta instruktur
-        return view('course.index', compact('courses'));
+        return view('admin.course.index', compact('courses'));
+    }
+    public function createCourse()
+    {
+        //
+        $instructors = Instructor::all();
+        return view('admin.course.create', compact('instructors'));
+    }
+    public function storeCourse(Request $request)
+    {
+        // Simpan data ke database
+        Course::create($validated);
+        return redirect('/admin/{akunId}/subjects')->with('success', 'Course added successfully.');
+    }
+    public function editCourse(Course $course)
+    {
+        //
+        $instructors = Instructor::all();
+        return view('Admin.course.edit', compact('instructors'));
+    }
+    public function updateCourse(Request $request, Course $course)
+    {
+        //
+        $course = Course::findOrFail($id);
+        $course->update($request->all());
+        return redirect('/admin/courses')->with('success', 'Courses updated successfully.');
+    }
+    public function destroyCourse(Course $course)
+    {
+        //
+        $course = Course::findOrFail($id);
+        $course->delete();
+        return redirect('/admin/courses')->with('success', 'Course deleted successfully.');
     }
 
+
+
+
+    // Kelola Siswa
+    public function indexStudent(){
+        $students = Account::all();
+        return view('admin.students.index', compact('students'));
+    }
+
+
+
+
+    // Kelola Modul
     public function indexTask()
     {
         //
@@ -47,32 +139,13 @@ class AdminController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function createInstructor()
-    {
-        //
-        return view('Instructor.create');
-    }
-    public function createCourse()
-    {
-        //
-        $instructors = Instructor::all();
-        return view('course.create', compact('instructors'));
-    }
+    
+   
     /**
      * Store a newly created resource in storage.
      */
-    public function storeInstructor(Request $request)
-    {
-        //
-        Instructor::create($request->all());
-        return redirect('admin/{akun_id}/instructors')->with('success', 'Instructor addd successfully.');
-    }
-    public function storeCourse(Request $request)
-    {
-        // Simpan data ke database
-        Course::create($validated);
-        return redirect('/admin/courses')->with('success', 'Course added successfully.');
-    }
+   
+    
 
     public function storeTask(Request $request)
     {
@@ -83,51 +156,25 @@ class AdminController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Instructor $instructor)
-    {
-        //
-    }
+    
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function editInstructor(Instructor $instructor)
-    {
-        //
-        
-        return view('instructors.edit', compact('instructor'));
-    }
+   
 
     /**
      * Update the specified resource in storage.
      */
-    public function editCourse(Course $course)
-    {
-        //
-        $instructors = Instructor::all();
-        return view('course.edit', compact('instructors'));
-    }
 
     public function editTask(Task $task)
     {
         //
         return view('modul.edit', compact('task'));
     }
-    public function updateInstructor(Request $request, Instructor $instructor)
-    {
-        //
-        $instructor = Instructor::findOrFail($id);
-        $instructor->update($request->all());
-        return redirect('/admin/instructors')->with('success', 'Instructor updated successfully.');
-    }
     
-    public function updateCourse(Request $request, Course $course)
-    {
-        //
-        $course = Course::findOrFail($id);
-        $course->update($request->all());
-        return redirect('/admin/courses')->with('success', 'Courses updated successfully.');
-    }
+    
+   
 
     public function updateTask(Request $request, Task $task)
     {
@@ -139,21 +186,9 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroyInstructor(Instructor $instructor)
-    {
-        //
-        $instructor = Instructor::findOrFail($id);
-        $instructor->delete();
-        return redirect('/admin/instructors')->with('success', 'Instructor deleted successfully.');
-    }
+   
 
-    public function destroyCourse(Course $course)
-    {
-        //
-        $course = Course::findOrFail($id);
-        $course->delete();
-        return redirect('/admin/courses')->with('success', 'Course deleted successfully.');
-    }
+    
 
     public function destroyTask(Task $task)
     {

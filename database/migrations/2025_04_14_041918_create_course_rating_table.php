@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('instructors', function (Blueprint $table) {
+        Schema::create('course_rating', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('lastname');
-            $table->string('email')->unique();
-            $table->string('phone_number', 13)->nullable();
+            $table->foreignId('course_id')->constrained('courses')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('accounts')->onDelete('cascade');
+            $table->integer('rating')->default(0);
+            $table->text('review')->nullable();
             $table->timestamp('created_at')->useCurrent(); // Menggunakan current timestamp untuk created_at
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate(); 
+
         });
     }
 
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('instructors');
+        Schema::dropIfExists('course_rating');
     }
 };

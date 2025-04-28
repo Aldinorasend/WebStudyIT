@@ -21,7 +21,7 @@ class RegularUserController extends Controller
         if (!$student) {
             abort(404, 'Student not found');
         }else if($student->User_Type == 'Free'){
-            return view('user.unsubs', ['students' => $student]);
+            return view('user.unsubs2', ['students' => $student]);
         }else if ($student->User_Type == 'Subscriber'){
             return view('user.subs', ['students' => $student]);
         }
@@ -35,7 +35,7 @@ class RegularUserController extends Controller
     public function index()
     {
         //
-        return view('index');
+        return view('welcome');
     }
 
     public function readModul($akun_id, $course_id)
