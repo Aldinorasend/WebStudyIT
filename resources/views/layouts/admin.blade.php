@@ -42,6 +42,7 @@
             <a href="/admin/instructors">Instructor Management</a>
             <a href="/admin/courses">Course Management</a>
             <a href="/admin/tasks">Task Management</a>
+            <a href="/admin/sertif">Upload Certificate</a>
             <a href="/">Logout</a>
         </div>
         
