@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Course</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 <body>
     <div class="container mt-4">
         <h1 class="mb-4">Edit Course</h1>
-        <a href="/admin/courses" class="btn btn-secondary mb-3">Back to List</a>
+        <button onclick="backtoList()" class="btn btn-secondary mb-3">Back to List</button>
         <form id="edit-course-form">
             <div class="mb-3">
                 <label for="course_name" class="form-label">Course Name</label>
@@ -53,7 +55,14 @@
     <script>
         const apiUrl = 'http://localhost:3000/api/courses';
         const apiInstructorsUrl = 'http://localhost:3000/api/instructors';
-        const courseId = window.location.pathname.split('/').slice(-2, -1)[0];
+        const courseId = window.location.pathname.split('/')[4];
+        const akunId = window.location.pathname.split('/')[2];
+        console.log("courseid:",courseId)
+        console.log("akun:",akunId)
+
+        async function backtoList(){
+            window.location.href=`/admin/${akunId}/subjects`;
+        }
 
         async function loadInstructors() {
     try {
@@ -102,7 +111,8 @@
                 body: JSON.stringify({ course_name, instructor_id, level, start_date, end_date, status })
             }).then(() => {
                 alert('Course updated successfully');
-                window.location.href = '/admin/courses';
+                console.log(akunId);
+                window.location.href = '/admin/${akunId}/subjects/';
             });
         });
     </script>

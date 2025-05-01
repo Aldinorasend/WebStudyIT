@@ -13,7 +13,8 @@ use App\Http\Controllers\EditProfileController;
 
 
 
-Route::get('/',[RegularUserController::class, 'index']);
+Route::get('/', [RegularUserController::class, 'index'])->name('index');
+Route::get('/students/{akun_id}', [RegularUserController::class, 'indexUser']);
 
 // Kelola Modul
 Route::get('/admin/tasks', [AdminController::class, 'indexTask']);
@@ -42,30 +43,44 @@ Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
 
 
-// INSTRUCTOR DATA
-Route::get('admin/', [AdminController::class, 'indexInstructor']);
-Route::get('admin/instructors', [AdminController::class, 'indexInstructor']);
-Route::get('admin/instructors/create', [AdminController::class, 'createInstructor']);
-Route::post('admin/instructors', [AdminController::class, 'storeInstructor']);
-Route::get('admin/instructors/{id}/edit', [AdminController::class, 'editInstructor']);
-Route::put('admin/instructors/{id}', [AdminController::class, 'updateInstructor']);
-Route::delete('admin/instructors/{id}', [AdminController::class, 'destroyInstructor']); 
 
-// COURSE DATA
-Route::get('/admin/courses', [AdminController::class, 'indexCourse']);
-Route::get('/admin/courses/create', [AdminController::class, 'createCourse']);
-Route::post('/admin/courses', [AdminController::class, 'storeCourse']);
-Route::get('/admin/courses/{id}/edit', [AdminController::class, 'editCourse']);
-Route::put('/admin/courses/', [AdminController::class, 'updateCourse']);
-Route::delete('/admin/courses/{id}', [AdminController::class, 'destroyCourse']); 
+Route::get('admin/{akunId}/dashboard', [AdminController::class, 'indexDashboard']);
+Route::get('admin/{akunId}/message', [AdminController::class, 'indexMessage']);
 
-// TASK DATA
-Route::get('/admin/tasks', [AdminController::class, 'indexTask']);
-Route::post('admin/tasks', [AdminController::class, 'store']);
-Route::get('/admin/tasks/{id}/edit', [AdminController::class, 'editTask']);
-Route::put('admin/tasks/{id}', [AdminController::class, 'update']);
-Route::delete('admin/tasks/{id}', [AdminController::class, 'destroy']); 
+// INSTRUCTOR FUNCTIONALITY
+Route::get('admin/{akunId}/instructors', [AdminController::class, 'indexInstructor']);
+Route::get('admin/{akunId}/instructors/create', [AdminController::class, 'createInstructor']);
+Route::post('admin/{akunId}/instructors', [AdminController::class, 'storeInstructor']);
+Route::get('admin/{akunId}/instructors/{id}/edit', [AdminController::class, 'editInstructor']);
+Route::put('admin/{akunId}/instructors/{id}', [AdminController::class, 'updateInstructor']);
+Route::delete('admin/{akunId}/instructors/{id}', [AdminController::class, 'destroyInstructor']); 
 
+// COURSE FUNCTIONALITY
+Route::get('/admin/{akunId}/subjects', [AdminController::class, 'indexCourse']);    
+Route::get('/admin/{akunId}/subjects/create', [AdminController::class, 'createCourse']);
+Route::post('/admin/{akunId}/subjects', [AdminController::class, 'storeCourse']);
+Route::get('/admin/{akunId}/subjects/{id}/edit', [AdminController::class, 'editCourse']);
+Route::put('/admin/{akunId}/subjects/', [AdminController::class, 'updateCourse']);
+Route::delete('/admin/{akunId}/subjects/{id}', [AdminController::class, 'destroyCourse']); 
+
+// MODUL FUNCTIONALITY
+Route::get('/admin/{akunId}/moduls', [AdminController::class, 'indexModul']);
+Route::get('/admin/{akunId}/moduls/{courseId}', [AdminController::class, 'indexModulByCourseId']);
+Route::post('/admin/{akunId}/moduls', [AdminController::class, 'storeTask']);
+Route::get('/admin/{akunId}/moduls/{id}/edit', [AdminController::class, 'editTask']);
+Route::put('/admin/{akunId}/moduls/{id}', [AdminController::class, 'updateTask']);
+Route::delete('/admin/{akunId}/moduls/{id}', [AdminController::class, 'destroyTask']);
+
+// TASK FUNCTIONALITY
+Route::get('/admin/{akunId}/tasks', [AdminController::class, 'indexTask']);
+Route::post('admin/{akunId}/tasks', [AdminController::class, 'store']);
+Route::get('/admin/{akunId}/tasks/{id}/edit', [AdminController::class, 'editTask']);
+Route::put('admin/{akunId}/tasks/{id}', [AdminController::class, 'update']);
+Route::delete('admin/{akunId}/tasks/{id}', [AdminController::class, 'destroy']); 
+
+// STUDENTS FUNCTIONALITY
+Route::get('/admin/{akunId}/students', [AdminController::class, 'indexStudent']);
+Route::get('/admin/{akunId}/students/{studentId}/activity', [AdminController::class, 'indexStudentActivity']);
 
 
 

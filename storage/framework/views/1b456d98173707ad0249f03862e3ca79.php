@@ -8,15 +8,36 @@
     <title>StudyIT | Find your way in a Good Way</title>
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=search" />
-    
+    <?php echo app('Illuminate\Foundation\Vite')('resources/css/app.css'); ?>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="<?php echo e(asset('css/styleindexuser.css')); ?>">
-    
+
 
 </head>
 
 <body>
-    <!-- Navbar  -->
+    <nav class="w-full px-5 py-4 flex bg-blue-400 flex-row content-center items-center justify-center text-textColorLight">
+        <div class="nav-brand flex flex-row items-center">
+            <img src="<?php echo e(asset('image/logo.png')); ?>" alt="" srcset="" class="size-8">
+            <h1 class="text-2xl font-bold text-textColorLight ml-2">StudyIT</h1>
+        </div>
+        <div class="nav-menu hidden md:flex md:justify-center md:ml-96 ">
+            <div class="nav-list flex flex-row ml-2">
+                <ul class="flex flex-row gap-7 text-lg font-semibold">
+                    <li><a href="">Home</a></li>
+                    <li><a href="">Moduls</a></li>
+                    <li><a href="">Subscribe</a></li>
+                </ul>
+            </div>
+            <div class="nav-button md:ml-96">
+                <ul class="flex flex-row gap-3 text-lg">
+                    <li><button class="bg-activeLight border-1 border-textColorLight py-1 px-2" onclick="">Login</button></li>
+                    <li><a href="">Register</a></li>
+                </ul>
+            </div>
+        </div>
+        
+    </nav>
+    <!-- Navbar 
     <header id="home">
         <div class="navbar">
             <div class="container-fluid">
@@ -60,9 +81,7 @@
 
     </header>
 
-    <!-- End Navbar Section -->
 
-    <!-- CTA Section -->
     <main>
         <div class="hero">
             <div class="content">
@@ -111,7 +130,6 @@
 
         </div>
 
-        <!-- Bootcamp Template Card -->
         <div class="bootcamp-container">
             <h1 class="bootcamp" id="bootcamp">Courses</h1>
             <div class="row">
@@ -120,7 +138,6 @@
                         <img src="" class="card-img-top" id="cover" alt="">
                         <div class="card-body">
                             <p class="card-title"></p>
-                            <!-- <p class="card-level">Level : </p> -->
                             <div class="date-container">
                                 <img src="<?php echo e(asset('image/date.png')); ?>" alt="Date Icon">
                                 <p class="date-card"></p>
@@ -130,7 +147,6 @@
                 </div>
             </div>
         </div>
-        <!-- End CTA Section -->
 
 
 
@@ -197,7 +213,7 @@
         </div>
         </div>
     </footer>
-    <script src="<?php echo e(asset('js/landingPage.js')); ?>"></script>
+    <script src="<?php echo e(asset('js/landingPage.js')); ?>"></script> -->
 </body>
 
 </html>

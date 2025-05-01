@@ -17,7 +17,8 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('email')->unique();
             $table->string('phone_number', 13)->nullable();
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent(); // Menggunakan current timestamp untuk created_at
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate(); 
         });
     }
 

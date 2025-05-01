@@ -9,10 +9,10 @@ return new class extends Migration {
     {
         Schema::create('sertifs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->unsignedBigInteger('EnrollID');
+            $table->foreign('EnrollID')->references('id')->on('enrollments')->onDelete('cascade');
             $table->string('file_path');
-            $table->string('recipient_name');
-            $table->timestamps();
+            $table->timestamp('created_at')->useCurrent(); // Menggunakan current timestamp untuk created_at
         });
 
         Schema::table('sertifs', function (Blueprint $table) {
@@ -28,6 +28,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('sertifikats');
+        Schema::dropIfExists('sertifs');
     }
 };

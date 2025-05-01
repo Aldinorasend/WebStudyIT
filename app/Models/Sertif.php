@@ -11,6 +11,6 @@ class Sertif extends Model
 
     public $incrementing = false;
     protected $keyType = 'string';
-    protected $fillable = ['name', 'file_path', 'recipient_name'];
+    protected $fillable = ['EnrollID', 'file_path'];
     public $timestamps = false;
 }
