@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('UserID');
             $table->unsignedBigInteger('CourseID');
-            $table->enum('Status', ['Pending', 'Completed'])->default('Pending');
+            $table->unsignedBigInteger('Progress')->default(0);
             $table->foreign('UserID')->references('id')->on('accounts')->onDelete('cascade');
             $table->foreign('CourseID')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();

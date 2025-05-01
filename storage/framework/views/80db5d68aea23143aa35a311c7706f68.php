@@ -45,7 +45,7 @@
             const response = await fetch(apiUrl);
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-
+            console.log(data);
             const tableBody = document.getElementById('table-body');
             tableBody.innerHTML = ''; // Hapus isi sebelumnya
 
@@ -72,9 +72,20 @@
                             </span>
                         </td>
                         <td class="p-3 text-center">
-                            <div class="flex justify-center items-center gap-2">
-                                <a href="/admin/${akunId}/subjects/${course.id}/edit" class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition">Edit</a>
-                                <button class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition" onclick="deleteCourse(${course.id})">Delete</button>
+                            <div class="flex justify-center items-center gap-1">
+                             <a href="/admin/${akunId}/moduls/${course.id}" class="bg-blue-500 text-white px-2 py-2 rounded-md text-sm hover:bg-yellow-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 ">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
+</svg>
+</a>
+                                <a href="/admin/${akunId}/subjects/${course.id}/edit" class="bg-yellow-500 text-white px-2 py-2 rounded-md text-sm hover:bg-yellow-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+</svg>
+</a>
+                                <button class="bg-red-500 text-white px-2 py-2 rounded-md text-sm hover:bg-red-600 transition" onclick="deleteCourse(${course.id})"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+</svg>
+</button>
+                               
                             </div>
                         </td>
 

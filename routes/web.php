@@ -56,7 +56,7 @@ Route::put('admin/{akunId}/instructors/{id}', [AdminController::class, 'updateIn
 Route::delete('admin/{akunId}/instructors/{id}', [AdminController::class, 'destroyInstructor']); 
 
 // COURSE FUNCTIONALITY
-Route::get('/admin/{akunId}/subjects', [AdminController::class, 'indexCourse']);
+Route::get('/admin/{akunId}/subjects', [AdminController::class, 'indexCourse']);    
 Route::get('/admin/{akunId}/subjects/create', [AdminController::class, 'createCourse']);
 Route::post('/admin/{akunId}/subjects', [AdminController::class, 'storeCourse']);
 Route::get('/admin/{akunId}/subjects/{id}/edit', [AdminController::class, 'editCourse']);
@@ -64,7 +64,8 @@ Route::put('/admin/{akunId}/subjects/', [AdminController::class, 'updateCourse']
 Route::delete('/admin/{akunId}/subjects/{id}', [AdminController::class, 'destroyCourse']); 
 
 // MODUL FUNCTIONALITY
-Route::get('/admin/{akunId}/moduls', [AdminController::class, 'indexTask']);
+Route::get('/admin/{akunId}/moduls', [AdminController::class, 'indexModul']);
+Route::get('/admin/{akunId}/moduls/{courseId}', [AdminController::class, 'indexModulByCourseId']);
 Route::post('/admin/{akunId}/moduls', [AdminController::class, 'storeTask']);
 Route::get('/admin/{akunId}/moduls/{id}/edit', [AdminController::class, 'editTask']);
 Route::put('/admin/{akunId}/moduls/{id}', [AdminController::class, 'updateTask']);
@@ -79,6 +80,8 @@ Route::delete('admin/{akunId}/tasks/{id}', [AdminController::class, 'destroy']);
 
 // STUDENTS FUNCTIONALITY
 Route::get('/admin/{akunId}/students', [AdminController::class, 'indexStudent']);
+Route::get('/admin/{akunId}/students/{studentId}/activity', [AdminController::class, 'indexStudentActivity']);
+
 
 
 Route::middleware(['auth'])->group(function () {

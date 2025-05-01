@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-4">
         <h1 class="mb-4">Edit Course</h1>
-        <a onclick="backtoList()" class="btn btn-secondary mb-3">Back to List</a>
+        <button onclick="backtoList()" class="btn btn-secondary mb-3">Back to List</button>
         <form id="edit-course-form">
             <div class="mb-3">
                 <label for="course_name" class="form-label">Course Name</label>

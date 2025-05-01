@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class modul extends Model
+class Enrollment extends Model
 {
     //
     use HasFactory;
-    protected $table = 'moduls';
+    protected $table = 'enrollments';
     protected $fillable = [
+        'UserID',
         'CourseID',
-        'title',
-        'description',
-        'task',
-        'assetto',
+        'Progress',
+        
     ];
     public function course()
     {

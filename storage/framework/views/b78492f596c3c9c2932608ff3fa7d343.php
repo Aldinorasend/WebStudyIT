@@ -1,17 +1,19 @@
 
 <?php $__env->startSection('title', 'Admin Page'); ?>
-<?php $__env->startSection('content-title', 'Students Management'); ?>
+<?php $__env->startSection('content-title', 'Students Activity Management'); ?>
 <?php $__env->startSection('content'); ?>
 
+<button onclick="backtoList()" class="bg-gray-500 text-white   px-4 mt-4 py-2 rounded-md hover:bg-gray-600">Back to Student List</button>
     <div class="container py-3">
+    
         <table class="w-full border-gray-300 rounded-lg shadow-md">
-      <thead class="bg-textColorLight border-b-2 border-white">
+        <thead class="bg-textColorLight border-b-2 border-white">
         <tr class="">
           <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">No.</th>
+          <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Course Name</th>
+          <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Instructor Name</th>          
+          <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Progress</th>
           <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Students Name</th>
-          <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Email Address</th>
-          <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Phone Number</th>
-          <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">User Type</th>
           <th class="p-3 text-sm font-semibold tracking-wide text-center text-white">Actions</th>
         </tr>
       </thead>
@@ -27,9 +29,14 @@
   </div>
 </div>
 <script>
-    const apiUrl = 'http://localhost:3000/api/StudentAccounts';
-  let currentPage = 1;
-  let totalPages = 1;
+    const urlPage = window.location.href;
+    const akunId = window.location.pathname.split('/')[2];
+    console.log("akunId:",akunId)
+    const studentId = window.location.pathname.split('/')[4];
+    console.log("studentId:",studentId)
+    const apiUrl = `http://localhost:3000/api/studentsEnrolls/${studentId}`;
+    let currentPage = 1;
+    let totalPages = 1;
 
   function timeAgo(date){
     return moment(date).fromNow();
@@ -37,7 +44,10 @@
   function timeDate(date){
     return moment(date).format("Do MMMM YYYY")
   }
-
+  async function backtoList(){
+    window.location.href = `/admin/${akunId}/students`;
+    
+  }
   async function fetchData(page = 1) {
     try {
         const response = await fetch(`${apiUrl}?page=${page}`);
@@ -59,24 +69,28 @@
             return;
         }
         
-        data.forEach((student, index) => {
+        data.forEach((enrolls, index) => {
             const rowClass = index % 2 === 0 ? 'bg-gray-100 hover:bg-blue-50' : 'bg-white hover:bg-blue-50';
             tableBody.insertAdjacentHTML('beforeend', `
                 <tr class="border-b ${rowClass} transition">
                     <td class="py-5 px-6 text-center text-gray-700">${index+1}</td>
-                    <td class="py-5 px-6 text-center text-gray-700">${student.firstname} ${student.lastname}</td>
-                    <td class="py-5 px-6 text-center text-gray-700">${student.email}</td>
-                    <td class="py-5 px-6 text-center text-gray-700">${student.phonenumber}</td>
-                    <td class="py-5 px-6 text-center text-gray-700">${student.User_Type}</td>
+                    <td class="py-5 px-6 text-center text-gray-700">${enrolls.Courses_Name}</td>
+                    <td class="py-5 px-6 text-center text-gray-700">${enrolls.Instructors_FirstName} ${enrolls.Instructors_LastName} </td>
+                    <td class="py-5 px-6 text-center text-gray-700">${enrolls.Progress}</td>
+                    <td class="py-5 px-6 text-center text-gray-700">${enrolls.Students_FirstName} ${enrolls.Students_LastName}</td>
                     <td class="py-5 px-6 text-center">
                         <div class="flex justify-center items-center gap-2">
-                            <a href="/admin/${akunId}/students/${student.id}/activity" class="bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-  <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0 0 20.25 18V6A2.25 2.25 0 0 0 18 3.75H6A2.25 2.25 0 0 0 3.75 6v12A2.25 2.25 0 0 0 6 20.25Z" />
+                            <a href="/admin/${akunId}/students/${enrolls.id}/activity" class="bg-blue-500 text-white px-2 py-2 rounded hover:bg-blue-600"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
 </svg>
+
+
 </a>
-                            <button class="bg-red-500 text-white px-2 py-2 rounded hover:bg-red-600 ml-2" onClick="deleteData(${student.id})"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
-  <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                            <button class="bg-green-500 text-white px-2 py-2 rounded hover:bg-blue-green ml-2" onClick="deleteData(${enrolls.id})"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6.72 13.829c-.24.03-.48.062-.72.096m.72-.096a42.415 42.415 0 0 1 10.56 0m-10.56 0L6.34 18m10.94-4.171c.24.03.48.062.72.096m-.72-.096L17.66 18m0 0 .229 2.523a1.125 1.125 0 0 1-1.12 1.227H7.231c-.662 0-1.18-.568-1.12-1.227L6.34 18m11.318 0h1.091A2.25 2.25 0 0 0 21 15.75V9.456c0-1.081-.768-2.015-1.837-2.175a48.055 48.055 0 0 0-1.913-.247M6.34 18H5.25A2.25 2.25 0 0 1 3 15.75V9.456c0-1.081.768-2.015 1.837-2.175a48.041 48.041 0 0 1 1.913-.247m10.5 0a48.536 48.536 0 0 0-10.5 0m10.5 0V3.375c0-.621-.504-1.125-1.125-1.125h-8.25c-.621 0-1.125.504-1.125 1.125v3.659M18 10.5h.008v.008H18V10.5Zm-3 0h.008v.008H15V10.5Z" />
 </svg>
+
 </button>
                         </div>
                     </td>
@@ -111,4 +125,4 @@
   fetchData(); // Initial Load
 </script>
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/admin/students/index.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/admin/students/activity.blade.php ENDPATH**/ ?>

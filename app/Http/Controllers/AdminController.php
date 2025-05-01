@@ -3,12 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Models\Instructor;
-use App\Models\Account;
 use App\Models\Course;
 use App\Models\Task;
+use App\Models\Sertif;
+use App\Models\Account;
+use App\Models\Modul;
 use App\Models\contactUs;
-use Illuminate\Http\Request;
+use App\Models\Enrollment;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
     /**
@@ -32,10 +38,10 @@ class AdminController extends Controller
     // Kelola Instruktur
     public function indexInstructor()
     {
-        //
         $instructors = Instructor::all();
         return view('admin.instructor.index', compact('instructors'));
     }
+
     public function createInstructor()
     {
         return view('admin.instructor.create');
@@ -69,14 +75,14 @@ class AdminController extends Controller
     // Kelola Kursus
     public function indexCourse()
     {
-        //
         $courses = Course::with('instructor')->get();
         foreach ($courses as $course) {
             if ($course->image) {
                 $course->image_url = asset('backend-uploads/' . $course->image);
             }
-        } // Mengambil data kursus beserta instruktur
-        return view('admin.course.index', compact('courses'));
+        }
+         // Mengambil data kursus beserta instruktur
+         return view('admin.course.index', compact('courses'));
     }
     public function createCourse()
     {
@@ -119,39 +125,73 @@ class AdminController extends Controller
         $students = Account::all();
         return view('admin.students.index', compact('students'));
     }
-
+    public function indexStudentActivity(){
+        $enrollments = Enrollment::with('course')->get();
+        return view('admin.students.activity', compact('enrollments'));
+    }
 
 
 
     // Kelola Modul
+    public function indexModul()
+    {
+        $moduls = Modul::with('course')->get();
+        foreach ($moduls as $modul) {
+            if ($modul->image) {
+                $modul->image_url = asset('backend-uploads/' . $modul->image);
+            }
+        }
+        return view('admin.modul.index', compact('moduls'));
+    }
+    public function indexModulByCourseId()
+    {
+        $moduls = Modul::with('course')->get();
+        foreach ($moduls as $modul) {
+            if ($modul->image) {
+                $modul->image_url = asset('backend-uploads/' . $modul->image);
+            }
+        }
+        return view('admin.modul.course', compact('moduls'));
+    }
     public function indexTask()
     {
-        //
         $tasks = Task::with('instructor')->get();
         foreach ($tasks as $task) {
             if ($task->image) {
                 $task->image_url = asset('backend-uploads/' . $task->image);
             }
-        } // Mengambil data kursus beserta instruktur
+        }
         return view('modul.index', compact('tasks'));
+    }
+
+    // Menampilkan halaman Sertifikat
+    public function indexSertif()
+    {
+        $files = Sertif::all();
+        return view('admin.sertif', compact('files'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
     
-   
-    /**
-     * Store a newly created resource in storage.
-     */
-   
-    
 
-    public function storeTask(Request $request)
+    public function storeSertif(Request $request)
     {
-        // Simpan data ke database
-        Task::create($validated);
-        return redirect('/admin/tasks')->with('success', 'Task added successfully.');
+        $request->validate([
+            'pdf_file' => 'required|mimes:pdf|max:2048',
+        ]);
+
+        $file = $request->file('pdf_file');
+        $fileName = time() . '_' . $file->getClientOriginalName();
+        $file->storeAs('public/sertif', $fileName);
+
+        Sertif::create([
+            'name' => $file->getClientOriginalName(),
+            'file_path' => $fileName,
+        ]);
+
+        return back()->with('success', 'Sertifikat berhasil diupload!');
     }
     /**
      * Display the specified resource.
@@ -166,44 +206,76 @@ class AdminController extends Controller
     /**
      * Update the specified resource in storage.
      */
-
-    public function editTask(Task $task)
-    {
-        //
-        return view('modul.edit', compact('task'));
-    }
     
-    
-   
 
-    public function updateTask(Request $request, Task $task)
-    {
-        //
-        $task = Task::findOrFail($id);
-        $task->update($request->all());
-        return redirect('/admin/tasks')->with('success', 'Task updated successfully.');
-    }
+    
     /**
      * Remove the specified resource from storage.
      */
+  
    
 
     
 
-    public function destroyTask(Task $task)
+  
+
+    public function generateSertif(Request $request)
     {
-        //
-        $task = Task::findOrFail($id);
-        $task->delete();
-        return redirect('/admin/tasks')->with('success', 'Task deleted successfully.');
+        $pdf = PDF::loadView('admin.certificate_template', [
+        'recipientName' => $request->recipient_name
+        ]);
+    
+        $filename = 'sertifikat_'.Str::slug($request->certificate_name).'_'.time().'.pdf';
+    
+        // Simpan ke storage
+        Storage::put('certificates/'.$filename, $pdf->output());
+    
+        // Simpan record ke database
+        Sertif::create([
+            'id' => Str::uuid(), // Generate UUID
+            'name' => $request->certificate_name,
+            'file_path' => 'certificates/'.$filename,
+            'recipient_name' => $request->recipient_name
+        ]);
+    
+        return back()->with('success', 'Sertifikat berhasil dibuat');
     }
 
+    public function downloadSertif($id)
+    {
+        // Cari sertifikat berdasarkan ID
+        $sertif = Sertif::findOrFail($id);
+    
+        // Path lengkap ke file
+        $path = storage_path('app/public/' . $sertif->file_path);
+    
+        // Validasi file exists
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan');
+        }
+    
+        // Download file
+        return response()->download($path, $sertif->name.'.pdf');
+    }
 
-    /**
-     * Update the specified resource in storage.
-     */
+    public function destroySertif($id)
+    {
+        try {
+            // Cari sertifikat berdasarkan ID
+            $sertif = Sertif::findOrFail($id);
+        
+            // Hapus file dari storage
+            Storage::delete('public/' . $sertif->file_path);
+        
+            // Hapus record dari database
+            $sertif->delete();
+        
+            return back()->with('success', 'Sertifikat berhasil dihapus');
+        
+        } catch (\Exception $e) {
+            return back()->with('error', 'Gagal menghapus sertifikat: ' . $e->getMessage());
+        }
+    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
 }
