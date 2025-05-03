@@ -51,5 +51,6 @@
 </form>
     </div>
     <script src="<?php echo e(asset('js/register.js')); ?>"></script>
+    <script src="<?php echo e(mix('js/idleTImeout.js')); ?>"></script>
 </body>
 </html><?php /**PATH C:\Users\harit\OneDrive\Documents\GitHub\WebStudyIT\resources\views/Auth/register.blade.php ENDPATH**/ ?>
