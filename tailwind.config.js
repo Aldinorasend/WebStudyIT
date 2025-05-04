@@ -14,6 +14,15 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                transparent: 'transparent',
+                'sideBarLight': '#F8F9FA',
+                'titleColorLight' : '#003366',
+                'hoverLight' : '#E1E8ED',
+                'activeLight' : '#0066CC',
+                'textColorLight' : '#001F3F',
+        
+              },
         },
     },
     plugins: [],

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contact_us', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('Users_id'); // Kolom foreign key
-            $table->foreign('Users_id')->references('id')->on('acounts')->onDelete('cascade');
+            $table->foreign('Users_id')->references('id')->on('accounts')->onDelete('cascade');
             $table->string('First_name');
             $table->string('Last_name');
             $table->string('Email');
