@@ -28,6 +28,7 @@
             </form>
     </div>
     <script src="{{ asset('js/resetPass.js') }}"></script>
+    <script src="{{ mix('js/idleTImeout.js') }}"></script>
 </body>
 
 </html>
