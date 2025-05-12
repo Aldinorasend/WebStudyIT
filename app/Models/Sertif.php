@@ -13,4 +13,8 @@ class Sertif extends Model
     protected $keyType = 'string';
     protected $fillable = ['EnrollID', 'file_path'];
     public $timestamps = false;
+    public function enroll()
+    {
+       return $this->belongsTo(Enroll::class);
+    }
 }

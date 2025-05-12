@@ -1,7 +1,6 @@
-@extends('layouts.admin')
-@section('title', 'Admin Page')
-@section('content-title', 'Task Management')
-@section('content')
+<?php $__env->startSection('title', 'Admin Page'); ?>
+<?php $__env->startSection('content-title', 'Task Management'); ?>
+<?php $__env->startSection('content'); ?>
 <button onclick="backtoList()" class="bg-gray-500 text-white   px-4 mt-4 py-2 rounded-md hover:bg-gray-600">Back to Courses Taken</button>
 
     <div class="container py-3">
@@ -157,4 +156,5 @@
 
   fetchData(); // Initial Load
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/admin/task/index.blade.php ENDPATH**/ ?>
