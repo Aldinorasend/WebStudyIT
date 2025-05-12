@@ -28,8 +28,9 @@ return new class extends Migration
             $table->foreign('ModulID')->references('id')->on('moduls')->onDelete('cascade');
             $table->foreign('EnrollID')->references('id')->on('enrollments')->onDelete('cascade');
             $table->string('FileTask');
-            $table->enum('Status', ['Pending', 'Completed'])->default('Pending');
-            $table->timestamps();
+            $table->enum('Status', ['Pending', 'Completed', 'Submitted', 'Rejected'])->default('Pending');
+            $table->text('Comment')->nullable();
+            $table->timestamp('SubmittedAt')->useCurrent();
         });
 
         

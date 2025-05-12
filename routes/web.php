@@ -81,6 +81,13 @@ Route::delete('admin/{akunId}/tasks/{id}', [AdminController::class, 'destroy']);
 // STUDENTS FUNCTIONALITY
 Route::get('/admin/{akunId}/students', [AdminController::class, 'indexStudent']);
 Route::get('/admin/{akunId}/students/{studentId}/activity', [AdminController::class, 'indexStudentActivity']);
+Route::get('/admin/{akunId}/students/{studentId}/courses/{courseId}/tasks', [AdminController::class, 'indexStudentActivityTask']);
+
+// SERTIF FUNCTIONALITY
+Route::get('/admin/sertif/download/{id}', [AdminController::class, 'downloadSertif'])->name('admin.sertif.download');
+Route::post('/admin/sertif/generate', [AdminController::class, 'generateSertif'])->name('admin.sertif.generate');
+Route::delete('/admin/sertif/{id}', [AdminController::class, 'destroySertif'])->name('admin.sertif.destroy');
+Route::get('/admin/sertif', [AdminController::class, 'indexSertif']);
 
 
 

@@ -16,17 +16,17 @@
     <!-- Sidebar Section -->
     <div class="container flex flex-row text-start  text-textColorLight">
         <div class="sidebar flex flex-col bg-sideBarLight w-56 h-full shadow-lg  py-4 px-2  text-textColorLight  border-x-slate-900  fixed top-0 right-0 left-0 justify-between">
-            <div class="brand flex flex-row items-center text-center  ml-4  ">
+            <div class="brand flex items-center ml-4">
                 <div class="brand-logo">
                     <img class="size-6" src="{{asset('image/logo.png')}}" alt="">
                 </div>
                 <div class="brand-title mx-3">
                     <h1 class="text-2xl font-sans font-bold text-titleColorLight">StudyIT</h1>
                 </div>
-                <div class="btnLogout items-center">
-                    <button onclick="window.location.href='/'">
+                <div class="btnLogout">
+                    <button onclick="window.location.href='/'" class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6 ml-1">
+                            stroke="currentColor" class="size-6 ">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                         </svg>
@@ -114,8 +114,8 @@
                 </div>
         </div>
     
-        <div class="content p-7 ml-60 w-full">
-            <h1 class="text-textColorLight font-bold text-3xl">@yield('content-title')</h1>
+        <div class="content  ml-60 w-full">
+            <h1 class="text-textColorLight px-6 pt-6 font-bold text-3xl">@yield('content-title')</h1>
             <div class="content-body mt-5">
               @yield('content')
             </div>

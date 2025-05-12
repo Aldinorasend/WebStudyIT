@@ -59,7 +59,7 @@
                 tableBody.insertAdjacentHTML('beforeend', `
                     <tr class="border-b hover:bg-gray-100 transition">
                         <td class="p-3 text-center">${index + 1}</td>
-                        <td class="p-3 text-center">
+                        <td class="p-3 text-center justify-center content-center">
                             <img src="${baseUrl}${course.image}" alt="${course.course_name}" class="rounded-md shadow-md" style="max-width: 100px; max-height: 100px;">
                         </td>
                         <td class="p-3 text-center">${course.course_name}</td>
