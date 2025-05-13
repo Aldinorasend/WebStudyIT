@@ -74,32 +74,6 @@
     // Fungsi untuk memuat instruktur ke dalam dropdown
     const akunId = window.location.pathname.split('/')[2];
     console.log("akunId :",akunId)
-  
-    // async function loadInstructors() {
-    //     try {
-    //         const response = await fetch(apiInstructorsUrl);
-    //         const instructors = await response.json();
-    //         console.log(instructors)
-    //         const instructorDropdown = document.getElementById('instructor_id');
-    //         instructorDropdown.innerHTML = '';
-
-    //         // Menambahkan instruktur ke dalam dropdown
-    //         instructors.data.forEach(instructor => {
-    //             const option = document.createElement('option');
-    //             option.value = instructor.id;
-    //             option.textContent = `${instructor.firstname} ${instructor.lastname}`;
-    //             instructorDropdown.appendChild(option);
-    //         });
-    //     } catch (error) {
-    //         console.error('Error loading instructors:', error);
-    //     }
-    // }
-
-    // Panggil fungsi untuk memuat instruktur saat halaman dimuat
-    // document.addEventListener('DOMContentLoaded', loadInstructors);
-    
-
-    // Event listener untuk menangani submit form
 
     async function backtoList(){
             window.location.href=`/admin/${akunId}/subjects`;

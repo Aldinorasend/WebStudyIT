@@ -43,7 +43,7 @@
                                         d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                 </svg>
 
-                                <a href="/">Dashboard</a>
+                                <a href="dashboard">Dashboard</a>
                             </li>
                         </div>
                         <div class="btn border-2 border-transparent py-3 hover:bg-textColorLight p-3 hover:text-hoverLight  hover:rounded-lg active:bg-activeLight ">
@@ -125,19 +125,38 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const currentLocation = window.location.pathname; // Mendapatkan path URL saat ini
-            const menuItems = document.querySelectorAll('.btn'); // Mengambil semua elemen dengan class .btn
-            console.log(currentLocation)
-            menuItems.forEach(item => {
-                const link = item.querySelector('a'); // Mengambil elemen <a> dalam .btn
-                if (link && link.getAttribute('href') === currentLocation) {
-                    item.classList.add('bg-activeLight', 'text-hoverLight', 'rounded-lg',
-                        'font-medium'); // Menggunakan Tailwind untuk gaya aktif
-                }
-            });
-        });
+        const currentLocation = window.location.pathname; // Dapatkan path URL saat ini
+        const pathSegments = currentLocation.split('/'); // Pisahkan berdasarkan "/"
+        const akunId = pathSegments[2]; // Ambil ID akun dari path (misal: /admin/2)
 
+        const menuItems = document.querySelectorAll('.btn'); // Ambil semua elemen dengan class .btn
+
+        console.log("Current Path:", currentLocation);
+
+        menuItems.forEach(item => {
+            const link = item.querySelector('a'); // Ambil elemen <a> dalam .btn
+            if (link) {
+                // Tambahkan akunId ke dalam href jika tersedia
+                if (akunId) {
+                    link.href = `/students/${akunId}/${link.getAttribute('href')}`;
+                }
+
+                const linkPath = new URL(link.href, window.location.origin).pathname; // Normalisasi href
+                // console.log("Checking:", linkPath);
+
+                // Aktifkan menu jika path cocok
+                if (currentLocation.startsWith(linkPath)) {
+                    item.classList.add('bg-activeLight', 'text-hoverLight', 'rounded-lg', 'font-medium');
+                }
+
+                // console.log(`Active Menu: ${linkPath}`);
+            }
+        });
+    
+    });
     </script>
+
+    
 
 </body>
 

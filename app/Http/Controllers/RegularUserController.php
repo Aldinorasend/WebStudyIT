@@ -70,6 +70,6 @@ class RegularUserController extends Controller
         if (!$akun) {
             abort(404, 'Akun  not found');
         } //
-        return view('payment.index',['akun_id' => $akun_id]);
+        return view('user.payment',['akun_id' => $akun_id]);
     }
 }
