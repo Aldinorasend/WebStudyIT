@@ -114,7 +114,7 @@
                 </div>
         </div>
     
-        <div class="content  ml-60 w-full">
+        <div class="content ml-56 w-full">
             <h1 class="text-textColorLight px-6 pt-6 font-bold text-3xl">@yield('content-title')</h1>
             <div class="content-body mt-5">
               @yield('content')

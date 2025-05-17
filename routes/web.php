@@ -14,7 +14,6 @@ use App\Http\Controllers\EditProfileController;
 
 
 Route::get('/', [RegularUserController::class, 'index'])->name('index');
-Route::get('/students/{akun_id}/dashboard', [RegularUserController::class, 'indexUser']);
 
 // Kelola Modul
 Route::get('/admin/tasks', [AdminController::class, 'indexTask']);
@@ -38,7 +37,10 @@ Route::get('/reset-password', [AuthController::class, 'resetPassword']);
 
 // USER FUNCTIONALITY
 Route::get('/',[RegularUserController::class, 'index']);
-Route::get('/students/{akun_id}',[RegularUserController::class, 'indexUser']);
+Route::get('/students/{akun_id}/dashboard', [RegularUserController::class, 'indexUser']);
+Route::get('/students/{akun_id}/courses/{course_id}', [RegularUserController::class, 'indexCourse']);
+Route::get('/students/{akun_id}/mycourse', [RegularUserController::class, 'myCourse']);
+
 Route::get('/user/{akun_id}/payments',[RegularUserController::class, 'enroll']);
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
 

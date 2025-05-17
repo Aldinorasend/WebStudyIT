@@ -133,7 +133,7 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5 " id="all-course-container">
             <!-- Course Card 1 -->
             <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.005] origin-center"
-                id="all-course-template">
+     id="all-course-template" data-id="YOUR_COURSE_ID_HERE" data-student-id="YOUR_STUDENT_ID_HERE">
                 <!-- Konten card -->
                 <img src="" class="w-full h-48 object-cover all-card-img-top" id="card-img-top"
                     alt="Web Development Course">
@@ -150,8 +150,8 @@
                         </div>
                     </div>
                     <div class="all-course-content flex flex-row justify-between  items-center">
-                        <a href="#" class="text-sm mb-3 text-white hover:underline">View details</a>
-                        <p class=" text-white mb-3 text-sm  all-card-level" id="modul">0 Lesson</p>
+                            <a href="" class="text-white text-xs hover:underline view-details">View details </a>
+                            <p class=" text-white mb-3 text-sm  all-card-level" id="modul">0 Lesson</p>
                         </div>
                     </div>
                 </div>
@@ -169,6 +169,7 @@
     const API_ACCOUNT = `http://localhost:3000/api/Accounts`;
     const API_COURSE = `http://localhost:3000/api/coursesUser`;
     const BASE_URL = 'http://localhost:8000/backend-uploads/';
+    const API_ENROLL = `http://localhost:3000/api/createEnrolls`;
     
 
     document.addEventListener('DOMContentLoaded', function () {
@@ -176,6 +177,10 @@
         fetchAccount(API_ACCOUNT, studentId);
         fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL);
         fetchAllCourses(API_COURSE, studentId, BASE_URL);
+       
+        // Use querySelectorAll for multiple elements
+// JavaScript
+        
     });
     function navigatetoPayment() {
         const studentId = window.location.pathname.split('/')[2];
@@ -195,11 +200,33 @@
                 throw new Error('Network response was not ok');
             }
             const dataCourse = await courseResponse.json();
+            
           
             if(data.User_Type == "Free" && (dataCourse.level == "intermediate" || dataCourse.level == "expert")){
                 window.location.href = `/user/${studentId}/payments`;
             }else{
-                window.location.href = `/students/${studentId}/courses/${idCourse}`;
+                const enrollResponse = await fetch(`${API_ENROLL}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        UserID: studentId,
+                        CourseID: idCourse,
+                    }),
+                });
+                if (!enrollResponse.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const enrollData = await enrollResponse.json();
+                console.log(enrollData);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: 'You have successfully enrolled in the course!',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -251,7 +278,7 @@
                 const courseCard = courseTemplate.cloneNode(true);
                 courseCard.style.display = 'block';
                 courseCard.removeAttribute('id');
-                courseCard.setAttribute('data-id', course.id);
+                courseCard.setAttribute('data-id', course.CourseID);
 
                 // Get elements
                 const cardImg = courseCard.querySelector('.card-img-top');
@@ -283,9 +310,11 @@
                 progressBar.style.width = `${progress}%`;
                 progressPercent.textContent = `${progress}%`;
                 courseCard.addEventListener('click', () => {
-                    window.location.href = `/user/${studentId}/courses/${course.id}`;
+                    const cId = course.CourseID
+                    console.log(cId);
+                    window.location.href = `/students/${studentId}/courses/${course.CourseID}`;
                 });
-                learnLink.href = `/user/${studentId}/courses/${course.id}`;
+                // learnLink.href = `/user/${studentId}/courses/${course.id}`;
                 courseContainer.appendChild(courseCard);
             });
             // Update the UI with the fetched data
@@ -345,6 +374,14 @@
                 
                 btnEnroll.onclick = () => enroll(course.id); 
                 courseContainer.appendChild(courseCard);
+                const viewDetails = courseCard.querySelector('.view-details');
+                viewDetails.onclick = (e) => {
+                    e.preventDefault();
+
+                    const courseId = courseCard.getAttribute('data-id');
+                    window.location.href = `/students/${studentId}/courses/${courseId}`;
+                    console.log(`/students/${studentId}/courses/${courseId}`);
+                };
             });
         } catch (error) {
             console.error('Error fetching all courses:', error);
