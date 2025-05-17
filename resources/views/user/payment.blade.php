@@ -104,10 +104,16 @@
                 <h2 class="text-sm font-semibold">Amount</h2>
                 <input class="mt-2 text-sm border h-8 p-2 border-gray-300" type="text" name="amount" id="amount" placeholder="Rp. 100.000" readonly>
             </div>
-
+            <div class="codevoucher text-textColorLight px-6 pt-2 flex flex-col">
+                <h2 class="text-sm font-semibold">Voucher Code</h2>
+                <div class="voucherInput flex flex-row gap-1 items-center mt-2">
+                    <input class=" w-3/4 text-sm border h-8 p-2 border-gray-300" type="text" name="codevoucher" id="codevoucher" placeholder="KODEVOUCHER"  >
+                    <button type="button" class="w-1/4 h-8 bg-textColorLight text-white text-sm rounded-sm" onclick="checkVoucher()">Check</button>
+                </div>
+            </div>
             <div class="btn flex justify-center mt-4 px-6">
                 <button type="submit" id="payButton" disabled
-                    class="w-full bg-textColorLight text-white font-semibold py-2 rounded-sm hover:bg-textColorDark transition duration-300">Pay Now</button>
+                    class="w-full bg-textColorLight text-white font-semibold py-2 rounded-sm hover:bg-textColorDark transition duration-300" >Pay Now</button>
             </div>
         </form>
     </div>
@@ -119,14 +125,76 @@
         const studentId = window.location.pathname.split('/')[2];
         console.log(studentId);
         const API_PAYMENT = `http://localhost:3000/api/payments`;
-
         
+        function checkVoucher() {
+            const codeVoucherInput = document.getElementById('codevoucher');
+            const codeVoucher = codeVoucherInput.value.trim();
+            const amountInput = document.getElementById('amount');
+            const selectedPackage = document.querySelector('.package-option > div.border-blue-500');
+            if(!selectedPackage) {
+                Swal.fire({
+                    title: 'No Package Selected',
+                    text: 'Please select a package first before applying voucher',
+                    icon: 'warning',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+            const packageAmount = parseInt(selectedPackage.getAttribute('data-amount'));
+            let newAmount = packageAmount;
+            if(codeVoucher === 'DISKON50') {
+                Swal.fire({
+                    title: 'Valid Voucher',
+                    text: 'You have applied a 50% discount voucher!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                newAmount = packageAmount - (packageAmount * 0.5);
+            } else if(codeVoucher === 'DISKON30') {
+                Swal.fire({
+                    title: 'Valid Voucher',
+                    text: 'You have applied a 30% discount voucher!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                newAmount = packageAmount - (packageAmount * 0.3);
+                
+            } else if(codeVoucher === 'DISKON20') {
+                Swal.fire({
+                    title: 'Valid Voucher',
+                    text: 'You have applied a 20% discount voucher!',
+                    icon: 'success',
+                    confirmButtonText: 'OK'
+                });
+                newAmount = packageAmount - (packageAmount * 0.2);
+            
+            } else if(codeVoucher === '') {
+                newAmount = packageAmount;
+                
+            }else{
+                  // Invalid voucher code
+                Swal.fire({
+                    title: 'Invalid Voucher',
+                    text: 'The voucher code you entered is not valid',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+                return;
+            }
+            amountInput.value = formatCurrency(newAmount);
+
+        }
+
+        function formatCurrency(amount) {
+            return 'Rp.' + parseInt(amount).toLocaleString('id-ID');
+        }
         document.addEventListener('DOMContentLoaded', function() {
             // Package selection
             const packages = document.querySelectorAll('.package-option > div');
             const selectedPackageInput = document.getElementById('selected_package');
             const amountInput = document.getElementById('amount');
             const phoneInput = document.getElementById('phone');
+            const codeVoucherInput = document.getElementById('codevoucher');
             
             // Add hidden input for payment date and expiry date
             const form = document.querySelector('form');
@@ -162,6 +230,7 @@
                 return result;
             }
 
+            
             packages.forEach(pkg => {
                 pkg.addEventListener('click', function() {
                     // Remove selected class from all packages
@@ -179,6 +248,8 @@
                     
                     // Update amount field
                     amountInput.value = formatCurrency(packageAmount);
+
+                    
                     
                     // Set payment date (today)
                     const currentDate = new Date();
