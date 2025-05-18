@@ -106,4 +106,13 @@ class RegularUserController extends Controller
         } //
         return view('user.payment',['akun_id' => $akun_id]);
     }
+
+    public function Profiles($akun_id)
+    {
+        $akun = Account::find($akun_id);
+        if (!$akun) {
+            abort(404, 'Akun  not found');
+        } //
+        return view('user.profiles',['akun_id' => $akun_id]);
+    }
 }

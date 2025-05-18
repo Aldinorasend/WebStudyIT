@@ -269,15 +269,15 @@
             const coursesToShow = data.slice(0, 3);
             console.log("Enrolled Course data: ", data);
 
-            coursesToShow.forEach(course => {
+            coursesToShow.forEach(enroll => {
                 document.getElementById("deadline").textContent =
-                    `${course.total_upcoming_incomplete_courses}`;
-                document.getElementById("activecourses").textContent = `${course.total_active_courses}`;
-                document.getElementById("overallprogress").textContent = `${course.average_progress}%`;
+                    `${enroll.total_upcoming_incomplete_courses}`;
+                document.getElementById("activecourses").textContent = `${enroll.total_active_courses}`;
+                document.getElementById("overallprogress").textContent = `${enroll.average_progress}%`;
                 const courseCard = courseTemplate.cloneNode(true);
                 courseCard.style.display = 'block';
                 courseCard.removeAttribute('id');
-                courseCard.setAttribute('data-id', course.CourseID);
+                courseCard.setAttribute('data-id', enroll.CourseID);
 
                 // Get elements
                 const cardImg = courseCard.querySelector('.card-img-top');
@@ -288,35 +288,34 @@
                 const learnLink = courseCard.querySelector('.learn-link');
 
                 if (!cardImg || !cardTitle || !progressBar || !progressPercent || !learnLink) {
-
                     console.error('Elements not found in card template');
                     return;
                 }
 
                 // Set content
-                cardImg.src = `${BASE_URL}${course.Courses_Image}`;
+                cardImg.src = `${BASE_URL}${enroll.Courses_Image}`;
                 cardImg.alt = "Cover course";
 
-                const level = course.Courses_Level ?
-                    course.Courses_Level.charAt(0).toUpperCase() + course.Courses_Level.slice(1) :
+                const level = enroll.Courses_Level ?
+                    enroll.Courses_Level.charAt(0).toUpperCase() + enroll.Courses_Level.slice(1) :
                     '';
 
-                cardTitle.textContent = `${course.Courses_Name}`;
+                cardTitle.textContent = `${enroll.Courses_Name}`;
                 cardLevel.textContent = `${level} Class`;
 
                 // Set progress (assuming course.Progress is a number between 0-100)
-                const progress = course.Progress || 0;
+                const progress = enroll.Progress || 0;
                 progressBar.style.width = `${progress}%`;
                 progressPercent.textContent = `${progress}%`;
-                courseCard.addEventListener('click', () => {
-                    const cId = course.CourseID
-                    console.log(cId);
-                    window.location.href = `/students/${studentId}/courses/${course.CourseID}`;
-                });
-                // learnLink.href = `/user/${studentId}/courses/${course.id}`;
+                
+                // Modified learnLink handler
+                learnLink.onclick = (e) => {
+                    e.preventDefault();
+                    window.location.href = `/students/${enroll.id}/courses/${enroll.CourseID}`;
+                };
+                
                 courseContainer.appendChild(courseCard);
             });
-            // Update the UI with the fetched data
 
         } catch (error) {
             console.error('Error fetching enrolled courses:', error);
@@ -327,71 +326,204 @@
                 `;
         }
     }
-    async function fetchAllCourses(API_COURSES, studentId, BASE_URL) {
-        const courseContainer = document.getElementById('all-course-container');
-        const courseTemplate = document.getElementById('all-course-template');
-        try {
+
+async function fetchAllCourses(API_COURSES, studentId, BASE_URL) {
+    const courseContainer = document.getElementById('all-course-container');
+    const courseTemplate = document.getElementById('all-course-template');
+    try {
+        const response = await fetch(`${API_COURSES}`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        courseContainer.innerHTML = '';
+        const data = await response.json();
+        console.log("All Courses data: ", data);
+        const coursesToShow = data.slice(0, 6);
+        coursesToShow.forEach(course => {
+            const courseCard = courseTemplate.cloneNode(true);
+            courseCard.style.display = 'block';
+            courseCard.removeAttribute('id');
+            courseCard.setAttribute('data-id', course.id);
             
-            const response = await fetch(`${API_COURSES}`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            // Get elements
+            const btnEnroll = courseCard.querySelector('.btnEnrollNow');
+            const cardImg = courseCard.querySelector('.all-card-img-top');
+            const cardTitle = courseCard.querySelector('.all-card-title');
+            const cardLevel = courseCard.querySelector('.all-card-level');
+            const viewDetails = courseCard.querySelector('.view-details');
+
+            if (!cardImg || !cardTitle || !btnEnroll || !viewDetails) {
+                console.error('Elements not found in card template');
+                return;
             }
-            courseContainer.innerHTML = '';
-            const data = await response.json();
-            console.log("All Courses data: ", data);
-            const coursesToShow = data.slice(0, 6);
-            coursesToShow.forEach(course => {
-                const courseCard = courseTemplate.cloneNode(true);
-                courseCard.style.display = 'block';
-                courseCard.removeAttribute('id');
-                courseCard.setAttribute('data-id', course.id);
+
+            // Set content
+            cardImg.src = `${BASE_URL}${course.image}`;
+            cardImg.alt = "Cover course";
+
+            const level = course.level ?
+                course.level.charAt(0).toUpperCase() + course.level.slice(1) :
+                '';
+
+            cardTitle.textContent = `${course.course_name}`;
+            cardLevel.textContent = `${level} Class`;
+            
+            btnEnroll.onclick = () => enroll(course.id); 
+            
+            // Modified viewDetails handler
+            viewDetails.onclick = (e) => {
+                e.preventDefault();
+                window.location.href = `/students/${studentId}/viewDetails/${course.id}`;
+            };
+            
+            courseContainer.appendChild(courseCard);
+        });
+    } catch (error) {
+        console.error('Error fetching all courses:', error);
+        courseContainer.innerHTML = `
+                <div class="text-center py-8 text-red-500">
+                    Failed to load courses. Please try again later.
+                </div>
+            `;
+    }
+}
+    // DI BAWAH INI CODE DEFAULT SEBELUM ALAN NGEMERGE
+    // async function fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL) {
+    //     const courseContainer = document.getElementById('course-container');
+    //     const courseTemplate = document.getElementById('course-template');
+    //     try {
+    //         const response = await fetch(`${API_ENROLLED_COURSE}/${studentId}`);
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         courseContainer.innerHTML = '';
+    //         const data = await response.json();
+    //         const coursesToShow = data.slice(0, 3);
+    //         console.log("Enrolled Course data: ", data);
+
+    //         coursesToShow.forEach(course => {
+    //             document.getElementById("deadline").textContent =
+    //                 `${course.total_upcoming_incomplete_courses}`;
+    //             document.getElementById("activecourses").textContent = `${course.total_active_courses}`;
+    //             document.getElementById("overallprogress").textContent = `${course.average_progress}%`;
+    //             const courseCard = courseTemplate.cloneNode(true);
+    //             courseCard.style.display = 'block';
+    //             courseCard.removeAttribute('id');
+    //             courseCard.setAttribute('data-id', course.CourseID);
+
+    //             // Get elements
+    //             const cardImg = courseCard.querySelector('.card-img-top');
+    //             const cardTitle = courseCard.querySelector('.card-title');
+    //             const cardLevel = courseCard.querySelector('.card-level');
+    //             const progressBar = courseCard.querySelector('.progress-bar');
+    //             const progressPercent = courseCard.querySelector('.progress-percent');
+    //             const learnLink = courseCard.querySelector('.learn-link');
+
+    //             if (!cardImg || !cardTitle || !progressBar || !progressPercent || !learnLink) {
+
+    //                 console.error('Elements not found in card template');
+    //                 return;
+    //             }
+
+    //             // Set content
+    //             cardImg.src = `${BASE_URL}${course.Courses_Image}`;
+    //             cardImg.alt = "Cover course";
+
+    //             const level = course.Courses_Level ?
+    //                 course.Courses_Level.charAt(0).toUpperCase() + course.Courses_Level.slice(1) :
+    //                 '';
+
+    //             cardTitle.textContent = `${course.Courses_Name}`;
+    //             cardLevel.textContent = `${level} Class`;
+
+    //             // Set progress (assuming course.Progress is a number between 0-100)
+    //             const progress = course.Progress || 0;
+    //             progressBar.style.width = `${progress}%`;
+    //             progressPercent.textContent = `${progress}%`;
+    //             courseCard.addEventListener('click', () => {
+    //                 const cId = course.CourseID
+    //                 console.log(cId);
+    //                 window.location.href = `/students/${studentId}/courses/${course.CourseID}`;
+    //             });
+    //             // learnLink.href = `/user/${studentId}/courses/${course.id}`;
+    //             courseContainer.appendChild(courseCard);
+    //         });
+    //         // Update the UI with the fetched data
+
+    //     } catch (error) {
+    //         console.error('Error fetching enrolled courses:', error);
+    //         courseContainer.innerHTML = `
+    //                 <div class="text-center py-8 text-red-500">
+    //                     Failed to load courses. Please try again later.
+    //                 </div>
+    //             `;
+    //     }
+    // }
+    // async function fetchAllCourses(API_COURSES, studentId, BASE_URL) {
+    //     const courseContainer = document.getElementById('all-course-container');
+    //     const courseTemplate = document.getElementById('all-course-template');
+    //     try {
+            
+    //         const response = await fetch(`${API_COURSES}`);
+    //         if (!response.ok) {
+    //             throw new Error('Network response was not ok');
+    //         }
+    //         courseContainer.innerHTML = '';
+    //         const data = await response.json();
+    //         console.log("All Courses data: ", data);
+    //         const coursesToShow = data.slice(0, 6);
+    //         coursesToShow.forEach(course => {
+    //             const courseCard = courseTemplate.cloneNode(true);
+    //             courseCard.style.display = 'block';
+    //             courseCard.removeAttribute('id');
+    //             courseCard.setAttribute('data-id', course.id);
                 
-                // Get elements
-                const btnEnroll = courseCard.querySelector('.btnEnrollNow');
-                const cardImg = courseCard.querySelector('.all-card-img-top');
-                const cardTitle = courseCard.querySelector('.all-card-title');
-                const cardLevel = courseCard.querySelector('.all-card-level');
+    //             // Get elements
+    //             const btnEnroll = courseCard.querySelector('.btnEnrollNow');
+    //             const cardImg = courseCard.querySelector('.all-card-img-top');
+    //             const cardTitle = courseCard.querySelector('.all-card-title');
+    //             const cardLevel = courseCard.querySelector('.all-card-level');
            
     
-                if (!cardImg || !cardTitle || !btnEnroll) {
-                    console.error('Elements not found in card template');
-                    return;
-                }
+    //             if (!cardImg || !cardTitle || !btnEnroll) {
+    //                 console.error('Elements not found in card template');
+    //                 return;
+    //             }
     
-                // Set content
-                cardImg.src = `${BASE_URL}${course.image}`;
-                cardImg.alt = "Cover course";
+    //             // Set content
+    //             cardImg.src = `${BASE_URL}${course.image}`;
+    //             cardImg.alt = "Cover course";
     
-                const level = course.level ?
-                    course.level.charAt(0).toUpperCase() + course.level.slice(1) :
-                    '';
+    //             const level = course.level ?
+    //                 course.level.charAt(0).toUpperCase() + course.level.slice(1) :
+    //                 '';
     
-                cardTitle.textContent = `${course.course_name}`;
-                cardLevel.textContent = `${level} Class`;
+    //             cardTitle.textContent = `${course.course_name}`;
+    //             cardLevel.textContent = `${level} Class`;
     
-                // Set progress (assuming course.Progress is a number between 0-100)
+    //             // Set progress (assuming course.Progress is a number between 0-100)
                 
-                btnEnroll.onclick = () => enroll(course.id); 
-                courseContainer.appendChild(courseCard);
-                const viewDetails = courseCard.querySelector('.view-details');
-                viewDetails.onclick = (e) => {
-                    e.preventDefault();
+    //             btnEnroll.onclick = () => enroll(course.id); 
+    //             courseContainer.appendChild(courseCard);
+    //             const viewDetails = courseCard.querySelector('.view-details');
+    //             viewDetails.onclick = (e) => {
+    //                 e.preventDefault();
 
-                    const courseId = courseCard.getAttribute('data-id');
-                    window.location.href = `/students/${studentId}/courses/${courseId}`;
-                    console.log(`/students/${studentId}/courses/${courseId}`);
-                };
-            });
-        } catch (error) {
-            console.error('Error fetching all courses:', error);
-            courseContainer.innerHTML = `
-                    <div class="text-center py-8 text-red-500">
-                        Failed to load courses. Please try again later.
-                    </div>
-                `;
+    //                 const courseId = courseCard.getAttribute('data-id');
+    //                 window.location.href = `/students/${studentId}/courses/${courseId}`;
+    //                 console.log(`/students/${studentId}/courses/${courseId}`);
+    //             };
+    //         });
+    //     } catch (error) {
+    //         console.error('Error fetching all courses:', error);
+    //         courseContainer.innerHTML = `
+    //                 <div class="text-center py-8 text-red-500">
+    //                     Failed to load courses. Please try again later.
+    //                 </div>
+    //             `;
             
-        }
-    }
+    //     }
+    // }
 
 </script>
 
