@@ -56,9 +56,14 @@
         <h1 class="text-xl font-bold mb-2">Course Guide</h1>
         <!-- <p class="text-sm text-gray-500 mb-4">12 days • 245 hours total</p> --> 
         
-        <div class="space-y-3" id="modules-container">
+        <!-- <div class="space-y-3" id="modules-container">
             <div class="text-center py-4 text-gray-500">Loading modules...</div>
-        </div>
+        </div> -->
+
+        <div class="space-y-3" id="modules-container">
+    <!-- Modules will be loaded here dynamically -->
+    <div class="text-center py-4 text-gray-500">Loading modules...</div>
+</div>
 </div>
     </div>
 </div>
@@ -72,7 +77,14 @@
     const API_RATING = `http://localhost:3000/api/coursesRating/`;
     const API_MODULES = `http://localhost:3000/api/modulsByCourseID/${courseId}`;
 
+    // Add this flag to track how the user arrived at the page
+    let cameFromContinueLearning = false;
+
     document.addEventListener('DOMContentLoaded', function () {
+        // Check URL parameters to see how we got here
+        const urlParams = new URLSearchParams(window.location.search);
+        cameFromContinueLearning = urlParams.get('source') === 'continue';
+
         fetchCourses(courseId);
         fetchRating(courseId);
         fetchModules();
@@ -132,14 +144,15 @@
             if (!response.ok) throw new Error('Network response was not ok');
             const modules = await response.json();
             
-            const modulesContainer = document.querySelector('.space-y-3');
+            const modulesContainer = document.getElementById('modules-container');
             if (!modulesContainer) return;
             
-            modulesContainer.innerHTML = ''; // Clear existing content
+            modulesContainer.innerHTML = '';
             
             modules.forEach((module, index) => {
                 const moduleElement = document.createElement('div');
                 moduleElement.className = 'flex items-center bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer';
+                moduleElement.setAttribute('data-module-id', module.id);
                 moduleElement.innerHTML = `
                     <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                         <span class="text-blue-600 text-sm font-medium">${index + 1}</span>
@@ -148,10 +161,29 @@
                 `;
                 modulesContainer.appendChild(moduleElement);
             });
+
+            // Add click event listener to the container
+            modulesContainer.addEventListener('click', (event) => {
+                // Only proceed if user came from Continue Learning
+                if (!cameFromContinueLearning) {
+                    return; // Do nothing if came from View Details
+                }
+                
+                const moduleElement = event.target.closest('[data-module-id]');
+                
+                if (moduleElement) {
+                    const moduleId = moduleElement.getAttribute('data-module-id');
+                    // Match the exact legacy route pattern
+                    const targetUrl = `/students/${studentId}/courses/${courseId}/modul?module_id=${moduleId}`;
+                    
+                    console.log('Redirecting to:', targetUrl);
+                    window.location.href = targetUrl;
+                }
+            });
             
         } catch (error) {
             console.error('Error fetching modules:', error);
-            const modulesContainer = document.querySelector('.space-y-3');
+            const modulesContainer = document.getElementById('modules-container');
             if (modulesContainer) {
                 modulesContainer.innerHTML = '<p class="text-red-500">Error loading modules. Please try again later.</p>';
             }

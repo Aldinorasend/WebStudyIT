@@ -1,8 +1,7 @@
-@extends('layouts.user')
-@section('title', 'StudyIT')
-@section('content-title', 'Your Current Course')
+<?php $__env->startSection('title', 'StudyIT'); ?>
+<?php $__env->startSection('content-title', 'Your Current Course'); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container flex flex-col px-6">
     <!-- Search Bar -->
     <div class="container-search-bar mb-10">
@@ -270,4 +269,5 @@
     }
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\alienware\Documents\WebPro\EXB\WebStudyIT\resources\views/user/mycourse.blade.php ENDPATH**/ ?>
