@@ -129,6 +129,11 @@ class AdminController extends Controller
         $enrollments = Enrollment::with('course')->get();
         return view('admin.students.activity', compact('enrollments'));
     }
+    public function indexStudentActivityTask() {
+        $tasks = Task::with('modul')->get();
+        $enrollments = Task::with('enrollment')->get();
+        return view('admin.task.index', compact('tasks', 'enrollments'));
+    } 
 
 
 

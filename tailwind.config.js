@@ -22,8 +22,19 @@ export default {
                 'activeLight' : '#0066CC',
                 'textColorLight' : '#001F3F',
         
-              },
+            },
+            
         },
     },
+        keyframes: {
+            float: {
+                '0%, 100%': { transform: 'translateY(0px)' },
+                '50%': { transform: 'translateY(-15px)' },
+            }
+        },
+        animation: {
+            float: 'float 6s ease-in-out infinite',
+        
+        },
     plugins: [],
 };

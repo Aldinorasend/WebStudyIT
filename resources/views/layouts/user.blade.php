@@ -16,17 +16,17 @@
     <!-- Sidebar Section -->
     <div class="container flex flex-row text-start  text-textColorLight">
         <div class="sidebar flex flex-col bg-sideBarLight w-56 h-full shadow-lg  py-4 px-2  text-textColorLight  border-x-slate-900  fixed top-0 right-0 left-0 justify-between">
-            <div class="brand flex flex-row items-center text-center  ml-4  ">
+            <div class="brand flex items-center ml-4">
                 <div class="brand-logo">
                     <img class="size-6" src="{{asset('image/logo.png')}}" alt="">
                 </div>
                 <div class="brand-title mx-3">
                     <h1 class="text-2xl font-sans font-bold text-titleColorLight">StudyIT</h1>
                 </div>
-                <div class="btnLogout items-center">
-                    <button onclick="window.location.href='/'">
+                <div class="btnLogout">
+                    <button onclick="window.location.href='/'" class="flex items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                            stroke="currentColor" class="size-6 ml-1">
+                            stroke="currentColor" class="size-6 ">
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15" />
                         </svg>
@@ -43,7 +43,7 @@
                                         d="m2.25 12 8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
                                 </svg>
 
-                                <a href="/">Dashboard</a>
+                                <a href="dashboard">Dashboard</a>
                             </li>
                         </div>
                         <div class="btn border-2 border-transparent py-3 hover:bg-textColorLight p-3 hover:text-hoverLight  hover:rounded-lg active:bg-activeLight ">
@@ -114,8 +114,8 @@
                 </div>
         </div>
     
-        <div class="content p-7 ml-60 w-full">
-            <h1 class="text-textColorLight font-bold text-3xl">@yield('content-title')</h1>
+        <div class="content ml-56 w-full">
+            <h1 class="text-textColorLight px-6 pt-6 font-bold text-3xl">@yield('content-title')</h1>
             <div class="content-body mt-5">
               @yield('content')
             </div>
@@ -125,19 +125,38 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const currentLocation = window.location.pathname; // Mendapatkan path URL saat ini
-            const menuItems = document.querySelectorAll('.btn'); // Mengambil semua elemen dengan class .btn
-            console.log(currentLocation)
-            menuItems.forEach(item => {
-                const link = item.querySelector('a'); // Mengambil elemen <a> dalam .btn
-                if (link && link.getAttribute('href') === currentLocation) {
-                    item.classList.add('bg-activeLight', 'text-hoverLight', 'rounded-lg',
-                        'font-medium'); // Menggunakan Tailwind untuk gaya aktif
-                }
-            });
-        });
+        const currentLocation = window.location.pathname; // Dapatkan path URL saat ini
+        const pathSegments = currentLocation.split('/'); // Pisahkan berdasarkan "/"
+        const akunId = pathSegments[2]; // Ambil ID akun dari path (misal: /admin/2)
 
+        const menuItems = document.querySelectorAll('.btn'); // Ambil semua elemen dengan class .btn
+
+        console.log("Current Path:", currentLocation);
+
+        menuItems.forEach(item => {
+            const link = item.querySelector('a'); // Ambil elemen <a> dalam .btn
+            if (link) {
+                // Tambahkan akunId ke dalam href jika tersedia
+                if (akunId) {
+                    link.href = `/students/${akunId}/${link.getAttribute('href')}`;
+                }
+
+                const linkPath = new URL(link.href, window.location.origin).pathname; // Normalisasi href
+                // console.log("Checking:", linkPath);
+
+                // Aktifkan menu jika path cocok
+                if (currentLocation.startsWith(linkPath)) {
+                    item.classList.add('bg-activeLight', 'text-hoverLight', 'rounded-lg', 'font-medium');
+                }
+
+                // console.log(`Active Menu: ${linkPath}`);
+            }
+        });
+    
+    });
     </script>
+
+    
 
 </body>
 

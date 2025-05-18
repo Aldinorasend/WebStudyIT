@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\RegularUser;
 use App\Models\Account;
+use App\Models\Enrollment;
 use App\Models\Modul;
 use App\Models\Course;
 
@@ -31,7 +32,22 @@ class RegularUserController extends Controller
         // Mengirim data ke view
         
     }
+
+    public function indexCourse($akun_id, $course_id)
+    {
+        // Ambil ID dari account 
+       
+        $student = Account::find($akun_id);
+        $course = Course::find($course_id);
+        
+        // Jika data tidak ditemukan, tampilkan pesan
+        return view('user.courses', ['students' => $student, 'courses' => $course]);
+        // Debugging jika diperlukan
+        // dump($student);
     
+        // Mengirim data ke view
+        
+    }
     public function index()
     {
         //
@@ -63,6 +79,24 @@ class RegularUserController extends Controller
         ]);
     }
     
+    public function myCourse($akun_id)
+    {
+        // Ambil data berdasarkan route model binding
+        $akun = Account::find($akun_id); // Asumsi kamu memiliki model Akun
+    
+        // Validasi apakah akun ditemukan
+        if (!$akun) {
+            abort(404, 'Akun not found');
+        }
+    
+        // Ambil semua course yang terkait dengan akun
+        $enroll = Enrollment::where('UserID', $akun_id)->get();
+    
+        return view('user.mycourse', [
+            'akun_id' => $akun_id,
+            'enroll' => $enroll,
+        ]);
+    }
 
     public function enroll($akun_id)
     {
@@ -70,6 +104,6 @@ class RegularUserController extends Controller
         if (!$akun) {
             abort(404, 'Akun  not found');
         } //
-        return view('payment.index',['akun_id' => $akun_id]);
+        return view('user.payment',['akun_id' => $akun_id]);
     }
 }

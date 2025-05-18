@@ -14,7 +14,6 @@ use App\Http\Controllers\EditProfileController;
 
 
 Route::get('/', [RegularUserController::class, 'index'])->name('index');
-Route::get('/students/{akun_id}', [RegularUserController::class, 'indexUser']);
 
 // Kelola Modul
 Route::get('/admin/tasks', [AdminController::class, 'indexTask']);
@@ -41,9 +40,18 @@ Route::get('/forgot-password', [AuthController::class, 'forgotPassword']);
 Route::get('/reset-password', [AuthController::class, 'resetPassword']);
 
 // USER FUNCTIONALITY
+<<<<<<< HEAD
 //Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/students/{akun_id}',[RegularUserController::class, 'indexUser']);
 Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll']);
+=======
+Route::get('/',[RegularUserController::class, 'index']);
+Route::get('/students/{akun_id}/dashboard', [RegularUserController::class, 'indexUser']);
+Route::get('/students/{akun_id}/courses/{course_id}', [RegularUserController::class, 'indexCourse']);
+Route::get('/students/{akun_id}/mycourse', [RegularUserController::class, 'myCourse']);
+
+Route::get('/user/{akun_id}/payments',[RegularUserController::class, 'enroll']);
+>>>>>>> 363b7f6cd6a639bf54857f35b5dd266eadab29b2
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
 
 
@@ -120,6 +128,13 @@ Route::delete('admin/{akunId}/tasks/{id}', [AdminController::class, 'destroy']);
 // STUDENTS FUNCTIONALITY
 Route::get('/admin/{akunId}/students', [AdminController::class, 'indexStudent']);
 Route::get('/admin/{akunId}/students/{studentId}/activity', [AdminController::class, 'indexStudentActivity']);
+Route::get('/admin/{akunId}/students/{studentId}/courses/{courseId}/tasks', [AdminController::class, 'indexStudentActivityTask']);
+
+// SERTIF FUNCTIONALITY
+Route::get('/admin/sertif/download/{id}', [AdminController::class, 'downloadSertif'])->name('admin.sertif.download');
+Route::post('/admin/sertif/generate', [AdminController::class, 'generateSertif'])->name('admin.sertif.generate');
+Route::delete('/admin/sertif/{id}', [AdminController::class, 'destroySertif'])->name('admin.sertif.destroy');
+Route::get('/admin/sertif', [AdminController::class, 'indexSertif']);
 
 
 
