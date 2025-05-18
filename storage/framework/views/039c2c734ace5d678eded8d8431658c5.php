@@ -36,7 +36,6 @@
         </form>
     </div>
     <script src="<?php echo e(asset('js/login.js')); ?>"></script>
-    <script src="<?php echo e(mix('js/idleTImeout.js')); ?>"></script>
 </body>
 
 </html>

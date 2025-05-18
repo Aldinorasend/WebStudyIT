@@ -67,9 +67,9 @@ async function submitLogin() {
             if (data.token) {
                 localStorage.setItem('authToken', data.token);
             }
-            if (data.id) {
-                localStorage.setItem('userId', data.id);
-            }
+            // if (data.id) {
+            //     localStorage.setItem('userId', data.id);
+            // }
 
             // Set "Remember Me" cookie
             if (rememberMe) {
