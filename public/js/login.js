@@ -89,6 +89,7 @@ async function submitLogin() {
             }
         } else {
             const error = await response.json();
+            console.log(response);
             alert('Login failed: ' + (error.message || 'Invalid credentials'));
         }
     } catch (error) {

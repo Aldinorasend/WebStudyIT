@@ -16,6 +16,23 @@ class AuthController extends Controller
         return view('Auth.register');
     }
 
+    public function twoFactor(){
+        return view('auth.twoFactor');
+    }
+
+    public function enter2fa(){
+        return view('auth.enterTwoFactor');
+    }
+
+
+    public function confirm2fa(){
+        return view('auth.confirmTwoFactor');
+    }
+
+    public function otp(){
+        return view('auth.otp');
+    }
+
     public function forgotPassword(){
         return view('Auth.forgotPass');
     }
