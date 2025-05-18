@@ -60,7 +60,7 @@ async function submitRegister(event) {
         // Handling the response
         if (response.ok) {
             alert('Registration successful! Please Verify Account');
-            window.location.href = `/otp?email=${encodeURIComponent(email)}`;
+            window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
         } else {
             const error = await response.json();
             alert('Registration failed: ' + (error.message || 'Please try again.'));
