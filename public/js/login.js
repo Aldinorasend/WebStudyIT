@@ -67,9 +67,9 @@ async function submitLogin() {
             if (data.token) {
                 localStorage.setItem('authToken', data.token);
             }
-            // if (data.id) {
-            //     localStorage.setItem('userId', data.id);
-            // }
+            if (data.id) {
+                localStorage.setItem('userId', data.id);
+            }
 
             // Set "Remember Me" cookie
             if (rememberMe) {
@@ -89,6 +89,7 @@ async function submitLogin() {
             }
         } else {
             const error = await response.json();
+            console.log(response);
             alert('Login failed: ' + (error.message || 'Invalid credentials'));
         }
     } catch (error) {

@@ -41,7 +41,7 @@ Route::get('/reset-password', [AuthController::class, 'resetPassword']);
 
 // USER FUNCTIONALITY
 //Route::get('/',[RegularUserController::class, 'index']);
-Route::get('/students/{akun_id}',[RegularUserController::class, 'indexUser']);
+Route::get('/students/{akun_id}/dashboard',[RegularUserController::class, 'indexUser']);
 Route::get('/students/{akun_id}/payments',[RegularUserController::class, 'enroll']);
 Route::get('/students/{akun_id}/courses/{course_id}/modul', [RegularUserController::class, 'readModul']);
 

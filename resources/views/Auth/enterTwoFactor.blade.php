@@ -17,10 +17,12 @@
         </div>
         <div class="button-container">
             <button class="button" onclick="verify()">Confirm</button>
+            <button class="button" onclick="cancel2FA()">Cancel</button>
         </div>
     </div>
     <script>
-        const api = 'http://localhost:3000/api/Accounts/verify-2fa';
+        const apiVerify = 'http://localhost:3000/api/Accounts/verify-2fa';
+        const apiDisable = 'http://localhost:3000/api/Accounts/disable-2fa';
 
         function format2fa(input) {
             let digits = input.value.replace(/\D/g, '').substring(0, 6); // Maks 6 digit
@@ -42,7 +44,7 @@
             }
 
             try {
-                const response = await fetch(api, {
+                const response = await fetch(apiVerify, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -59,14 +61,40 @@
                     throw new Error(errorData.message || 'Failed to verify 2FA code');
                 }
 
-                const data = await response.json();
                 alert('2FA verified successfully!');
-                // Lanjutkan proses setelah sukses, misal redirect ke dashboard
+                window.location.href = '/dashboard';
 
             } catch (error) {
                 // Tangani error disini
                 alert('Error verifying 2FA: ' + error.message);
                 console.error('Verify 2FA error:', error);
+            }
+        }
+
+        async function cancel2FA() {
+            if (!confirm('Are you sure you want to cancel 2FA activation?')) return;
+
+            try {
+                const response = await fetch(apiDisable, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        email: 'haritswot@gmail.com'
+                    })
+                });
+
+                const result = await response.json();
+                if (!response.ok) {
+                    throw new Error(result.error || 'Failed to disable 2FA');
+                }
+
+                alert('2FA has been disabled.');
+                window.location.href = '/profile'; // Atau redirect ke halaman lain
+            } catch (error) {
+                alert('Error disabling 2FA: ' + error.message);
+                console.error('Disable 2FA error:', error);
             }
         }
     </script>
