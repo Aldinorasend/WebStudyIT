@@ -190,16 +190,17 @@
         // Card click handler
         courseCard.addEventListener('click', (e) => {
             if (e.target !== learnLink && !learnLink.contains(e.target)) {
-                window.location.href = `/students/${studentId}/courses/${course.CourseID}`; // Use CourseID
+                window.location.href = `/students/${course.id}/courses/${course.CourseID}`; // Use CourseID
             }
         });
         
         // Continue Learning button handler
-        learnLink.onclick = (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            window.location.href = `/students/${studentId}/courses/${course.CourseID}?source=continue`; // Use CourseID
-        };
+         // Modified learnLink handler
+         learnLink.onclick = (e) => {
+                    e.preventDefault();
+                    window.location.href = `/students/${course.id}/courses/${course.CourseID}`;
+                };
+                
         
         courseContainer.appendChild(courseCard);
     });
