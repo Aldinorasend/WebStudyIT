@@ -87,7 +87,7 @@
    
 </div>
 
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
     const studentId = window.location.pathname.split('/')[2];
     const courseId = window.location.pathname.split('/')[4];
@@ -109,7 +109,116 @@
         fetchModules();
         fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL);
     });
-    
+    const { jsPDF } = window.jspdf;
+
+    async function claimSertif() {
+        try {
+            // Get user data
+            const userResponse = await fetch(`http://localhost:3000/api/Accounts/${studentId}`);
+            if (!userResponse.ok) throw new Error('Failed to fetch user data');
+            const userData = await userResponse.json();
+            
+            // Get course data
+            const courseResponse = await fetch(`${API_SEARCH_COURSE}${courseId}`);
+            if (!courseResponse.ok) throw new Error('Failed to fetch course data');
+            const courseData = await courseResponse.json();
+            
+            // Generate certificate
+            generateCertificate(
+                `${userData.firstname} ${userData.lastname}`,
+                courseData.course_name
+            );
+            
+        } catch (error) {
+            console.error('Error generating certificate:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to generate certificate',
+                text: error.message,
+                showConfirmButton: true
+            });
+        }
+    }
+
+    function generateCertificate(name, course) {
+        const doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm'
+        });
+        
+        // Add background color
+        doc.setFillColor(240, 240, 250);
+        doc.rect(0, 0, 297, 210, 'F');
+        
+        // Add border
+        doc.setDrawColor(100, 100, 200);
+        doc.setLineWidth(1);
+        doc.rect(10, 10, 277, 190);
+        
+        // Add logo (optional)
+        // const logoData = 'data:image/png;base64,...';
+        // doc.addImage(logoData, 'PNG', 20, 20, 30, 30);
+        
+        // Add title
+        doc.setFontSize(36);
+        doc.setTextColor(30, 50, 150);
+        doc.setFont('helvetica', 'bold');
+        doc.text('CERTIFICATE OF COMPLETION', 148, 50, { align: 'center' });
+        
+        // Add decorative elements
+        doc.setDrawColor(200, 200, 255);
+        doc.setLineWidth(0.5);
+        doc.line(60, 70, 237, 70);
+        
+        // Add recipient text
+        doc.setFontSize(18);
+        doc.setTextColor(80, 80, 80);
+        doc.setFont('helvetica', 'normal');
+        doc.text('This is to certify that', 148, 90, { align: 'center' });
+        
+        // Add recipient name
+        doc.setFontSize(28);
+        doc.setTextColor(30, 50, 150);
+        doc.setFont('helvetica', 'bold');
+        doc.text(name, 148, 110, { align: 'center' });
+        
+        // Add course text
+        doc.setFontSize(18);
+        doc.setTextColor(80, 80, 80);
+        doc.setFont('helvetica', 'normal');
+        doc.text('has successfully completed the course', 148, 130, { align: 'center' });
+        
+        // Add course name
+        doc.setFontSize(24);
+        doc.setTextColor(30, 50, 150);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`"${course}"`, 148, 150, { align: 'center' });
+        
+        // Add date
+        doc.setFontSize(14);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 148, 170, { align: 'center' });
+        
+        // Add signature lines
+        doc.setDrawColor(150, 150, 150);
+        doc.line(60, 180, 120, 180);
+        doc.line(175, 180, 235, 180);
+        doc.setFontSize(12);
+        doc.text('Director of Studies', 90, 190);
+        doc.text('Course Instructor', 205, 190);
+        
+        // Save the PDF
+        doc.save(`Certificate_${name.replace(/\s+/g, '_')}_${course.replace(/\s+/g, '_')}.pdf`);
+        
+        // Show success message
+        Swal.fire({
+            icon: 'success',
+            title: 'Certificate Downloaded!',
+            text: 'Your certificate has been generated successfully',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
     async function fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL) {
         const courseContainer = document.getElementById('course-container');
         const courseTemplate = document.getElementById('course-template');

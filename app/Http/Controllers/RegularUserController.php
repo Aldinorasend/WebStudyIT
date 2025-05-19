@@ -24,7 +24,7 @@ class RegularUserController extends Controller
         }else if($student->User_Type == 'Free'){
             return view('user.unsubs2', ['students' => $student]);
         }else if ($student->User_Type == 'Subscriber'){
-            return view('user.subs', ['students' => $student]);
+            return view('user.unsubs2', ['students' => $student]);
         }
         // Debugging jika diperlukan
         // dump($student);
