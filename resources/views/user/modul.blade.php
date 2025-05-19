@@ -206,13 +206,21 @@
 
             const url = window.location.pathname;
             const pathParts = url.split('/');
-            const userId = pathParts[2];
+            const EnrollId = pathParts[2];
             const modul = pathParts[4];
 
             const formData = new FormData();
             formData.append('FileTask', file);
-            formData.append('ModulID', modul);
-            formData.append('UserID', userId);
+            formData.append('ModulID', parseInt(modul));
+            formData.append('EnrollID', parseInt(EnrollId)); //BENAR
+
+//             fetch('http://localhost:3000/api/tasks', {
+//   method: 'POST',
+//   body: formData
+// })
+// .then(res => res.json())
+// .then(data => console.log(data))
+// .catch(err => console.error(err));
 
             try {
                 const response = await fetch(taskUploadUrl, {
