@@ -1,11 +1,10 @@
-
 <?php $__env->startSection('title', 'StudyIT'); ?>
 
 <?php $__env->startSection('content'); ?>
 <div class="w-full flex flex-col">
     <div
         class="header w-full bg-gradient-to-r from-textColorLight to-activeLight h-auto -mt-11 gap-4 px-10 py-8 flex flex-row text-white justify-between">
-        <!-- Left content (your existing content) -->
+        <!-- Left content -->
         <div class="content-body flex flex-col gap-4 justify-center">
             <h1 class="course-name font-bold text-2xl" id="course-name">Understanding UI/UX Deeply</h1>
             <div class="stats flex flex-row items-center gap-4">
@@ -26,7 +25,6 @@
                     </svg>
                     <p class="text-xs">8</p>
                     <p class="text-xs">Registered in this course</p>
-
                 </div>
             </div>
             <p class="course-description text-gray-400 text-sm w-1/2">Lorem, ipsum dolor sit amet consectetur
@@ -34,9 +32,9 @@
                 exercitationem!</p>
             <p class="text-sm text-sideBarLight">Course will end on <span class="end-date text-blue-600">30 Dec,
                     2025</span></p>
-            <div class="rating flex flex-row gap-2 items-center ">
+            <div class="rating flex flex-row gap-2 items-center">
                 <p class="text-sm">Ratings: </p>
-                <div class="flex flex-row gap-2 ">
+                <div class="flex flex-row gap-2">
                     <svg class="w-4 h-4 text-gray-300 cursor-pointer star" data-rating="1"
                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                         <path
@@ -62,22 +60,34 @@
                         <path
                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
-
                 </div>
             </div>
         </div>
-        <div class="flex w-auto z-20 pt-20 -mb-40 ">
-            <img src="" class="image-container h-48   rounded-lg object-center shadow-lg">
+        <div class="flex w-auto z-20 pt-20 -mb-40">
+            <img src="" class="image-container h-48 rounded-lg object-center shadow-lg">
         </div>
-
-        <!-- Right container with image -->
-    </div>
-    <div class="modul w-4/6 h-40 py-6 pl-10 pr-4">
-        <h1 class="text-xl font-bold">Course Modul</h1>
-
     </div>
 
+    <!-- Course Modules Section -->
+    <div class="modul w-4/6 py-6 pl-10 pr-4">
+        <h1 class="text-xl font-bold mb-2">Course Guide</h1>
+        <!-- <p class="text-sm text-gray-500 mb-4">12 days • 245 hours total</p> -->
+
+        <!-- <div class="space-y-3" id="modules-container">
+            <div class="text-center py-4 text-gray-500">Loading modules...</div>
+        </div> -->
+
+        <div class="space-y-3" id="modules-container">
+            <!-- Modules will be loaded here dynamically -->
+            <div class="text-center py-4 text-gray-500">Loading modules...</div>
+        </div>
+    </div>
+  
+    <button type="submit" class="btnClaim w-auto h-auto bg-green-600 p-2 mx-7 text-white rounded-md font-semibold hidden" onclick="claimSertif();">Claim Sertif</button>
+   
 </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
     const studentId = window.location.pathname.split('/')[2];
     const courseId = window.location.pathname.split('/')[4];
@@ -85,38 +95,169 @@
     const API_SEARCH_COURSE = `http://localhost:3000/api/courses/`;
     const BASE_URL = 'http://localhost:8000/backend-uploads/';
     const API_RATING = `http://localhost:3000/api/coursesRating/`;
+    const API_MODULES = `http://localhost:3000/api/modulsByCourseID/`;
+
+    // Add this flag to track how the user arrived at the page
+   
 
     document.addEventListener('DOMContentLoaded', function () {
+        // Check URL parameters to see how we got here
+
 
         fetchCourses(courseId);
         fetchRating(courseId);
-
-        // Setup form submission handler
-
+        fetchModules();
+        fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL);
     });
+    const { jsPDF } = window.jspdf;
 
+    async function claimSertif() {
+        try {
+            // Get user data
+            const userResponse = await fetch(`http://localhost:3000/api/Accounts/${studentId}`);
+            if (!userResponse.ok) throw new Error('Failed to fetch user data');
+            const userData = await userResponse.json();
+            
+            // Get course data
+            const courseResponse = await fetch(`${API_SEARCH_COURSE}${courseId}`);
+            if (!courseResponse.ok) throw new Error('Failed to fetch course data');
+            const courseData = await courseResponse.json();
+            
+            // Generate certificate
+            generateCertificate(
+                `${userData.firstname} ${userData.lastname}`,
+                courseData.course_name
+            );
+            
+        } catch (error) {
+            console.error('Error generating certificate:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Failed to generate certificate',
+                text: error.message,
+                showConfirmButton: true
+            });
+        }
+    }
+
+    function generateCertificate(name, course) {
+        const doc = new jsPDF({
+            orientation: 'landscape',
+            unit: 'mm'
+        });
+        
+        // Add background color
+        doc.setFillColor(240, 240, 250);
+        doc.rect(0, 0, 297, 210, 'F');
+        
+        // Add border
+        doc.setDrawColor(100, 100, 200);
+        doc.setLineWidth(1);
+        doc.rect(10, 10, 277, 190);
+        
+        // Add logo (optional)
+        // const logoData = 'data:image/png;base64,...';
+        // doc.addImage(logoData, 'PNG', 20, 20, 30, 30);
+        
+        // Add title
+        doc.setFontSize(36);
+        doc.setTextColor(30, 50, 150);
+        doc.setFont('helvetica', 'bold');
+        doc.text('CERTIFICATE OF COMPLETION', 148, 50, { align: 'center' });
+        
+        // Add decorative elements
+        doc.setDrawColor(200, 200, 255);
+        doc.setLineWidth(0.5);
+        doc.line(60, 70, 237, 70);
+        
+        // Add recipient text
+        doc.setFontSize(18);
+        doc.setTextColor(80, 80, 80);
+        doc.setFont('helvetica', 'normal');
+        doc.text('This is to certify that', 148, 90, { align: 'center' });
+        
+        // Add recipient name
+        doc.setFontSize(28);
+        doc.setTextColor(30, 50, 150);
+        doc.setFont('helvetica', 'bold');
+        doc.text(name, 148, 110, { align: 'center' });
+        
+        // Add course text
+        doc.setFontSize(18);
+        doc.setTextColor(80, 80, 80);
+        doc.setFont('helvetica', 'normal');
+        doc.text('has successfully completed the course', 148, 130, { align: 'center' });
+        
+        // Add course name
+        doc.setFontSize(24);
+        doc.setTextColor(30, 50, 150);
+        doc.setFont('helvetica', 'bold');
+        doc.text(`"${course}"`, 148, 150, { align: 'center' });
+        
+        // Add date
+        doc.setFontSize(14);
+        doc.setTextColor(100, 100, 100);
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 148, 170, { align: 'center' });
+        
+        // Add signature lines
+        doc.setDrawColor(150, 150, 150);
+        doc.line(60, 180, 120, 180);
+        doc.line(175, 180, 235, 180);
+        doc.setFontSize(12);
+        doc.text('Director of Studies', 90, 190);
+        doc.text('Course Instructor', 205, 190);
+        
+        // Save the PDF
+        doc.save(`Certificate_${name.replace(/\s+/g, '_')}_${course.replace(/\s+/g, '_')}.pdf`);
+        
+        // Show success message
+        Swal.fire({
+            icon: 'success',
+            title: 'Certificate Downloaded!',
+            text: 'Your certificate has been generated successfully',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    }
+    async function fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL) {
+        const courseContainer = document.getElementById('course-container');
+        const courseTemplate = document.getElementById('course-template');
+        try {
+            const response = await fetch(`${API_ENROLLED_COURSE}/${studentId}`);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const data = await response.json();
+            console.log("Enrolled Course data: ", data[0]);
+            console.log("Enrolled Course data Progress: ", data[0].Progress);
+            if(data[0].Progress == 100){
+                document.querySelector('.btnClaim').classList.remove('hidden');
+            }
+            
+        } catch (error) {
+            console.error('Error fetching enrolled courses:', error);
+            courseContainer.innerHTML = `
+                    <div class="text-center py-8 text-red-500">
+                        Failed to load courses. Please try again later.
+                    </div>
+                `;
+        }
+    }
     async function fetchCourses(id) {
         try {
-
             const response = await fetch(`${API_SEARCH_COURSE}${courseId}`);
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            console.log(data);
-            const header = document.querySelector('.header');
-
+            console.log("Courses data:", data);
             const courseName = document.querySelector('.course-name');
             const courseDescription = document.querySelector('.course-description');
             const courseImage = document.querySelector('.image-container');
             const endDate = document.querySelector('.end-date');
-            if (!header) {
-                console.error('Course name element not found');
-                return;
-            }
 
-            courseName.textContent = data.course_name;
-            courseDescription.textContent = data.description;
-            courseImage.src = `${BASE_URL}${data.image}`;
-            endDate.textContent = new Date(data.end_date).toLocaleDateString('en-Us', {
+            if (courseName) courseName.textContent = data.course_name;
+            if (courseDescription) courseDescription.textContent = data.description;
+            if (courseImage) courseImage.src = `${BASE_URL}${data.image}`;
+            if (endDate) endDate.textContent = new Date(data.end_date).toLocaleDateString('en-Us', {
                 day: 'numeric',
                 month: 'long',
                 year: 'numeric'
@@ -124,114 +265,90 @@
 
         } catch (error) {
             console.error('Error fetching course data:', error);
-
         }
     }
+
     async function fetchRating(id) {
         try {
             const response = await fetch(`${API_RATING}${courseId}`);
             if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.json();
-            console.log(data[0]);
             const ratingStars = document.querySelectorAll('.star');
             const ratingValue = data[0].average_rating;
-            console.log(ratingValue)
+
             ratingStars.forEach(star => {
                 star.classList.remove('text-yellow-400');
                 star.classList.add('text-gray-300');
             });
+
             for (let i = 0; i < ratingValue; i++) {
                 ratingStars[i].classList.remove('text-gray-300');
                 ratingStars[i].classList.add('text-yellow-400');
             }
         } catch (error) {
             console.error('Error fetching course data:', error);
-
         }
-        
     }
-    // async function searchCourses(searchValue) {
-    //     console.log(searchValue)
-    //     try {
-    //         const response = await fetch(`${API_SEARCH_COURSE}/${studentId}/${searchValue}`);
 
-    //         const data = await response.json();
-    //         renderCourses(data);
+    async function fetchModules() {
+        try {
+            const response = await fetch(`${API_MODULES}${courseId}`);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const modules = await response.json();
 
-    //     } catch (error) {
-    //         showErrorMessage();
+            const modulesContainer = document.getElementById('modules-container');
+            if (!modulesContainer) return;
 
-    //     }
-    //     document.getElementById('search').value = '';
+            modulesContainer.innerHTML = '';
 
-    // }
+            modules.forEach((module, index) => {
+                const moduleElement = document.createElement('div');
+                moduleElement.className =
+                    'flex items-center bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow cursor-pointer';
+                moduleElement.setAttribute('data-module-id', module.id);
+                moduleElement.innerHTML = `
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                        <span class="text-blue-600 text-sm font-medium">${index + 1}</span>
+                    </div>
+                    <span class="text-gray-700">${module.Title}</span>
+                `;
+                modulesContainer.appendChild(moduleElement);
+            });
 
-    // function renderCourses(courses) {
-    //     const courseContainer = document.getElementById('course-container');
-    //     const courseTemplate = document.getElementById('course-template');
-    //     const savedTemplate = courseTemplate.cloneNode(true); // simpan salinan
-    //     courseContainer.innerHTML = ''; // ini akan hapus template aslinya
+            // Add click event listener to the container
+            modulesContainer.addEventListener('click', (event) => {
+                const page = window.location.pathname.split('/')[3];
 
-    //         courses.forEach(course => {
+                if (page == 'viewDetails') {
+                    Swal.fire({
+                        title: "You're not allowed to access this page",
+                        text: "Please enroll to this course first",
+                        icon: "error",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#3B82F6",
+                        showCloseButton: true,
+                    })
+                } else {
+                    const moduleId = event.target.closest('.flex').getAttribute('data-module-id');
+                    if (moduleId) {
+                        window.location.href =
+                            `/students/${studentId}/courses/${courseId}/moduls/${moduleId}`;
+                    }
+                }
 
-    //             const courseCard = savedTemplate.cloneNode(true);
-    //             courseCard.classList.remove('hidden');
-    //             courseCard.style.display = 'block';
-    //             courseCard.removeAttribute('id');
-    //             courseCard.setAttribute('data-id', course.id);
+            });
 
-    //             // Get elements
-    //             const cardImg = courseCard.querySelector('.card-img-top');
-    //             const cardTitle = courseCard.querySelector('.card-title');
-    //             const cardLevel = courseCard.querySelector('.card-level');
-    //             const progressBar = courseCard.querySelector('.progress-bar');
-    //             const progressPercent = courseCard.querySelector('.progress-percent');
-    //             const learnLink = courseCard.querySelector('.learn-link');
-
-    //             if (!cardImg || !cardTitle || !progressBar || !progressPercent || !learnLink) {
-
-    //                 console.error('Elements not found in card template');
-    //                 return;
-    //             }
-
-    //             // Set content
-    //             cardImg.src = `${BASE_URL}${course.Courses_Image}`;
-    //             cardImg.alt = "Cover course";
-
-    //             const level = course.Courses_Level ?
-    //                 course.Courses_Level.charAt(0).toUpperCase() + course.Courses_Level.slice(1) :
-    //                 '';
-
-    //             cardTitle.textContent = `${course.Courses_Name}`;
-    //             cardLevel.textContent = `${level} Class`;
-
-    //             // Set progress (assuming course.Progress is a number between 0-100)
-    //             const progress = course.Progress || 0;
-    //             progressBar.style.width = `${progress}%`;
-    //             progressPercent.textContent = `${progress}%`;
-    //             courseCard.addEventListener('click', () => {
-    //                 window.location.href = `/user/${studentId}/courses/${course.id}`;
-    //             });
-    //             learnLink.href = `/user/${studentId}/courses/${course.id}`;
-    //             courseContainer.appendChild(courseCard);
-    //         });
-    //         // Update the UI with the fetched data
-
-
-    // }
-
-    // function showErrorMessage() {
-    //     const courseContainer = document.getElementById('course-container');
-    //     courseContainer.innerHTML = `
-    //         <div class="col-span-3 text-center py-8 text-red-500">
-    //             <h1 class="text-2xl font-bold">No courses found</h1>
-    //             <p class="mt-4">Please try again later.</p>
-    //         </div>
-    //     `;
-    // }
+        } catch (error) {
+            console.error('Error fetching modules:', error);
+            const modulesContainer = document.getElementById('modules-container');
+            if (modulesContainer) {
+                modulesContainer.innerHTML =
+                    '<p class="text-red-500">Error loading modules. Please try again later.</p>';
+            }
+        }
+    }
 
 </script>
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.user', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/user/courses.blade.php ENDPATH**/ ?>

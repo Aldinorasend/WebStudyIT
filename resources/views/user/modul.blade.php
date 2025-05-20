@@ -82,12 +82,47 @@
 </div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const apiUrl = 'http://localhost:3000/api/modulsByCourseID/{{$courses->id}}';
-        const taskUploadUrl = 'http://localhost:3000/api/tasks/';
-        const baseUrl = 'http://localhost:8000/backend-uploads/';
+    const EnrollId = window.location.pathname.split('/')[2];
+    const ModulId = window.location.pathname.split('/')[6];
+    const apiUrl = `http://localhost:3000/api/moduls/${ModulId}`;
+    const taskUploadUrl = 'http://localhost:3000/api/tasks/';
+    const baseUrl = 'http://localhost:8000/backend-uploads/';
+    
+    async function taskChecker() {
+            try {
+                const response = await fetch(`http://localhost:3000/api/tasksCheck/${EnrollId}/${ModulId}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    console.log("Task Checker Data:", data);
+                    console.log("Task Checker Data:", data);
+                    if (data.length > 0) {
+                        const taskList = document.getElementById('submit-task');
+                        // Get the first task (assuming there might be multiple)
+                        const task = data[0]; 
+                        taskList.innerHTML = `
+                            <div class="bg-green-50 p-4 rounded-lg border border-green-100">
+                                <p class="text-gray-800 font-medium">Task already submitted</p>
+                                <p class="text-gray-600 mt-1">File: ${task.FileTask}</p>
+                                <p class="text-gray-500 text-sm mt-1">Submitted on: ${new Date(task.SubmittedAt).toLocaleString(
+                                    'en-US', {
+                                            day: 'numeric',
+                                            month: 'long',
+                                            year: 'numeric'
+                                    }
+                                )}</p>
+                                <p class="text-gray-500 text-sm">Status: ${task.Status || 'Completed'}</p>
+                            </div>`;
+                    }
+                } else {
+                    console.error("Error checking tasks:", response.statusText);
+                }
+            } catch (error) {
+                console.error("Error fetching task checker data:", error);
+            }
+            
+        }
 
-        // Fetch module data
+    async function fetchModulData(){
         fetch(apiUrl)
             .then(response => response.json())
             .then(data => {
@@ -149,6 +184,13 @@
             .catch(error => {
                 console.error("Error fetching courses:", error);
             });
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+        console.log(EnrollId, ModulId);
+        taskChecker();
+        fetchModulData();
+        // Fetch module data
+       
 
         // Handle file task submission
         document.getElementById('submit-task').addEventListener('submit', async function(e) {
@@ -164,13 +206,21 @@
 
             const url = window.location.pathname;
             const pathParts = url.split('/');
-            const userId = pathParts[2];
+            const EnrollId = pathParts[2];
             const modul = pathParts[4];
 
             const formData = new FormData();
             formData.append('FileTask', file);
-            formData.append('ModulID', modul);
-            formData.append('UserID', userId);
+            formData.append('ModulID', parseInt(modul));
+            formData.append('EnrollID', parseInt(EnrollId)); //BENAR
+
+//             fetch('http://localhost:3000/api/tasks', {
+//   method: 'POST',
+//   body: formData
+// })
+// .then(res => res.json())
+// .then(data => console.log(data))
+// .catch(err => console.error(err));
 
             try {
                 const response = await fetch(taskUploadUrl, {

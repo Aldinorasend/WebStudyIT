@@ -24,7 +24,7 @@ class RegularUserController extends Controller
         }else if($student->User_Type == 'Free'){
             return view('user.unsubs2', ['students' => $student]);
         }else if ($student->User_Type == 'Subscriber'){
-            return view('user.subs', ['students' => $student]);
+            return view('user.unsubs2', ['students' => $student]);
         }
         // Debugging jika diperlukan
         // dump($student);
@@ -105,5 +105,14 @@ class RegularUserController extends Controller
             abort(404, 'Akun  not found');
         } //
         return view('user.payment',['akun_id' => $akun_id]);
+    }
+
+    public function Profiles($akun_id)
+    {
+        $akun = Account::find($akun_id);
+        if (!$akun) {
+            abort(404, 'Akun  not found');
+        } //
+        return view('user.profiles',['akun_id' => $akun_id]);
     }
 }

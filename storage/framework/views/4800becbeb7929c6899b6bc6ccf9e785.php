@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title', 'StudyIT'); ?>
 <?php $__env->startSection('content-title', 'Your Current Course'); ?>
 
@@ -119,6 +118,7 @@
             
             const data = await response.json();
             renderCourses(data); // Show first 3 courses
+            console.log(data);
 
         } catch (error) {
             showErrorMessage();
@@ -142,59 +142,122 @@
        
     }
 
+    // In the renderCourses function, modify the click handlers:
+
     function renderCourses(courses) {
-        const courseContainer = document.getElementById('course-container');
-        const courseTemplate = document.getElementById('course-template');
-        const savedTemplate = courseTemplate.cloneNode(true); // simpan salinan
-        courseContainer.innerHTML = ''; // ini akan hapus template aslinya
+    const courseContainer = document.getElementById('course-container');
+    const courseTemplate = document.getElementById('course-template');
+    const savedTemplate = courseTemplate.cloneNode(true);
+    courseContainer.innerHTML = '';
 
-            courses.forEach(course => {
+    courses.forEach(course => {
+        const courseCard = savedTemplate.cloneNode(true);
+        courseCard.classList.remove('hidden');
+        courseCard.style.display = 'block';
+        courseCard.removeAttribute('id');
+        courseCard.setAttribute('data-id', course.CourseID); // Use CourseID instead of id
+
+        // Get elements
+        const cardImg = courseCard.querySelector('.card-img-top');
+        const cardTitle = courseCard.querySelector('.card-title');
+        const cardLevel = courseCard.querySelector('.card-level');
+        const progressBar = courseCard.querySelector('.progress-bar');
+        const progressPercent = courseCard.querySelector('.progress-percent');
+        const learnLink = courseCard.querySelector('.learn-link');
+
+        if (!cardImg || !cardTitle || !progressBar || !progressPercent || !learnLink) {
+            console.error('Elements not found in card template');
+            return;
+        }
+
+        // Set content
+        cardImg.src = `${BASE_URL}${course.Courses_Image}`;
+        cardImg.alt = "Cover course";
+
+        const level = course.Courses_Level ?
+            course.Courses_Level.charAt(0).toUpperCase() + course.Courses_Level.slice(1) :
+            '';
+
+        cardTitle.textContent = `${course.Courses_Name}`;
+        cardLevel.textContent = `${level} Class`;
+
+        // Set progress
+        const progress = course.Progress || 0;
+        progressBar.style.width = `${progress}%`;
+        progressPercent.textContent = `${progress}%`;
+        
+        // Card click handler
+        courseCard.addEventListener('click', (e) => {
+            if (e.target !== learnLink && !learnLink.contains(e.target)) {
+                window.location.href = `/students/${course.id}/courses/${course.CourseID}`; // Use CourseID
+            }
+        });
+        
+        // Continue Learning button handler
+         // Modified learnLink handler
+         learnLink.onclick = (e) => {
+                    e.preventDefault();
+                    window.location.href = `/students/${course.id}/courses/${course.CourseID}`;
+                };
                 
-                const courseCard = savedTemplate.cloneNode(true);
-                courseCard.classList.remove('hidden');
-                courseCard.style.display = 'block';
-                courseCard.removeAttribute('id');
-                courseCard.setAttribute('data-id', course.id);
+        
+        courseContainer.appendChild(courseCard);
+    });
+}
+    // DI BAWAH INI MERUPAKAN CODE SEBELUM MERGE OLEH ALAND
+    // function renderCourses(courses) {
+    //     const courseContainer = document.getElementById('course-container');
+    //     const courseTemplate = document.getElementById('course-template');
+    //     const savedTemplate = courseTemplate.cloneNode(true); // simpan salinan
+    //     courseContainer.innerHTML = ''; // ini akan hapus template aslinya
 
-                // Get elements
-                const cardImg = courseCard.querySelector('.card-img-top');
-                const cardTitle = courseCard.querySelector('.card-title');
-                const cardLevel = courseCard.querySelector('.card-level');
-                const progressBar = courseCard.querySelector('.progress-bar');
-                const progressPercent = courseCard.querySelector('.progress-percent');
-                const learnLink = courseCard.querySelector('.learn-link');
+    //         courses.forEach(course => {
+                
+    //             const courseCard = savedTemplate.cloneNode(true);
+    //             courseCard.classList.remove('hidden');
+    //             courseCard.style.display = 'block';
+    //             courseCard.removeAttribute('id');
+    //             courseCard.setAttribute('data-id', course.id);
 
-                if (!cardImg || !cardTitle || !progressBar || !progressPercent || !learnLink) {
+    //             // Get elements
+    //             const cardImg = courseCard.querySelector('.card-img-top');
+    //             const cardTitle = courseCard.querySelector('.card-title');
+    //             const cardLevel = courseCard.querySelector('.card-level');
+    //             const progressBar = courseCard.querySelector('.progress-bar');
+    //             const progressPercent = courseCard.querySelector('.progress-percent');
+    //             const learnLink = courseCard.querySelector('.learn-link');
 
-                    console.error('Elements not found in card template');
-                    return;
-                }
+    //             if (!cardImg || !cardTitle || !progressBar || !progressPercent || !learnLink) {
 
-                // Set content
-                cardImg.src = `${BASE_URL}${course.Courses_Image}`;
-                cardImg.alt = "Cover course";
+    //                 console.error('Elements not found in card template');
+    //                 return;
+    //             }
 
-                const level = course.Courses_Level ?
-                    course.Courses_Level.charAt(0).toUpperCase() + course.Courses_Level.slice(1) :
-                    '';
+    //             // Set content
+    //             cardImg.src = `${BASE_URL}${course.Courses_Image}`;
+    //             cardImg.alt = "Cover course";
 
-                cardTitle.textContent = `${course.Courses_Name}`;
-                cardLevel.textContent = `${level} Class`;
+    //             const level = course.Courses_Level ?
+    //                 course.Courses_Level.charAt(0).toUpperCase() + course.Courses_Level.slice(1) :
+    //                 '';
 
-                // Set progress (assuming course.Progress is a number between 0-100)
-                const progress = course.Progress || 0;
-                progressBar.style.width = `${progress}%`;
-                progressPercent.textContent = `${progress}%`;
-                courseCard.addEventListener('click', () => {
-                    window.location.href = `/user/${studentId}/courses/${course.id}`;
-                });
-                learnLink.href = `/user/${studentId}/courses/${course.id}`;
-                courseContainer.appendChild(courseCard);
-            });
-            // Update the UI with the fetched data
+    //             cardTitle.textContent = `${course.Courses_Name}`;
+    //             cardLevel.textContent = `${level} Class`;
+
+    //             // Set progress (assuming course.Progress is a number between 0-100)
+    //             const progress = course.Progress || 0;
+    //             progressBar.style.width = `${progress}%`;
+    //             progressPercent.textContent = `${progress}%`;
+    //             courseCard.addEventListener('click', () => {
+    //                 window.location.href = `/user/${studentId}/courses/${course.id}`;
+    //             });
+    //             learnLink.href = `/user/${studentId}/courses/${course.id}`;
+    //             courseContainer.appendChild(courseCard);
+    //         });
+    //         // Update the UI with the fetched data
 
       
-    }
+    // }
 
     function showErrorMessage() {
         const courseContainer = document.getElementById('course-container');
