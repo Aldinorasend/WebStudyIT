@@ -17,20 +17,23 @@ class AuthController extends Controller
     }
 
     public function twoFactor(){
-        return view('auth.twoFactor');
+        return view('Auth.twoFactor');
     }
 
     public function enter2fa(){
-        return view('auth.enterTwoFactor');
+        return view('Auth.enterTwoFactor');
     }
 
-
-    public function confirm2fa(){
-        return view('auth.confirmTwoFactor');
+    public function verify2fa(){
+        return view('Auth.verify2fa');
     }
+
+    // public function confirm2fa(){
+    //     return view('auth.confirmTwoFactor');
+    // }
 
     public function otp(){
-        return view('auth.otp');
+        return view('Auth.otp');
     }
 
     public function forgotPassword(){
