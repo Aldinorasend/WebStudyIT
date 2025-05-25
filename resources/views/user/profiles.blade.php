@@ -15,18 +15,18 @@
                     </svg>
                 </button>
             </div>
-            
+
             <h2 class="text-xl font-bold text-gray-800 mb-1" id="name"></h2>
             <p class="text-gray-500 mb-4" id="uType"> Member</p>
-            
+
             <div class="w-full">
                 <h3 class="text-sm font-semibold text-gray-700 mb-2">Bio</h3>
                 <p class="text-sm text-gray-600 bg-gray-50 p-3 rounded-lg" id="bio">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae beatae officiis veniam 
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quae beatae officiis veniam
                     voluptatem explicabo temporibus doloremque, eaque voluptates.
                 </p>
             </div>
-            
+
             <div class="mt-6 w-full">
                 <h3 class="text-sm font-semibold text-gray-700 mb-2">Account Details</h3>
                 <div class="space-y-2 text-sm text-gray-600">
@@ -38,16 +38,16 @@
         <!-- Right Section - Profile Form -->
         <div class="w-full lg:w-2/3 bg-white rounded-xl shadow-md overflow-hidden p-6">
             <h1 class="text-2xl font-bold text-gray-800 mb-6">Personal Information</h1>
-            
+
             <form id="profile-form" class="space-y-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- First Name -->
                     <div>
                         <label for="firstname" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                        <input type="text" id="firstname" name="firstname" value="Aldino" 
+                        <input type="text" id="firstname" name="firstname" value="Aldino"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                     </div>
-                    
+
                     <!-- Last Name -->
                     <div>
                         <label for="lastname" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
@@ -55,37 +55,41 @@
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                     </div>
                 </div>
-                
+
                 <!-- Username -->
                 <div>
                     <label for="username" class="block text-sm font-medium text-gray-700 mb-1">Username</label>
                     <input type="text" id="username" name="username" value="aldino_r"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 </div>
-                
+
                 <!-- Email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
                     <input type="email" id="email" name="email" value="aldino@example.com"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 </div>
-                
+
                 <!-- Phone Number -->
                 <div>
                     <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
                     <input type="tel" id="phone_number" name="phone_number" value="+1234567890"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all">
                 </div>
-                
+
                 <!-- User Type (Readonly) -->
                 <div>
                     <label class="block text-sm font-medium text-gray-700 mb-1">User Type</label>
                     <input type="text" readonly id="UserType"
                         class="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-100 cursor-not-allowed">
                 </div>
-                
+
                 <!-- Form Actions -->
                 <div class="flex justify-end gap-4 pt-6">
+                    <button type="button" id="activate2faBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors flex items-center gap-2">
+                        Activate 2-FA
+                    </button>
+
                     <button type="button" class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors">
                         Cancel
                     </button>
@@ -102,97 +106,155 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const form = document.getElementById('profile-form');
-    const apiUrl = 'http://localhost:3000/api/Accounts';
-    const BASE_URL = 'http://localhost:8000/backend-uploads/';
+    const apiDeact2fa = 'http://localhost:3000/api/Accounts/disable-2fa';
 
-    const profileUrl = 'http://localhost:3000/api/Profiles';
-    const studentId = window.location.pathname.split('/')[2];
-    fetchAkun(apiUrl, studentId);
-    fetch(`${profileUrl}/${studentId}`)
-                .then(response => response.json())
-                .then(profileData => {
-                    console.log(profileData);
-                    document.getElementById('profile-pict').src = `${BASE_URL}${profileData.profile_picture}`;
-                    document.getElementById('bio').textContent = profileData.bio;
+    document.addEventListener('DOMContentLoaded', function() {
+        const activate2faBtn = document.getElementById('activate2faBtn');
+        const form = document.getElementById('profile-form');
+        const apiUrl = 'http://localhost:3000/api/Accounts';
+        const BASE_URL = 'http://localhost:8000/backend-uploads/';
+        const profileUrl = 'http://localhost:3000/api/Profiles';
+        const studentId = window.location.pathname.split('/')[2];
+
+        fetchAkun(apiUrl, studentId);
+        fetch(`${profileUrl}/${studentId}`)
+            .then(response => response.json())
+            .then(profileData => {
+                console.log(profileData);
+                document.getElementById('profile-pict').src = `${BASE_URL}${profileData.profile_picture}`;
+                document.getElementById('bio').textContent = profileData.bio;
+            });
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const formData = {
+                firstname: document.getElementById('firstname').value,
+                lastname: document.getElementById('lastname').value,
+                username: document.getElementById('username').value,
+                email: document.getElementById('email').value,
+                phonenumber: document.getElementById('phone_number').value
+            };
+
+            try {
+                const response = await fetch(`${apiUrl}/${studentId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
                 });
-   
-    
-    form.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        
-        // Collect form data
-        const formData = {
-            firstname: document.getElementById('firstname').value,
-            lastname: document.getElementById('lastname').value,
-            username: document.getElementById('username').value,
-            email: document.getElementById('email').value,
-            phonenumber: document.getElementById('phone_number').value
-        };
-        
-        try {
-            const response = await fetch(`${apiUrl}/${studentId}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(formData)
-            });
 
-            if (!response.ok) {
-                const errorData = await response.json();
-                throw new Error(errorData.message || 'Failed to update profile');
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Failed to update profile');
+                }
+
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Profile updated successfully',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+
+            } catch (error) {
+                console.error('Error updating profile:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Update Failed',
+                    text: error.message || 'Please try again later.',
+                    showConfirmButton: true
+                });
             }
+        });
 
-            // Show success message
-            await Swal.fire({
-                icon: 'success',
-                title: 'Profile updated successfully',
-                showConfirmButton: false,
-                timer: 1500
-            });
+        activate2faBtn.addEventListener('click', async function() {
+            const email = document.getElementById('email').value;
+            if (activate2faBtn.textContent.includes('Deactivate')) {
+                const result = await Swal.fire({
+                    title: 'Are you sure?',
+                    text: "You are about to disable 2-FA on your account.",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, disable it!'
+                });
 
-            // Optional: Reload or redirect after success
-            // window.location.reload();
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(apiDeact2fa, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                email
+                            })
+                        });
 
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Update Failed',
-                text: error.message || 'Please try again later.',
-                showConfirmButton: true
-            });
+                        if (!response.ok) {
+                            const errorData = await response.json();
+                            throw new Error(errorData.message || 'Failed to disable 2-FA');
+                        }
+
+                        await Swal.fire({
+                            icon: 'success',
+                            title: '2-FA has been disabled.',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        // Reload account data to update button state
+                        fetchAkun(apiUrl, studentId);
+
+                    } catch (error) {
+                        console.error('Error disabling 2-FA:', error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: error.message || 'Failed to disable 2-FA'
+                        });
+                    }
+                }
+
+            } else {
+                window.location.href = `/enable-twoFactor?email=${encodeURIComponent(email)}`;
+            }
+        });
+
+        async function fetchAkun(apiUrl, studentId) {
+            fetch(`${apiUrl}/${studentId}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+
+                    document.getElementById('firstname').value = data.firstname;
+                    document.getElementById('lastname').value = data.lastname;
+                    document.getElementById('username').value = data.username;
+                    document.getElementById('email').value = data.email;
+                    document.getElementById('phone_number').value = data.phonenumber;
+                    document.getElementById('UserType').value = data.User_Type;
+                    document.getElementById('regist_date').textContent = new Date(data.regist_date).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                    });
+                    document.getElementById('uType').textContent = `${data.User_Type} Member`;
+                    document.getElementById('name').textContent = `${data.firstname} ${data.lastname}`;
+
+                    if (data.twofa_secret) {
+                        activate2faBtn.textContent = 'Deactivate 2-FA';
+                        activate2faBtn.classList.remove('bg-blue-600', 'hover:bg-blue-700');
+                        activate2faBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+                    } else {
+                        activate2faBtn.textContent = 'Activate 2-FA';
+                        activate2faBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                        activate2faBtn.classList.add('bg-blue-600', 'hover:bg-blue-700');
+                    }
+                });
         }
     });
-    
-});
-
-async function fetchAkun(apiUrl, studentId){
-    fetch(`${apiUrl}/${studentId}`)
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-
-            document.getElementById('firstname').value = data.firstname;
-            document.getElementById('lastname').value = data.lastname;
-            document.getElementById('username').value = data.username;
-            document.getElementById('email').value = data.email;
-            document.getElementById('phone_number').value = data.phonenumber;
-            document.getElementById('UserType').value = data.User_Type;
-// Correct way to set text content for all elements with class "date"
-            document.getElementById('regist_date').textContent = new Date(data.regist_date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            }); 
-            document.getElementById('uType').textContent = `${data.User_Type} Member`;
-            document.getElementById('name').textContent = `${data.firstname} ${data.lastname}`;
-
-           
-        });
-}
-
 </script>
+
 @endsection

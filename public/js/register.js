@@ -4,7 +4,7 @@ const apiRegisterUrl = 'http://localhost:3000/api/Accounts';
 // Function to handle form submission
 async function submitRegister(event) {
     event.preventDefault(); // Prevent default form submission
-    console.log("Form submission intercepted"); // Debugging
+    console.log("Form submission intercepted");
 
     // Collect form data
     const username = document.getElementById('username').value;
@@ -20,55 +20,82 @@ async function submitRegister(event) {
 
     // Validation checks
     if (!username || !firstname || !lastname || !phone || !email || !password || !confirmPassword) {
-        alert("Please fill in all fields.");
+        await Swal.fire({
+            icon: 'warning',
+            title: 'Missing Fields',
+            text: 'Please fill in all fields.'
+        });
         return;
     }
 
     if (!email.includes('@') || !email.includes('.')) {
-        alert("Invalid email address.");
+        await Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email address.'
+        });
         return;
     }
 
     if (password !== confirmPassword) {
-        alert('Passwords do not match!');
+        await Swal.fire({
+            icon: 'error',
+            title: 'Password Mismatch',
+            text: 'Passwords do not match!'
+        });
         return;
     }
 
     if (!passwordPattern.test(password)) {
-        alert("Password must be at least 8 characters long and contain letters, numbers, and special characters.");
+        await Swal.fire({
+            icon: 'warning',
+            title: 'Weak Password',
+            html: 'Password must be at least <b>8 characters</b> long and contain <b>letters, numbers, and special characters</b>.'
+        });
         return;
     }
 
-    // Preparing the payload for the API
     const payload = {
-        username: username,
-        firstname: firstname,
-        lastname: lastname,
+        username,
+        firstname,
+        lastname,
         phonenumber: phone,
-        email: email,
-        password: password
+        email,
+        password
     };
 
     try {
-        // Making a POST request to the API
         const response = await fetch(apiRegisterUrl, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
 
-        // Handling the response
         if (response.ok) {
-            alert('Registration successful! Please Verify Account');
+            await Swal.fire({
+                icon: 'success',
+                title: 'Registration Successful!',
+                text: 'Please check your email to verify your account.',
+                timer: 2000,
+                showConfirmButton: false
+            });
+
             window.location.href = `/verify-otp?email=${encodeURIComponent(email)}`;
         } else {
             const error = await response.json();
-            alert('Registration failed: ' + (error.message || 'Please try again.'));
+            await Swal.fire({
+                icon: 'error',
+                title: 'Registration Failed',
+                text: error.message || 'Please try again.'
+            });
         }
     } catch (error) {
-        // Handle errors during fetch
         console.error('Error during registration:', error);
-        alert('Error during registration: ' + error.message);
+        await Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: error.message || 'Unexpected error occurred during registration.'
+        });
     }
 }
 
