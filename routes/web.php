@@ -29,6 +29,7 @@ Route::get('/verify-otp',[AuthController::class, 'otp']);
 Route::get('/enable-twoFactor', [AuthController::class, 'twoFactor']);
 Route::get('/enter-twoFactor', [AuthController::class, 'enter2fa']);
 Route::get('/confirm-twoFactor', [AuthController::class, 'confirm2fa']);
+Route::get('/verify-twofactor', [AuthController::class, 'verify2fa']);
 
 
 Route::get('contact-us/', [ContactUsController::class, 'index'])->name('contact_us.index');

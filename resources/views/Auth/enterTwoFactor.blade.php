@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Confirm 2-Factor Authentication</title>
     <link rel="stylesheet" href="{{ asset('css/styleEnter2fa.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body>
@@ -21,83 +23,127 @@
         </div>
     </div>
     <script>
-        const apiVerify = 'http://localhost:3000/api/Accounts/verify-2fa';
-        const apiDisable = 'http://localhost:3000/api/Accounts/disable-2fa';
+    const apiVerify = 'http://localhost:3000/api/Accounts/verify-2fa';
+    const apiDisable = 'http://localhost:3000/api/Accounts/disable-2fa';
 
-        function format2fa(input) {
-            let digits = input.value.replace(/\D/g, '').substring(0, 6); // Maks 6 digit
+    function getEmailFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get('email');
+    }
+    const emailFromUrl = getEmailFromUrl();
 
-            // Format sebagai XXX-XXX jika panjang > 3
-            if (digits.length > 3) {
-                input.value = digits.slice(0, 3) + '-' + digits.slice(3);
-            } else {
-                input.value = digits;
-            }
+    function format2fa(input) {
+        let digits = input.value.replace(/\D/g, '').substring(0, 6); // Maks 6 digit
+
+        // Format sebagai XXX-XXX jika panjang > 3
+        if (digits.length > 3) {
+            input.value = digits.slice(0, 3) + '-' + digits.slice(3);
+        } else {
+            input.value = digits;
+        }
+    }
+
+    async function verify() {
+        const codeInput = document.getElementById('code2fa').value.replace('-', ''); // ambil input, hilangkan strip
+        console.log(codeInput);
+        if (codeInput.length !== 6) {
+            await Swal.fire({
+                icon: 'warning',
+                title: 'Invalid Code',
+                text: 'Please enter a 6-digit 2FA code',
+            });
+            return;
         }
 
-        async function verify() {
-            const codeInput = document.getElementById('code2fa').value.replace('-', ''); // ambil input, hilangkan strip
-            console.log(codeInput);
-            if (codeInput.length !== 6) {
-                alert('Please enter a 6-digit 2FA code');
-                return;
+        try {
+            const response = await fetch(apiVerify, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: emailFromUrl,
+                    token: codeInput
+                })
+            });
+
+            if (!response.ok) {
+                // Jika status HTTP bukan 2xx, lempar error
+                const errorData = await response.json();
+                throw new Error(errorData.message || 'Failed to verify 2FA code');
             }
 
-            try {
-                const response = await fetch(apiVerify, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: 'haritswot@gmail.com', // HARDCODE
-                        token: codeInput
-                    })
-                });
+            await Swal.fire({
+                icon: 'success',
+                title: '2FA Verified',
+                text: '2FA verified successfully!',
+                timer: 1500,
+                showConfirmButton: false
+            });
 
-                if (!response.ok) {
-                    // Jika status HTTP bukan 2xx, lempar error
-                    const errorData = await response.json();
-                    throw new Error(errorData.message || 'Failed to verify 2FA code');
-                }
+            const userID = localStorage.getItem('userId');
+            window.location.href = `/students/${userID}/profiles`;
 
-                alert('2FA verified successfully!');
-                window.location.href = '/dashboard';
-
-            } catch (error) {
-                // Tangani error disini
-                alert('Error verifying 2FA: ' + error.message);
-                console.error('Verify 2FA error:', error);
-            }
+        } catch (error) {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Verification Failed',
+                text: 'Error verifying 2FA: ' + error.message
+            });
+            console.error('Verify 2FA error:', error);
         }
+    }
 
-        async function cancel2FA() {
-            if (!confirm('Are you sure you want to cancel 2FA activation?')) return;
+    async function cancel2FA() {
+        const result = await Swal.fire({
+            title: 'Are you sure?',
+            text: "Do you want to cancel 2FA activation?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!'
+        });
 
-            try {
-                const response = await fetch(apiDisable, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: 'haritswot@gmail.com'
-                    })
-                });
+        if (!result.isConfirmed) return;
 
-                const result = await response.json();
-                if (!response.ok) {
-                    throw new Error(result.error || 'Failed to disable 2FA');
-                }
+        try {
+            const response = await fetch(apiDisable, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: 'haritswot@gmail.com' // Ganti sesuai kebutuhan
+                })
+            });
 
-                alert('2FA has been disabled.');
-                window.location.href = '/profile'; // Atau redirect ke halaman lain
-            } catch (error) {
-                alert('Error disabling 2FA: ' + error.message);
-                console.error('Disable 2FA error:', error);
+            const resJson = await response.json();
+            if (!response.ok) {
+                throw new Error(resJson.error || 'Failed to disable 2FA');
             }
+
+            await Swal.fire({
+                icon: 'success',
+                title: '2FA Disabled',
+                text: '2FA has been disabled.',
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+            window.location.href = '/profile'; // Atau redirect ke halaman lain
+
+        } catch (error) {
+            await Swal.fire({
+                icon: 'error',
+                title: 'Disable Failed',
+                text: 'Error disabling 2FA: ' + error.message
+            });
+            console.error('Disable 2FA error:', error);
         }
-    </script>
+    }
+</script>
+
 </body>
 
 </html>
