@@ -38,11 +38,53 @@
                 </div>
             </div>
 
+            <!-- Download Button -->
+            <div class="bg-white rounded-xl shadow-md p-6 text-center">
+                <a href="#" id="download-link" class="inline-flex items-center px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                    Download Module
+                </a>
+            </div>
+
             <!-- Tools Section -->
             <div class="bg-white rounded-xl shadow-md p-6">
                 <h2 class="text-xl font-bold text-gray-800 mb-4">Tools You'll Use</h2>
                 <div class="flex flex-wrap gap-4" id="tools-container">
                     <!-- Tools will be loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Discussion Forum -->
+            <div class="bg-white rounded-xl shadow-md p-6">
+                <h2 class="text-xl font-bold text-gray-800 mb-4">Discussion Forum</h2>
+                
+                <!-- Discussion Form -->
+                <form id="discussion-form" class="mb-6 space-y-4">
+                    <div>
+                        <label for="topics" class="block text-sm font-medium text-gray-700 mb-1">Topics</label>
+                        <input type="text" id="topics" name="topics" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+                    
+                    <div>
+                        <label for="discussions" class="block text-sm font-medium text-gray-700 mb-1">Discussions</label>
+                        <textarea id="discussions" name="discussions" rows="3" required
+                            class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+                    </div>
+                    
+                    <input type="hidden" id="parent-id" name="parent_id" value="">
+                    
+                    <button type="submit" 
+                        class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors">
+                        Post Discussion
+                    </button>
+                </form>
+
+                <!-- Discussions List -->
+                <div id="discussion-list" class="space-y-4">
+                    <!-- Discussions will be loaded here -->
                 </div>
             </div>
         </div>
@@ -71,6 +113,8 @@
                                 file:bg-blue-50 file:text-blue-700
                                 hover:file:bg-blue-100">
                     </div>
+                    <!-- File Preview -->
+                    <div id="file-preview" class="mt-2"></div>
                     <button type="submit" 
                         class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg transition-colors">
                         Submit Task
@@ -78,6 +122,36 @@
                 </form>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- Reply Modal -->
+<div id="replyModal" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+    <div class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md">
+        <h3 class="text-lg font-bold text-gray-800 mb-4">Reply to Discussion</h3>
+        <form id="reply-form" class="space-y-4">
+            <input type="hidden" id="reply-parent-id">
+            <div>
+                <label for="reply-topic" class="block text-sm font-medium text-gray-700 mb-1">Sub-Topic</label>
+                <input type="text" id="reply-topic" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="reply-discussion" class="block text-sm font-medium text-gray-700 mb-1">Reply</label>
+                <textarea id="reply-discussion" rows="3" required
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"></textarea>
+            </div>
+            <div class="flex justify-end space-x-3">
+                <button type="button" id="close-reply-modal"
+                    class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium rounded-md transition-colors">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition-colors">
+                    Post Reply
+                </button>
+            </div>
+        </form>
     </div>
 </div>
 
@@ -89,6 +163,8 @@
     const apiUrl = `http://localhost:3000/api/moduls/${ModulId}`;
     const taskUploadUrl = 'http://localhost:3000/api/tasks/';
     const baseUrl = 'http://localhost:8000/backend-uploads/';
+    const discussionApiUrl = 'http://localhost:3000/api/discussions/';
+    const replyApiUrl = 'http://localhost:3000/api/discussion_replies/';
     console.log("EnrollId: ", EnrollId, " ModulId: ", ModulId, "StudentId: ", studentId);
     async function taskChecker() {
             try {
@@ -242,5 +318,173 @@
             }
         });
     });
+
+    // Load discussions when page loads
+        loadDiscussions();
+
+        // Function to load discussions and replies
+        async function loadDiscussions() {
+            const url = window.location.pathname;
+            const pathParts = url.split('/');
+            const modul = pathParts[6];
+
+            try {
+                // Fetch discussions and replies
+                const [discussionsResponse, repliesResponse] = await Promise.all([
+                    fetch(discussionApiUrl),
+                    fetch(replyApiUrl)
+                ]);
+
+                const discussionsData = await discussionsResponse.json();
+                const repliesData = await repliesResponse.json();
+
+                const filteredDiscussions = discussionsData.filter(discussion => discussion.ModulID == modul);
+
+                const discussionList = document.getElementById('discussion-list');
+                discussionList.innerHTML = '';
+
+                if (filteredDiscussions.length === 0) {
+                    discussionList.innerHTML = '<p class="text-gray-500">No discussions yet. Be the first to discussion!</p>';
+                    return;
+                }
+
+                filteredDiscussions.forEach(discussion => {
+                    const discussionItem = document.createElement('div');
+                    discussionItem.className = 'border border-gray-200 rounded-lg p-4';
+
+                    discussionItem.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-bold text-gray-800">${discussion.topics}</h4>
+                            <span class="text-xs text-gray-500">${new Date(discussion.created_at).toLocaleString()}</span>
+                        </div>
+                        
+                        <p class="text-gray-700 mb-3">${discussion.discussions}</p>
+                        <button type="button" class="reply-button text-sm text-blue-600 hover:text-blue-800" data-id="${discussion.id}">
+                            Reply
+                        </button>
+                        <div class="reply-list mt-3 space-y-3 pl-4 border-l-2 border-gray-200"></div>
+                    `;
+
+                    const replyList = discussionItem.querySelector('.reply-list');
+
+                    // Find and display all matching replies
+                    repliesData
+                        .filter(reply => reply.DiscussionID == discussion.id)
+                        .forEach(reply => {
+                            const replyItem = document.createElement('div');
+                            replyItem.className = 'bg-gray-50 p-3 rounded-lg';
+                            replyItem.innerHTML = `
+                                <div class="flex justify-between items-start mb-1">
+                                    <h5 class="font-semibold text-gray-700">${reply.subtopic}</h5>
+                                    <span class="text-xs text-gray-500">${new Date(reply.created_at).toLocaleString()}</span>
+                                </div>
+                                <p class="text-gray-700">${reply.replies}</p>
+                            `;
+                            replyList.appendChild(replyItem);
+                        });
+
+                    discussionList.appendChild(discussionItem);
+                });
+
+                // Setup reply button functionality
+                document.querySelectorAll('.reply-button').forEach(button => {
+                    button.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        const parentId = this.dataset.id;
+                        document.getElementById('reply-parent-id').value = parentId;
+                        document.getElementById('replyModal').classList.remove('hidden');
+                    });
+                });
+
+                // Close modal button
+                document.getElementById('close-reply-modal').addEventListener('click', function() {
+                    document.getElementById('replyModal').classList.add('hidden');
+                });
+
+            } catch (error) {
+                console.error('Error loading discussions or replies:', error);
+                document.getElementById('discussion-list').innerHTML = 
+                    '<p class="text-red-500">Error loading discussions. Please try again later.</p>';
+            }
+        }
+
+        // Submit new discussion
+        document.getElementById('discussion-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const url = window.location.pathname;
+            const pathParts = url.split('/');
+            const userId = pathParts[2];
+            const modul = pathParts[4];
+
+            try {
+                const response = await fetch(discussionApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        topics: this.elements['topics'].value,
+                        discussions: this.elements['discussions'].value,
+                        ModulID: modul,
+                        UserID: userId
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Discussion posted successfully!');
+                    this.reset();
+                    loadDiscussions();
+                } else {
+                    const resData = await response.json();
+                    alert('Failed to post discussion: ' + (resData.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error submitting discussion:', error);
+                alert('An error occurred while posting your discussion.');
+            }
+        });
+
+        // Submit reply
+        document.getElementById('reply-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const parentId = document.getElementById('reply-parent-id').value;
+            const subtopic = document.getElementById('reply-topic').value;
+            const replies = document.getElementById('reply-discussion').value;
+
+            const url = window.location.pathname;
+            const pathParts = url.split('/');
+            const userId = pathParts[2];
+
+            try {
+                const response = await fetch(replyApiUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        subtopic: subtopic,
+                        replies: replies,
+                        DiscussionID: parentId,
+                        UserID: userId
+                    })
+                });
+
+                if (response.ok) {
+                    alert('Reply posted successfully!');
+                    this.reset();
+                    document.getElementById('replyModal').classList.add('hidden');
+                    loadDiscussions();
+                } else {
+                    const resData = await response.json();
+                    alert('Failed to post reply: ' + (resData.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error submitting reply:', error);
+                alert('An error occurred while posting your reply.');
+            }
+        });
+    
 </script>
 @endsection
