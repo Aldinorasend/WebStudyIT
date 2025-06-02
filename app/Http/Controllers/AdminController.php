@@ -148,6 +148,10 @@ class AdminController extends Controller
         }
         return view('admin.modul.index', compact('moduls'));
     }
+    public function createModuls(){
+        $courses = Course::all();
+        return view('admin.modul.create', compact('courses'));
+    }
     public function indexModulByCourseId()
     {
         $moduls = Modul::with('course')->get();

@@ -56,7 +56,7 @@ async function submitRegister(event) {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
         });
-
+        console.log(response);
         // Handling the response
         if (response.ok) {
             alert('Registration successful! Please Verify Account');
