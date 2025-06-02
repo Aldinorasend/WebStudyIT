@@ -81,12 +81,14 @@
 </div>
 
 <script>
-    const EnrollId = window.location.pathname.split('/')[2];
-    const ModulId = window.location.pathname.split('/')[6];
+    const studentId = window.location.pathname.split('/')[2];
+    const EnrollId = window.location.pathname.split('/')[4];
+    const courseId = window.location.pathname.split('/')[6];
+    const ModulId = window.location.pathname.split('/')[8];
     const apiUrl = `http://localhost:3000/api/moduls/${ModulId}`;
     const taskUploadUrl = 'http://localhost:3000/api/tasks/';
     const baseUrl = 'http://localhost:8000/backend-uploads/';
-    
+    console.log("EnrollId: ", EnrollId, " ModulId: ", ModulId, "StudentId: ", studentId);
     async function taskChecker() {
             try {
                 const response = await fetch(`http://localhost:3000/api/tasksCheck/${EnrollId}/${ModulId}`);
@@ -185,7 +187,7 @@
             });
     }
     document.addEventListener('DOMContentLoaded', function() {
-        console.log(EnrollId, ModulId);
+        console.log("EnrollID: ",EnrollId, " ModulId: ",ModulId);
         taskChecker();
         fetchModulData();
         // Fetch module data
@@ -205,8 +207,8 @@
 
             const url = window.location.pathname;
             const pathParts = url.split('/');
-            const EnrollId = pathParts[2];
-            const modul = pathParts[4];
+            const EnrollId = pathParts[4];
+            const modul = pathParts[8];
 
             const formData = new FormData();
             formData.append('FileTask', file);
@@ -226,14 +228,13 @@
                     method: 'POST',
                     body: formData,
                 });
-
+                console.log("Response:", response);
                 if (response.ok) {
                     alert('Task submitted successfully!');
                     fileInput.value = '';
-                } else {
-                    const errorData = await response.json();
-                    alert('Error submitting: ' + (errorData.message || 'Unknown error'));
-                }
+                    window.location.href = `/students/${studentId}/enrolls/${EnrollId}/courses/${courseId}`;
+
+                } 
             } catch (error) {
                 console.error('Error submitting task:', error);
                 alert('An error occurred while submitting the task. Please try again later.');

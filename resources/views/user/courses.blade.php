@@ -83,123 +83,340 @@
             <div class="text-center py-4 text-gray-500">Loading modules...</div>
         </div>
     </div>
-  
-    <button type="submit" class="btnClaim w-auto h-auto bg-green-600 p-2 mx-7 text-white rounded-md font-semibold hidden" onclick="claimSertif();">Claim Sertif</button>
-   
+
+    <button type="submit"
+        class="btnClaim w-auto h-auto bg-green-600 p-2 mx-7 text-white rounded-md font-semibold hidden">Claim
+        Sertif</button>
+    <!-- Rating Modal -->
+    <div id="rating-modal"
+        class="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-50 hidden transition-opacity duration-300 opacity-0">
+        <div
+            class="bg-white rounded-xl shadow-xl p-6 w-full max-w-md mx-4 transform transition-all duration-300 scale-95">
+            <!-- Modal Header -->
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="text-2xl font-bold text-gray-900">Rate This Course</h3>
+                    <p class="text-gray-500 text-sm mt-1">Share your experience to help us improve</p>
+                </div>
+                <button id="close-rating-modal"
+                    class="text-gray-400 hover:text-gray-600 transition-colors p-1 -mt-2 -mr-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Rating Stars -->
+            <div class="mb-6">
+                <div class="flex justify-center space-x-1 mb-3">
+                    <!-- 5 Star Rating -->
+                    <div class="rating-stars flex flex-row-reverse">
+                        <input type="radio" id="star1" name="rating" value="5" class="hidden peer">
+                        <label for="star1"
+                            class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 hover:text-yellow-400 transition-colors duration-150 star px-1">★</label>
+
+                        <input type="radio" id="star2" name="rating" value="4" class="hidden peer">
+                        <label for="star2"
+                            class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 hover:text-yellow-400 transition-colors duration-150 star px-1">★</label>
+
+                        <input type="radio" id="star3" name="rating" value="3" class="hidden peer">
+                        <label for="star3"
+                            class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 hover:text-yellow-400 transition-colors duration-150 star px-1">★</label>
+
+                        <input type="radio" id="star4" name="rating" value="2" class="hidden peer">
+                        <label for="star4"
+                            class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 hover:text-yellow-400 transition-colors duration-150 star px-1">★</label>
+
+                        <input type="radio" id="star5" name="rating" value="1" class="hidden peer">
+                        <label for="star5"
+                            class="text-4xl cursor-pointer text-gray-300 peer-checked:text-yellow-400 hover:text-yellow-400 transition-colors duration-150 star px-1">★</label>
+                    </div>
+                </div>
+                <p id="rating-text" class="text-center text-gray-500 font-medium transition-colors duration-200">Tap to
+                    rate</p>
+            </div>
+
+            <!-- Review Textarea -->
+            <div class="mb-6">
+                <label for="review" class="block text-sm font-medium text-gray-700 mb-2">Your Review (Optional)</label>
+                <textarea id="review" name="review" rows="4"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
+                    placeholder="What did you like about this course?"></textarea>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="flex space-x-3">
+                <button id="skip-rating"
+                    class="flex-1 bg-gray-100 hover:bg-gray-200 text-gray-800 font-medium py-3 px-4 rounded-lg transition-colors duration-200">
+                    Skip
+                </button>
+                <button id="submit-rating"
+                    class="flex-1 bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 text-white font-medium py-3 px-4 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    disabled>
+                    Submit Rating
+                </button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script>
+    const enrollId = window.location.pathname.split('/')[4];
+    const courseId = window.location.pathname.split('/')[6];
     const studentId = window.location.pathname.split('/')[2];
-    const courseId = window.location.pathname.split('/')[4];
-    const API_ENROLLED_COURSE = `http://localhost:3000/api/studentEnrolls`;
+    const API_ENROLLED_COURSE = `http://localhost:3000/api/StudentsEnrollment`;
     const API_SEARCH_COURSE = `http://localhost:3000/api/courses/`;
     const BASE_URL = 'http://localhost:8000/backend-uploads/';
     const API_RATING = `http://localhost:3000/api/coursesRating/`;
     const API_MODULES = `http://localhost:3000/api/modulsByCourseID/`;
+    const API_POST_RATING = `http://localhost:3000/api/postRating`;
+
 
     // Add this flag to track how the user arrived at the page
-   
+
+    console.log("EnrollId: ", enrollId, " CourseId: ", courseId, "StudentId: ", studentId);
 
     document.addEventListener('DOMContentLoaded', function () {
+
+    
         // Check URL parameters to see how we got here
 
 
         fetchCourses(courseId);
         fetchRating(courseId);
         fetchModules();
-        fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL);
-    });
-    const { jsPDF } = window.jspdf;
-
-    async function claimSertif() {
-        try {
-            // Get user data
-            const userResponse = await fetch(`http://localhost:3000/api/Accounts/${studentId}`);
-            if (!userResponse.ok) throw new Error('Failed to fetch user data');
-            const userData = await userResponse.json();
-            
-            // Get course data
-            const courseResponse = await fetch(`${API_SEARCH_COURSE}${courseId}`);
-            if (!courseResponse.ok) throw new Error('Failed to fetch course data');
-            const courseData = await courseResponse.json();
-            
-            // Generate certificate
-            generateCertificate(
-                `${userData.firstname} ${userData.lastname}`,
-                courseData.course_name
-            );
-            
-        } catch (error) {
-            console.error('Error generating certificate:', error);
-            Swal.fire({
-                icon: 'error',
-                title: 'Failed to generate certificate',
-                text: error.message,
-                showConfirmButton: true
+        fetchEnrolledCourse(API_ENROLLED_COURSE, enrollId, BASE_URL);
+        const ratingModal = document.getElementById('rating-modal');
+        const modalContent = ratingModal.querySelector('div > div');
+        const closeModalBtn = document.getElementById('close-rating-modal');
+        const skipRatingBtn = document.getElementById('skip-rating');
+        const submitRatingBtn = document.getElementById('submit-rating');
+        const stars = document.querySelectorAll('.star');
+        const ratingText = document.getElementById('rating-text');
+        const reviewTextarea = document.getElementById('review');
+        const claimBtn = document.querySelector('.btnClaim');
+        if (claimBtn) {
+            claimBtn.addEventListener('click', function () {
+                const ratingModal = document.getElementById('rating-modal');
+                const modalContent = ratingModal.querySelector('div > div');
+                ratingModal.classList.remove('hidden');
+                setTimeout(() => {
+                    ratingModal.classList.add('opacity-100');
+                    modalContent.classList.remove('scale-95');
+                }, 10);
             });
         }
-    }
 
-    function generateCertificate(name, course) {
+        function closeRatingModal() {
+            ratingModal.classList.remove('opacity-100');
+            modalContent.classList.add('scale-95');
+            setTimeout(() => {
+                ratingModal.classList.add('hidden');
+            }, 300);
+        }
+        closeModalBtn.addEventListener('click', closeRatingModal);
+        skipRatingBtn.addEventListener('click', closeRatingModal);
+
+        // Star rating interaction
+        stars.forEach(star => {
+            star.addEventListener('click', function () {
+                const rating = this.previousElementSibling.value;
+                submitRatingBtn.disabled = false;
+
+                // Update rating text
+                const ratingTexts = {
+                    '1': 'Poor - Not satisfied',
+                    '2': 'Fair - Could be better',
+                    '3': 'Good - Met expectations',
+                    '4': 'Very Good - Enjoyed it',
+                    '5': 'Excellent - Loved it!'
+                };
+                ratingText.textContent = ratingTexts[rating];
+                ratingText.classList.add('text-blue-600');
+                ratingText.classList.remove('text-gray-500');
+            });
+        });
+
+        // Review textarea focus effect
+        reviewTextarea.addEventListener('focus', function () {
+            this.classList.add('ring-2', 'ring-blue-200');
+        });
+
+        reviewTextarea.addEventListener('blur', function () {
+            this.classList.remove('ring-2', 'ring-blue-200');
+        });
+
+        // Submit rating
+        if (submitRatingBtn) {
+
+        }
+        submitRatingBtn.addEventListener('click', async function() {
+            const selectedRating = document.querySelector('input[name="rating"]:checked')?.value;
+            
+            const review = reviewTextarea?.value.trim() || '';
+            console.log("Selected Rating: ", selectedRating);
+            console.log("Review: ", review);
+            if (!selectedRating) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Please select a rating',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3B82F6'
+                });
+                return;
+            }
+
+            try {
+                const response = await fetch(API_POST_RATING, {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        course_id: courseId,
+                        user_id:studentId, 
+                        rating: selectedRating, 
+                        review: review
+                    })
+                });
+
+                if (!response.ok) throw new Error('Failed to submit rating');
+
+                const data = await response.json();
+                
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thank you!',
+                    text: data.message || 'Rating submitted successfully',
+                    showConfirmButton: true,
+                    confirmButtonColor: '#3B82F6'
+                });
+                
+                closeRatingModal();
+                // Refresh rating display
+                fetchRating(courseId); 
+               // Dapatkan data student dan course terlebih dahulu
+        const [enrollmentData, courseData] = await Promise.all([
+            fetchEnrolledCourse(API_ENROLLED_COURSE, enrollId, BASE_URL),
+        ]);
+
+        // Pastikan struktur data sesuai dengan respons API Anda
+        const studentName = `${enrollmentData[0].Students_FirstName} ${enrollmentData[0].Students_LastName}`;
+        const courseName = enrollmentData[0].Courses_Name;
+        console.log("Student Name: ", studentName);
+        console.log("Course Name: ", courseName);
+        // Generate sertifikat
+        generateCertificate(studentName, courseName);
+        
+        Swal.fire({
+            icon: 'success',
+            title: 'Thank you!',
+            text: 'Rating submitted and certificate generated!',
+            showConfirmButton: true,
+            confirmButtonText: 'Claim Certificate',
+
+            confirmButtonColor: '#3B82F6'
+        });
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message,
+                    showConfirmButton: true,
+                    confirmButtonColor: '#EF4444'
+                });
+            
+            }
+        });
+    });
+   
+    
+        
+       
+
+        
+
+
+    
+
+
+    
+    // Function to generate and download the certificate
+    const { jsPDF } = window.jspdf;
+    async function generateCertificate(name, course) {
         const doc = new jsPDF({
             orientation: 'landscape',
             unit: 'mm'
         });
-        
+
         // Add background color
         doc.setFillColor(240, 240, 250);
         doc.rect(0, 0, 297, 210, 'F');
-        
+
         // Add border
         doc.setDrawColor(100, 100, 200);
         doc.setLineWidth(1);
         doc.rect(10, 10, 277, 190);
-        
+
         // Add logo (optional)
         // const logoData = 'data:image/png;base64,...';
         // doc.addImage(logoData, 'PNG', 20, 20, 30, 30);
-        
+
         // Add title
         doc.setFontSize(36);
         doc.setTextColor(30, 50, 150);
         doc.setFont('helvetica', 'bold');
-        doc.text('CERTIFICATE OF COMPLETION', 148, 50, { align: 'center' });
-        
+        doc.text('CERTIFICATE OF COMPLETION', 148, 50, {
+            align: 'center'
+        });
+
         // Add decorative elements
         doc.setDrawColor(200, 200, 255);
         doc.setLineWidth(0.5);
         doc.line(60, 70, 237, 70);
-        
+
         // Add recipient text
         doc.setFontSize(18);
         doc.setTextColor(80, 80, 80);
         doc.setFont('helvetica', 'normal');
-        doc.text('This is to certify that', 148, 90, { align: 'center' });
-        
+        doc.text('This is to certify that', 148, 90, {
+            align: 'center'
+        });
+
         // Add recipient name
         doc.setFontSize(28);
         doc.setTextColor(30, 50, 150);
         doc.setFont('helvetica', 'bold');
-        doc.text(name, 148, 110, { align: 'center' });
-        
+        doc.text(name, 148, 110, {
+            align: 'center'
+        });
+
         // Add course text
         doc.setFontSize(18);
         doc.setTextColor(80, 80, 80);
         doc.setFont('helvetica', 'normal');
-        doc.text('has successfully completed the course', 148, 130, { align: 'center' });
-        
+        doc.text('has successfully completed the course', 148, 130, {
+            align: 'center'
+        });
+
         // Add course name
         doc.setFontSize(24);
         doc.setTextColor(30, 50, 150);
         doc.setFont('helvetica', 'bold');
-        doc.text(`"${course}"`, 148, 150, { align: 'center' });
-        
+        doc.text(`"${course}"`, 148, 150, {
+            align: 'center'
+        });
+
         // Add date
         doc.setFontSize(14);
         doc.setTextColor(100, 100, 100);
-        doc.text(`Date: ${new Date().toLocaleDateString()}`, 148, 170, { align: 'center' });
-        
+        doc.text(`Date: ${new Date().toLocaleDateString()}`, 148, 170, {
+            align: 'center'
+        });
+
         // Add signature lines
         doc.setDrawColor(150, 150, 150);
         doc.line(60, 180, 120, 180);
@@ -207,10 +424,10 @@
         doc.setFontSize(12);
         doc.text('Director of Studies', 90, 190);
         doc.text('Course Instructor', 205, 190);
-        
+
         // Save the PDF
         doc.save(`Certificate_${name.replace(/\s+/g, '_')}_${course.replace(/\s+/g, '_')}.pdf`);
-        
+
         // Show success message
         Swal.fire({
             icon: 'success',
@@ -219,22 +436,54 @@
             showConfirmButton: false,
             timer: 2000
         });
+     
+       
+
+       
+
+        const tanggal = new Date().toLocaleDateString();
+        console.log(tanggal);
+        const saveResponse = await fetch('http://localhost:3000/api/postCertif', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                EnrollID: enrollId,
+                // created_at: tanggal,
+                // file_path: null // Path file yang disimpan di server
+            })
+        });
+
+        if (!saveResponse.ok) throw new Error('Failed to store certificate data');
+
+        // 3. Download sertifikat ke user
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Certificate Generated!',
+            text: 'Certificate has been saved to your account',
+            showConfirmButton: true
+        });
+
+   
     }
-    async function fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL) {
+    async function fetchEnrolledCourse(API_ENROLLED_COURSE, enrollId, BASE_URL) {
         const courseContainer = document.getElementById('course-container');
         const courseTemplate = document.getElementById('course-template');
         try {
-            const response = await fetch(`${API_ENROLLED_COURSE}/${studentId}`);
+            const response = await fetch(`${API_ENROLLED_COURSE}/${enrollId}`);
             if (!response.ok) {
                 throw new Error('Network response was not ok');
             }
             const data = await response.json();
-            console.log("Enrolled Course data: ", data[0]);
+            console.log("Enrolled Course data: ", data);
             console.log("Enrolled Course data Progress: ", data[0].Progress);
-            if(data[0].Progress == 100){
+            if (data[0].Progress == 100) {
                 document.querySelector('.btnClaim').classList.remove('hidden');
             }
-            
+            return data;
+
         } catch (error) {
             console.error('Error fetching enrolled courses:', error);
             courseContainer.innerHTML = `
@@ -331,9 +580,11 @@
                     })
                 } else {
                     const moduleId = event.target.closest('.flex').getAttribute('data-module-id');
+                    console.log(moduleId)
                     if (moduleId) {
                         window.location.href =
-                            `/students/${studentId}/courses/${courseId}/moduls/${moduleId}`;
+                            `/students/${studentId}/enrolls/${enrollId}/courses/${courseId}/moduls/${moduleId}`;
+
                     }
                 }
 

@@ -1,0 +1,1 @@
+<?php /**PATH D:\KULIAHAHAHHA\KULIAH\SEMESTER 5\WEB\laravel-frontend\resources\views/admin/modul/edit.blade.php ENDPATH**/ ?>

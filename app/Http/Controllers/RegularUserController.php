@@ -33,15 +33,15 @@ class RegularUserController extends Controller
         
     }
 
-    public function indexCourse($akun_id, $course_id)
+    public function indexCourse($enroll_id, $course_id)
     {
         // Ambil ID dari account 
        
-        $student = Account::find($akun_id);
+        $enroll = Enrollment::find($enroll_id);
         $course = Course::find($course_id);
         
         // Jika data tidak ditemukan, tampilkan pesan
-        return view('user.courses', ['students' => $student, 'courses' => $course]);
+        return view('user.courses', ['students' => $enroll, 'courses' => $course]);
         // Debugging jika diperlukan
         // dump($student);
     
@@ -54,30 +54,34 @@ class RegularUserController extends Controller
         return view('index');
     }
 
-    public function readModul($akun_id, $course_id)
-    {
-        // Ambil data berdasarkan route model binding
-        $akun = Account::find($akun_id); // Asumsi kamu memiliki model Akun
-        $course = Course::find($course_id); // Asumsi kamu memiliki model Course
-    
-        // Validasi apakah akun dan course ditemukan
-        if (!$akun || !$course) {
-            abort(404, 'Akun or Course not found');
-        }
-    
-        // Cari data modul berdasarkan course_id
-        $modul = Modul::where('CourseID', $course_id)->first();
-    
-        // Validasi modul
-        if (!$modul) {
-            abort(404, 'Modul not found');
-        }
-    
-        return view('user.modul', [
-            'akun_id' => $akun_id,
-            'courses' => $modul,
-        ]);
+    public function readModul($akun_id, $enroll_id, $course_id, $modul_id)
+{
+    // Ambil data berdasarkan ID
+    $akun = Account::find($akun_id);
+    $enroll = Enrollment::find($enroll_id);
+    $course = Course::find($course_id);
+
+    // Validasi data
+    if (!$akun || !$enroll || !$course) {
+        abort(404, 'Account, Enrollment, or Course not found');
     }
+
+    // Cari modul spesifik
+    $modul = Modul::where('id', $modul_id)
+                 ->where('CourseID', $course_id)
+                 ->first();
+
+    if (!$modul) {
+        abort(404, 'Module not found for this course');
+    }
+
+    return view('user.modul', [
+        'enroll' => $enroll,
+        'modul' => $modul,
+        'course' => $course,
+        'account' => $akun,
+    ]);
+}
     
     public function myCourse($akun_id)
     {

@@ -43,12 +43,12 @@ Route::get('/reset-password', [AuthController::class, 'resetPassword']);
 // USER FUNCTIONALITY
 Route::get('/',[RegularUserController::class, 'index']);
 Route::get('/students/{akun_id}/dashboard', [RegularUserController::class, 'indexUser']);
-Route::get('/students/{akun_id}/courses/{course_id}', [RegularUserController::class, 'indexCourse']);
+Route::get('/students/{akun_id}/enrolls/{enroll_id}/courses/{course_id}', [RegularUserController::class, 'indexCourse']);
 Route::get('/students/{akun_id}/viewDetails/{course_id}', [RegularUserController::class, 'indexCourse']);
 Route::get('/students/{akun_id}/mycourse', [RegularUserController::class, 'myCourse']);
 Route::get('/students/{akun_id}/profiles', [RegularUserController::class, 'profiles']);
 Route::get('/user/{akun_id}/payments',[RegularUserController::class, 'enroll']);
-Route::get('/students/{akun_id}/courses/{course_id}/moduls/{modul_id}', [RegularUserController::class, 'readModul']);
+Route::get('/students/{akun_id}/enrolls/{enroll_id}/courses/{course_id}/moduls/{modul_id}', [RegularUserController::class, 'readModul']);
 
 
 
@@ -108,6 +108,7 @@ Route::delete('/admin/{akunId}/subjects/{id}', [AdminController::class, 'destroy
 
 // MODUL FUNCTIONALITY
 Route::get('/admin/{akunId}/moduls', [AdminController::class, 'indexModul']);
+Route::get('/admin/{akunId}/moduls/create', [AdminController::class, 'createModuls']);
 Route::get('/admin/{akunId}/moduls/{courseId}', [AdminController::class, 'indexModulByCourseId']);
 Route::post('/admin/{akunId}/moduls', [AdminController::class, 'storeTask']);
 Route::get('/admin/{akunId}/moduls/{id}/edit', [AdminController::class, 'editTask']);

@@ -150,7 +150,7 @@
                     </div>
                     <div class="all-course-content flex flex-row justify-between  items-center">
                             <a href="" class="text-white text-xs hover:underline view-details">View details </a>
-                            <p class=" text-white mb-3 text-sm  all-card-level" id="modul">0 Lesson</p>
+                            <p class=" text-white mb-3 text-sm  all-card-level modul_count">0 Lesson</p>
                         </div>
                     </div>
                 </div>
@@ -226,6 +226,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 });
+                
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -265,9 +266,17 @@
                 throw new Error('Network response was not ok');
             }
             courseContainer.innerHTML = '';
-            const data = await response.json();
-            const coursesToShow = data.slice(0, 3);
-            console.log("Enrolled Course data: ", data);
+            const result = await response.json();
+            console.log(result.data.length)
+            if (result.data.length == 0){
+                courseContainer.innerHTML = `
+                    <div class="text-center py-8 text-textColorLight text-xl">
+                        You haven’t taken any courses yet.
+                    </div>
+                `;
+            }
+            const coursesToShow = result.data.slice(0, 3);
+            console.log("Enrolled Course data: ", result.data);
 
             coursesToShow.forEach(enroll => {
                 document.getElementById("deadline").textContent =
@@ -311,13 +320,14 @@
                 // Modified learnLink handler
                 learnLink.onclick = (e) => {
                     e.preventDefault();
-                    window.location.href = `/students/${enroll.id}/courses/${enroll.CourseID}`;
+                    window.location.href = `/students/${studentId}/enrolls/${enroll.id}/courses/${enroll.CourseID}`;
                 };
                 
                 courseContainer.appendChild(courseCard);
             });
 
         } catch (error) {
+            
             console.error('Error fetching enrolled courses:', error);
             courseContainer.innerHTML = `
                     <div class="text-center py-8 text-red-500">
@@ -335,24 +345,34 @@ async function fetchAllCourses(API_COURSES, studentId, BASE_URL) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
+        const responseEnroll = await fetch(`${API_ENROLLED_COURSE}/${studentId}`);
+        if (!responseEnroll.ok) {
+            throw new Error('Network response was not ok');
+        }
         courseContainer.innerHTML = '';
         const data = await response.json();
         console.log("All Courses data: ", data);
+        const dataEnroll = await responseEnroll.json();
+        console.log("All Courses dataEnroll: ", dataEnroll);
+
+
         const coursesToShow = data.slice(0, 6);
         coursesToShow.forEach(course => {
             const courseCard = courseTemplate.cloneNode(true);
             courseCard.style.display = 'block';
             courseCard.removeAttribute('id');
             courseCard.setAttribute('data-id', course.id);
-            
+
             // Get elements
             const btnEnroll = courseCard.querySelector('.btnEnrollNow');
             const cardImg = courseCard.querySelector('.all-card-img-top');
             const cardTitle = courseCard.querySelector('.all-card-title');
             const cardLevel = courseCard.querySelector('.all-card-level');
             const viewDetails = courseCard.querySelector('.view-details');
+            const jumlahModul = courseCard.querySelector('.modul_count');
 
-            if (!cardImg || !cardTitle || !btnEnroll || !viewDetails) {
+
+            if (!cardImg || !cardTitle || !btnEnroll || !viewDetails || !jumlahModul) {
                 console.error('Elements not found in card template');
                 return;
             }
@@ -367,16 +387,25 @@ async function fetchAllCourses(API_COURSES, studentId, BASE_URL) {
 
             cardTitle.textContent = `${course.course_name}`;
             cardLevel.textContent = `${level} Class`;
-            
+            jumlahModul.textContent = `${course.jumlah_modul} Lesson`;
             btnEnroll.onclick = () => enroll(course.id); 
+            // fetchEnrolledCourse(API_ENROLLED_COURSE, studentId, BASE_URL);
+            
             
             // Modified viewDetails handler
             viewDetails.onclick = (e) => {
                 e.preventDefault();
                 window.location.href = `/students/${studentId}/viewDetails/${course.id}`;
             };
-            
-            courseContainer.appendChild(courseCard);
+            if (dataEnroll.data.length != 0){
+                for(var i = 0; i < dataEnroll.data.length; i++){
+                    if (course.id != dataEnroll.data[i].CourseID){
+                        courseContainer.appendChild(courseCard);
+                    }
+                }
+            }else{     
+                courseContainer.appendChild(courseCard);
+            }
         });
     } catch (error) {
         console.error('Error fetching all courses:', error);
