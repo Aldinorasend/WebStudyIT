@@ -73,7 +73,7 @@
 
                         <td class="p-3 text-center">
                             <div class="flex justify-center items-center gap-2">
-                                <a href="/admin/${akunId}/subjects/${modul.id}/edit" class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition">Edit</a>
+                                <a href="/admin/${akunId}/moduls/${modul.id}/edit" class="bg-yellow-500 text-white px-3 py-1 rounded-md text-sm hover:bg-yellow-600 transition">Edit</a>
                                 <button class="bg-red-500 text-white px-3 py-1 rounded-md text-sm hover:bg-red-600 transition" onclick="deleteCourse(${modul.id})">Delete</button>
                             </div>
                         </td>
