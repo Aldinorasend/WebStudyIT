@@ -8,6 +8,7 @@ use App\Models\Account;
 use App\Models\Enrollment;
 use App\Models\Modul;
 use App\Models\Course;
+use App\Models\Subscribers;
 
 class RegularUserController extends Controller
 {
@@ -47,6 +48,12 @@ class RegularUserController extends Controller
     
         // Mengirim data ke view
         
+    }
+
+    public function indexTransaction(){
+        // Mengambil data pembayaran dari model Account
+        $payments = Subscribers::all();
+        return view('user.transaction', compact('payments'));
     }
     public function index()
     {

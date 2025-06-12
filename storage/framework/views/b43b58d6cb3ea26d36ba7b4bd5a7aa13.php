@@ -1,4 +1,3 @@
-
 <?php $__env->startSection('title', 'Admin Page'); ?>
 <?php $__env->startSection('content-title', 'Modul Management'); ?>
 <?php $__env->startSection('content'); ?>

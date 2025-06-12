@@ -112,7 +112,7 @@
 </svg>
 
 
-                            <a href="certificates">Payment</a>
+                            <a href="payments">Payment</a>
                         </li>
                     </div>
                     </ul>

@@ -10,6 +10,7 @@ use App\Models\Account;
 use App\Models\Modul;
 use App\Models\contactUs;
 use App\Models\Enrollment;
+use App\Models\Subscribers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -31,7 +32,11 @@ class AdminController extends Controller
         $messages = contactUs::all();
         return view('Admin.message', compact('messages'));
     }
-
+    public function indexPayments(){
+        // Mengambil data pembayaran dari model Account
+        $payments = Subscribers::all();
+        return view('Admin.payment', compact('payments'));
+    }
 
 
 
