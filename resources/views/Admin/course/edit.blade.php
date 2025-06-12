@@ -112,7 +112,7 @@
             }).then(() => {
                 alert('Course updated successfully');
                 console.log(akunId);
-                window.location.href = '/admin/${akunId}/subjects/';
+                window.location.href = `/admin/${akunId}/subjects/`;
             });
         });
     </script>

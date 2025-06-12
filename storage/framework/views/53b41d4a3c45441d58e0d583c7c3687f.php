@@ -29,7 +29,7 @@
                 class="container-course-active bg-white shadow-md hover:shadow-lg w-2/6 h-auto p-5 rounded-md flex flex-row justify-between items-center ">
                 <div class="body flex flex-col gap-3">
                     <h2 class="text-md font-semibold text-gray-500">Active Courses</h2>
-                    <p class="text-2xl font-bold" id="activecourses">Loading..</p>
+                    <p class="text-2xl font-bold" id="activecourses">0</p>
                     <a class="text-sm text-blue-400" href="">View all Courses</a>
                 </div>
                 <div class="icon bg-blue-100 p-4 rounded-full">
@@ -45,7 +45,7 @@
                 class="overall-progress bg-white/90 shadow-md hover:shadow-lg w-2/6 h-auto p-5 rounded-md flex flex-row justify-between items-center">
                 <div class="body flex flex-col gap-3">
                     <h2 class="text-md font-semibold text-gray-500">Overall Progress</h1>
-                        <p class="text-2xl font-bold" id="overallprogress">Loading..</p>
+                        <p class="text-2xl font-bold" id="overallprogress">0</p>
                         <a class="text-sm text-blue-400" href="">View all Courses</a>
                 </div>
                 <div class="bg-green-100 p-4 rounded-full">
@@ -60,7 +60,7 @@
                 class="deadline bg-white/90 shadow-md  origin-center transition-all duration-300 transform w-2/6 h-auto p-5 rounded-md flex flex-row justify-between items-center hover:shadow-lg hover:scale-[1.005]">
                 <div class="body flex flex-col gap-3">
                     <h2 class="text-md font-semibold text-gray-500">Upcoming Deadlines</h1>
-                        <p class="text-2xl font-bold" id="deadline">Loading..</p>
+                        <p class="text-2xl font-bold" id="deadline">0</p>
                         <a class="text-sm text-blue-400" href="">View deadlines</a>
                 </div>
                 <div class="bg-orange-100 p-4 rounded-full">

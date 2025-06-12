@@ -1,70 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Edit Instructor</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @vite('resources/css/app.css')
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body>
-    <div class="container mt-4">
-        <h1 class="mb-4">Edit Instructor</h1>
-        <button onclick="backtoList()" class="btn btn-secondary mb-3">Back to List</button>
-        <form id="edit-course-form">
-            <div class="mb-3">
-                <label for="firstname" class="form-label">Firstname</label>
-                <input type="text" class="form-control" id="firstname" required>
+<body class="bg-gray-50 min-h-screen">
+    <div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-2xl font-semibold mb-6 text-gray-800">Edit Instructor</h1>
+        <button onclick="backtoList()" class="mb-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600">Back to List</button>
+        
+        <form id="edit-course-form" class="space-y-4">
+            <div>
+                <label for="firstname" class="block text-sm font-medium text-gray-700">Firstname</label>
+                <input type="text" id="firstname" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="mb-3">
-                <label for="lastname" class="form-label">Lastname</label>
-                <input type="text" class="form-control" id="lastname" required>
+            <div>
+                <label for="lastname" class="block text-sm font-medium text-gray-700">Lastname</label>
+                <input type="text" id="lastname" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" required>
+            <div>
+                <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                <input type="email" id="email" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="mb-3">
-                <label for="phone_number" class="form-label">Phone Number</label>
-                <input type="text" class="form-control" id="phone_number" required> 
+            <div>
+                <label for="phone_number" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                <input type="text" id="phone_number" class="mt-1 block w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500" required />
             </div>
-            <div class="mb-3">
-                <label for="status" class="form-label">Status</label>
-                <select class="form-control" id="status">
-                    <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Update Instructor</button>
+           
+            <button type="submit" class="w-full py-2 px-4 bg-blue-600 text-white rounded hover:bg-blue-700">Update Instructor</button>
         </form>
     </div>
+
     <script>
         const apiUrl = 'http://localhost:3000/api/instructors';
         const insId = window.location.pathname.split('/')[4];
         const akunId = window.location.pathname.split('/')[2];
-        console.log("instructorId:",insId)
-        console.log("akun:",akunId)
+        console.log("instructorId:", insId)
+        console.log("akun:", akunId)
 
         async function backtoList(){
-            window.location.href=`/admin/${akunId}/instructors`;
+            window.location.href = `/admin/${akunId}/instructors`;
         }
 
-       
+        async function fetchIns() {
+            try {
+                const response = await fetch(`${apiUrl}/${insId}`);
+                if (!response.ok) throw new Error('Network response was not ok');
+                const instructor = await response.json();
+              
+                return instructor;
+            } catch (error) {
+                console.error('Error fetching instructor data:', error);
+            }
+        }
 
-
-        // Fetch data course untuk diisi di form
-        fetch(`${apiUrl}/${insId}`)
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('firstname').value = data.firstname;
-                document.getElementById('lastname').value = data.lastname;
-                document.getElementById('email').value = data.email;
-                document.getElementById('phone_number').value = data.phone_number;
-                document.getElementById('status').value = data.status;
-            });
-
-        // Update data course
         document.getElementById('edit-course-form').addEventListener('submit', function (e) {
             e.preventDefault();
 
@@ -73,22 +66,30 @@
             const email = document.getElementById('email').value;
             const phone_number = document.getElementById('phone_number').value;
             const status = document.getElementById('status').value;
-            
 
             fetch(`${apiUrl}/${insId}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstname, lastname, email, phone_number, status })
+                body: JSON.stringify({ firstname, lastname, email, phone_number })
             }).then(() => {
                 Swal.fire({
                     icon: 'success',
                     title: 'Instructor updated successfully',
                     showConfirmButton: false,
-                    timer: 15000
+                    timer: 1500
                 });
-                console.log(akunId);
                 window.location.href = `/admin/${akunId}/instructors/`;
             });
+        });
+
+        window.addEventListener('DOMContentLoaded', async () => {
+            const instructor = await fetchIns();
+            if (instructor) {
+                document.getElementById('firstname').value = instructor.firstname;
+                document.getElementById('lastname').value = instructor.lastname;
+                document.getElementById('email').value = instructor.email;
+                document.getElementById('phone_number').value = instructor.phone_number;;
+            }
         });
     </script>
 </body>

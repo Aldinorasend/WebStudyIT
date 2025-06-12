@@ -109,9 +109,11 @@ Route::delete('/admin/{akunId}/subjects/{id}', [AdminController::class, 'destroy
 // MODUL FUNCTIONALITY
 Route::get('/admin/{akunId}/moduls', [AdminController::class, 'indexModul']);
 Route::get('/admin/{akunId}/moduls/create', [AdminController::class, 'createModuls']);
-Route::get('/admin/{akunId}/moduls/{courseId}', [AdminController::class, 'indexModulByCourseId']);
+Route::get('/admin/{akunId}/subjects/{courseId}/moduls', [AdminController::class, 'indexModulByCourseId']);
 Route::post('/admin/{akunId}/moduls', [AdminController::class, 'storeTask']);
-Route::get('/admin/{akunId}/moduls/{id}/edit', [AdminController::class, 'editTask']);
+Route::get('/admin/{akunId}/moduls/{id}/edit', [AdminController::class, 'editModul']);
+Route::get('/admin/{akunId}/subjects/{courseId}/moduls/{id}/edit', [AdminController::class, 'editModul']);
+
 Route::put('/admin/{akunId}/moduls/{id}', [AdminController::class, 'updateTask']);
 Route::delete('/admin/{akunId}/moduls/{id}', [AdminController::class, 'destroyTask']);
 

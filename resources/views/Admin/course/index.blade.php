@@ -39,7 +39,7 @@
     const apiUrl = 'http://localhost:3000/api/coursesAdmin';
     const baseUrl = 'http://localhost:8000/backend-uploads/';
     const urlPage = window.location.href;
-    const akunId = urlPage.split('/').slice(-2, -1)[0];
+    const akunId = window.location.pathname.split('/')[2];
     console.log("akunId:",akunId)
     async function fetchData() {
         try {
@@ -74,7 +74,7 @@
                         </td>
                         <td class="p-3 text-center">
                             <div class="flex justify-center items-center gap-1">
-                             <a href="/admin/${akunId}/moduls/${course.id}" class="bg-blue-500 text-white px-2 py-2 rounded-md text-sm hover:bg-yellow-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 ">
+                             <a href="/admin/${akunId}/subjects/${course.id}/moduls" class="bg-blue-500 text-white px-2 py-2 rounded-md text-sm hover:bg-yellow-600 transition"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 ">
   <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 9.776c.112-.017.227-.026.344-.026h15.812c.117 0 .232.009.344.026m-16.5 0a2.25 2.25 0 0 0-1.883 2.542l.857 6a2.25 2.25 0 0 0 2.227 1.932H19.05a2.25 2.25 0 0 0 2.227-1.932l.857-6a2.25 2.25 0 0 0-1.883-2.542m-16.5 0V6A2.25 2.25 0 0 1 6 3.75h3.879a1.5 1.5 0 0 1 1.06.44l2.122 2.12a1.5 1.5 0 0 0 1.06.44H18A2.25 2.25 0 0 1 20.25 9v.776" />
 </svg>
 </a>

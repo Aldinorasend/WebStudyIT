@@ -138,7 +138,7 @@ class AdminController extends Controller
 
 
     // Kelola Modul
-    public function indexModul()
+    public function indexModul(Modul $moduls)
     {
         $moduls = Modul::with('course')->get();
         foreach ($moduls as $modul) {
@@ -147,6 +147,11 @@ class AdminController extends Controller
             }
         }
         return view('admin.modul.index', compact('moduls'));
+    }
+
+    public function editModul(Modul $moduls){
+        $courses = Course::all();
+        return view('Admin.modul.edit', compact('courses'));
     }
     public function createModuls(){
         $courses = Course::all();
