@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Course</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-</head>
-<body>
+@extends('layouts.admin')
+@section('title', 'Admin Page')
+@section('content-title', 'Course Management')
+@section('content')
     <div class="container mt-4">
         <h1 class="mb-4">Edit Course</h1>
         <button onclick="backtoList()" class="btn btn-secondary mb-3">Back to List</button>
@@ -116,5 +109,4 @@
             });
         });
     </script>
-</body>
-</html>
+

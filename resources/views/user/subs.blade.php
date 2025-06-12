@@ -1,5 +1,6 @@
 @extends('layouts.user')
 @section('title', 'StudyIT')
+
 @section('content')
 <div class="container flex flex-row">
     <header class="w-full bg-sideBarLight h-12 border-2 border-textColorLight ">

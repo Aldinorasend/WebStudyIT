@@ -49,7 +49,7 @@ Route::get('/students/{akun_id}/mycourse', [RegularUserController::class, 'myCou
 Route::get('/students/{akun_id}/profiles', [RegularUserController::class, 'profiles']);
 Route::get('/user/{akun_id}/payments',[RegularUserController::class, 'enroll']);
 Route::get('/students/{akun_id}/enrolls/{enroll_id}/courses/{course_id}/moduls/{modul_id}', [RegularUserController::class, 'readModul']);
-
+Route::get('/students/{akun_id}/transaction', [RegularUserController::class, 'indexTransaction']);
 
 
 Route::get('admin/{akunId}/dashboard', [AdminController::class, 'indexDashboard']);
@@ -90,6 +90,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/profile/update', [EditProfileController::class, 'update'])->name('profile.update');
     Log::info('User updated their profile');
 });
+// PAYMENT FUNCTIONALITY
+Route::get('/admin/{akun_id}/payments', [AdminController::class, 'indexPayments']);
+
 // INSTRUCTOR FUNCTIONALITY
 Route::get('admin/{akunId}/instructors', [AdminController::class, 'indexInstructor']);
 Route::get('admin/{akunId}/instructors/create', [AdminController::class, 'createInstructor']);
